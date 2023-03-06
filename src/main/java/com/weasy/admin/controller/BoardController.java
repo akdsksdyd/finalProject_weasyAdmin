@@ -9,10 +9,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
 
 	
-	@GetMapping("/boardSummary")
+	@GetMapping("/dashboardSummary")
 	public String boardSummary() {
 		
-		return "board/boardSummary";
+		return "board/dashboardSummary";
+	}
+	
+	@GetMapping("/taskCurrent")
+	public String taskCurrent() {
+		
+		return "board/taskCurrent";
+	}
+	
+	@GetMapping("/taskProgress")
+	public String taskProgress() {
+		
+		return "board/taskProgress";
 	}
 	
 }

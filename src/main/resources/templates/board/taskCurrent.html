@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+
+	<div class="main-wrapper">
+		
+		<div class="currentWrap">
+		
+			<div class="currentList">
+			
+				<div class="currentTitle">
+					• 팀별 태스크 현황
+				</div>
+				
+				<div class="listWrap">
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					<div class="currentCard">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">프로젝트 A</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">10</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">목표일까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">7일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">6명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div>
+							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+						</div>
+					</div>
+					
+					
+					
+				</div>
+				
+			</div>
+		
+		</div>
+
+	</div>
+
+</th:block>
+
+<link rel="stylesheet" href="../css/taskCurrent.css">
+
+<script th:inline="javascript">
+
+const ctx1 = document.getElementById('doughnutChart');
+const doughnutChart = new Chart(ctx1, {
+	  type: 'doughnut',
+	    data: {
+	      labels: ['완료', '진행예정', '진행중'],
+	      datasets: [{
+	        data: [20, 30, 50],     
+	        backgroundColor: [
+	          '#9DCEFF',
+	          '#F9F8CF',
+	          '#FBC5C5',
+	        ],
+	        borderWidth: 0,
+	        scaleBeginAtZero: true,
+	      }
+	    ]
+	  },
+	  options: {
+	    	responsive: false,
+	    	plugins:{
+		        legend: {
+		        	display: true,
+		        	align: 'center',
+		        	reverse: true,
+		        	labels: {
+		        		padding: 3,
+		        		boxWidth: 10,
+		        	}
+		        },
+	        }    
+	    }
+	});
+
+</script>
+
+
+

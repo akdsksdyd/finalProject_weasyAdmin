@@ -1,0 +1,180 @@
+@charset "UTF-8";
+
+.progressWrap {
+	width: 80%;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	margin-top: 80px;
+	color: #595757;
+	position: relative;
+}
+
+.progressTitle {
+	width: 90%;
+	height: 40px;
+	margin: 0 auto;
+	margin-top: 30px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.progressPagingWrap {
+	width: 90%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.progressPaging {
+	width: 100px;
+	height: 80px;
+	padding: 30px 0 10px 0;
+	margin: 0 auto;
+}
+
+.progressRow {
+	cursor: pointer;
+}
+
+.progressRow:hover td {
+	background-color: rgba(54, 162, 235, 0.1);
+}
+
+
+/***********/
+/* 모달 부분 */
+/***********/
+
+.progressModal {
+    display: none;
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 9;
+}
+
+.progressModalBody {
+	position: fixed;
+    top: 44%;
+    left: 56%;
+    width: 70%;
+    height: 70%;
+    padding: 50px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    transform: translateX(-50%) translateY(-50%);
+    overflow: scroll;
+    overflow-x: hidden;
+    z-index: 10;
+}
+
+.progressModalTitle {
+	font-size: 18px;
+	font-weight: 600;
+	border-bottom: 2px #a39485 solid;
+	padding-bottom: 15px;
+}
+
+.progressModalData {
+	overflow: hidden;
+	padding: 20px;
+}
+
+.modalChart {
+	float: left;
+	width: 60%;
+	border-right: 2px #a39485 solid;
+}
+
+.modalText {
+	float: right;
+	width: 40%;
+}
+
+.completeList {
+	padding: 5px 0 10px 20px;
+}
+
+.UnprogressList {
+	padding: 5px 0 10px 20px;
+}
+
+
+/************/
+/* 테이블 부분 */
+/************/
+
+table {
+	border: 1px #9DCEFF solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	font-size: .9em;
+	width: 90%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	font-weight: bold;
+	color: #fff;
+	background: #9DCEFF;
+}
+
+td, th {
+	padding: 1em .5em;
+	vertical-align: middle;
+}
+
+td {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	background: #fff;
+}
+
+a {
+	color: #73685d;
+}
+
+@media all and (max-width: 768px) {
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+	th {
+		text-align: right;
+	}
+	table {
+		position: relative;
+		padding-bottom: 0;
+		border: none;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	}
+	thead {
+		float: left;
+		white-space: nowrap;
+	}
+	tbody {
+		overflow-x: auto;
+		overflow-y: hidden;
+		position: relative;
+		white-space: nowrap;
+	}
+	tr {
+		display: inline-block;
+		vertical-align: top;
+	}
+	th {
+		border-bottom: 1px solid #a39485;
+	}
+	td {
+		border-bottom: 1px solid #e5e5e5;
+	}
+}
