@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.main-wrapper{
+	margin : 100px 120px 100px 120px; 
+}
+.user_registration {
+	font-size : 38px;
+	font-weight: 550;
+}
+
+.reporting_date {
+	font-size: 17px;
+	font-weight: 550;
+}
+
+.name {
+	font-size: 17px;
+	font-weight: 550;
+}
+
+.search_btn{
+	float: right;
+	padding: 0 23px; 
+	color: #fff; 
+	display: inline-block; 
+	background-color: #7866c9; 
+	border: 1px solid #7866c9; 
+	height:30px; 
+	line-height:30px;
+}
+
+.data_amount{
+	float: right;
+}
+
+.user_management{
+	width: 100%;
+}
+
+.user_management{width:100%; border-left:1px solid #ededed;  border-top:1px solid #4588fd;}
+.user_management tr th{text-align:center; background-color: #edf0f5; text-align: center; border-bottom: 1px solid #fff; border-right: 1px solid #ededed; height: 50px; line-height: 45px; min-width:15%; width:15%;}
+
