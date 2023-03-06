@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+
+	<div class="main-wrapper">
+		<h2>팀 관리</h2>
+		
+
+		<table>
+			<thead>
+				<tr>
+					<th>NO.</th>
+					<th>팀명</th>
+					<th>팀목표</th>
+					<th>팀인원</th>
+					<th>팀 생성일</th>
+					<th>팀 생성자</th>
+					<th>팀 상태</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each=" vo, status : ${list}">
+					<td>[[${status.count}]]</td>
+					<td>[[${vo.teamName}]]</td>
+					<td>[[${vo.teamGoal}]]</td>
+					<td></td>
+					<td>[[${vo.teamRegdate}]]</td>
+					<td>[[${vo.userEmail}]]</td>
+					<td>[[${vo.teamStatus== 'Y' ? '진행중' : '종료된 팀' }]]</td>
+				</tr>
+			</tbody>
+
+		</table>
+
+		<div class="page">
+			<ul>
+				<li><a><i
+						class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
+				<li style="margin-right: 5px;" th:if=${pageVO.prev}><a><i
+						class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+
+				<th:block th:each=" page : ${pageVO.pageList}">
+					<li th:class="${page == pageVO.page ? 'on' : ''}"><a>[[${page}]]</a></li>
+				</th:block>
+
+				<li style="margin-left: 5px;" th:if=${pageVO.next}><a><i
+						class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a
+					th:href="@{productList(page=${pageVO.realEnd}, amount=${pageVO.amount})}"><i
+						class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+			</ul>
+		</div>
+		</li>
+
+		</ul>
+		</li>
+		</ul>
+	</div>
+
+
+
+	</div>
+
+</th:block>
+
+<link rel="stylesheet" href="../css/TeamList.css">
