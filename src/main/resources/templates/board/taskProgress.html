@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+
+	<div class="main-wrapper">
+
+		<div class="progressWrap">
+
+			<div class="progressTitle">• 팀별 태스크 진척률 현황</div>
+
+
+			<!-- 테이블 부분 -->
+			<table>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>팀명</th>
+						<th>진행</th>
+						<th>미진행</th>
+						<th>완료</th>
+						<th>진척률</th>
+
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+					<tr class="progressRow">
+						<td>1</td>
+						<td>프로젝트 A</td>
+						<td>10</td>
+						<td>5</td>
+						<td>5</td>
+						<td>25%</td>
+					</tr>
+
+
+				</tbody>
+			</table>
+
+			<div class="progressPagingWrap">
+				<div class="progressPaging">12345</div>
+			</div>
+
+			<div class="progressModal">
+				<div class="progressModalBody">
+					<div class="progressModalTitle"> ◉ 태스크 진척률 상세 현황</div>
+					
+					<div class="progressModalData">
+					
+						<div class="modalChart">
+							<canvas id="progressChart" style="height: 50vh; width: 33vw"></canvas>
+						</div>
+						
+						<div class="modalText">
+							<div class="completeList">
+								<div style="font-size: 16px; font-weight: 600;">■ 완료된 업무</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
+							</div>
+							<div class="UnprogressList">
+								<div style="font-size: 16px; font-weight: 600;">■ 미진행 업무</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
+								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+	
+		</div>
+
+		<!-- main-wrapper 끝 -->
+	</div>
+
+</th:block>
+
+<link rel="stylesheet" href="../css/taskProgress.css">
+
+<script th:inline="javascript">
+	
+	/* 모달 켜기 */
+	$('.progressRow').click(() => {
+		$('.progressModal').css({'display':'block'});
+	});
+	
+	/* 모달 끄기 */
+	$('.progressModal').click(() => {
+		$('.progressModal').css({'display':'none'});
+	});
+	
+	/* 진척률 차트 */
+	const ctx = document.getElementById('progressChart');
+	const progressChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['업무1', '업무2', '업무3', '업무4', '업무5', '업무6'],
+        datasets: [{
+            data: [
+            		22, 
+            		11, 
+            		30, 
+            		50, 
+            		20, 
+            		10
+            	  ],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(25, 19, 164, 0.2)',
+                'rgba(155, 109, 64, 0.2)',
+                'rgba(205, 19, 64, 0.2)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(25, 19, 164, 1)',
+                'rgba(155, 109, 64, 1)',
+                'rgba(205, 19, 64, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	responsive: false,
+    	indexAxis: 'y',
+    	scales: {
+            x: {
+                suggestedMin: 0,
+                suggestedMax: 100
+            }
+        },
+        plugins:{
+            legend: {
+                display: false
+            },
+        }
+    }
+});
+
+</script>

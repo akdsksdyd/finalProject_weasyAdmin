@@ -15,4 +15,16 @@ public class BoardController {
 		return "board/boardSummary";
 	}
 	
+	@GetMapping("/taskCurrent")
+	public String taskCurrent() {
+		
+		return "board/taskCurrent";
+	}
+	
+	@GetMapping("/taskProgress")
+	public String taskProgress() {
+		
+		return "board/taskProgress";
+	}
+	
 }

@@ -1,0 +1,184 @@
+@charset "UTF-8";
+
+* {padding: 0; margin: 0;}
+
+/**************/
+/*  차트 부분   */
+/**************/
+
+.summaryWrap {
+	width: 100%;
+	padding-top: 30px;
+}
+
+.chartWrap {
+	width: 80%;
+	overflow: hidden;
+	margin: 0 auto;
+	padding: 30px;
+}
+
+.barWrap {
+	float: left;
+	overflow: hidden;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+  	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+}
+
+.doughnutWrap {
+	float: right;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+  	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  	padding: 10px;
+ }
+
+.barList {
+	float: left;
+	padding: 30px 30px 20px 20px;
+}
+
+.teamTotal {
+	width: 210px;
+	margin: 0 auto;
+	margin-top: 10px;
+	padding: 10px;
+	font-size: 15px;
+	font-weight: 600;
+	color: #595757;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+  	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  	display: block;
+}
+
+.teamTotal:hover {
+	background-color: rgba(54, 162, 235, 0.2);
+}
+
+.barTitle {
+	font-size: 13px;
+	font-weight: 600;
+	color: #595757;
+	margin-bottom: 10px;
+}
+
+.doughnutTitle {
+	font-size: 16px;
+	font-weight: 600;
+	color: #595757;
+	margin-bottom: 10px;
+}
+
+/**************/
+/* 테이블 템플릿 */
+/**************/
+
+.summaryNoticeWrap {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.noticeWrap {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.noticeTitle {
+	width: 132px;
+	padding: 10px;
+	margin-bottom: 8px;
+	font-size: 15px;
+	font-weight: 600;
+	color: #595757;
+	border-radius: 5px;
+	border: 1px #a39485 solid;
+  	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  	display: inline-block;
+}
+
+.noticeTitle:hover {
+	background-color: rgba(54, 162, 235, 0.2);
+}
+
+table {
+  border: 1px #9DCEFF solid;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  font-size: .9em;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+th {
+  text-align: left;
+}
+  
+thead {
+  font-weight: bold;
+  color: #fff;
+  background: #9DCEFF;
+}
+  
+ td, th {
+  padding: 1em .5em;
+  vertical-align: middle;
+}
+  
+ td {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  background: #fff;
+}
+
+a {
+  color: #73685d;
+}
+  
+ @media all and (max-width: 768px) {
+    
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  
+  th {
+    text-align: right;
+  }
+  
+  table {
+    position: relative; 
+    padding-bottom: 0;
+    border: none;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+  }
+  
+  thead {
+    float: left;
+    white-space: nowrap;
+  }
+  
+  tbody {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  th {
+    border-bottom: 1px solid #a39485;
+  }
+  
+  td {
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  }
+
+
