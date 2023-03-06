@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.weasy.admin.service.TeamMapper">
+ 
+ 	<select id="getList" resultType="TeamVO">
+ 		select * from team
+ 	</select>
+ 	
+ 	<select id = "getTotal" resultType="int">
+ 		select count(*) as total from team
+<!--  		<if test ="cri.startDate != null and cri.startDate !='' ">
+		<![CDATA[ and date_format(prod_enddate, '%Y-%m-%d') >= date_format(#{cri.startDate},'%Y-%m-%d')]]>
+		</if>
+		<if test ="cri.endDate != null and cri.endDate !='' ">
+		<![CDATA[ and date_format(prod_enddate, '%Y-%m-%d') <= date_format(#{cri.endDate},'%Y-%m-%d') ]]>
+		</if>
+		<if test ="cri.searchName != null and cri.searchName !='' ">
+		and prod_name like concat('%', #{cri.searchName},'%')
+		</if>
+		<if test ="cri.searchContent != null and cri.searchContent !='' ">
+		and prod_content like concat('%', #{cri.searchContent},'%')
+		</if>
+ --> 	</select>
+ 
+ </mapper>
