@@ -1,13 +1,256 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
-		ㅇㅇㅇㅇㅇㅇㅇ
+
+		<div class="summaryWrap">
+
+			<div class="chartWrap">
+
+				<div class="barWrap">
+					<a href="#" class="teamTotal">» 진행중인 프로젝트 수: 12</a>
+					<div class="barList">
+						<div class="barTitle">• 태스크 수 상위 3팀</div>
+						<canvas id="barChart1" style="height: 30vh; width: 10vw"></canvas>
+					</div>
+					<div class="barList">
+						<div class="barTitle">• 완료 태스크 수 상위 3팀</div>
+						<canvas id="barChart2" style="height: 30vh; width: 10vw"></canvas>
+					</div>
+					<div class="barList">
+						<div class="barTitle">• 분기별 프로젝트 수</div>
+						<canvas id="barChart3" style="height: 30vh; width: 10vw"></canvas>
+					</div>
+
+				</div>
+
+				<div class="doughnutWrap">
+					<div class="doughnutTitle">• 금년도 프로젝트 전체 현황</div>
+					<canvas id="doughnutChart" style="height: 40vh; width: 20vw"></canvas>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="summaryNoticeWrap">
+		
+			<div class="noticeWrap">
+			
+				<a href="#" class="noticeTitle">
+					⚹ 공지사항 관리
+				</a>
+				
+				<table>
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>등록일시</th>
+							<th>조회수</th>
+	
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td>1</td>
+							<td>테스트 공지</td>
+							<td>admin</td>
+							<td>2023-03-01</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>테스트 공지</td>
+							<td>admin</td>
+							<td>2023-03-01</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>테스트 공지</td>
+							<td>admin</td>
+							<td>2023-03-01</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>테스트 공지</td>
+							<td>admin</td>
+							<td>2023-03-01</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>테스트 공지</td>
+							<td>admin</td>
+							<td>2023-03-01</td>
+							<td>1</td>
+						</tr>
+						
+						
+					</tbody>
+				</table>
+				
+			</div>
+			
+		</div>
+
 	</div>
 
 </th:block>
 
+<link rel="stylesheet" href="../css/boardSummary.css">
 
+<script th:inline="javascript">
 
+// 1 도넛차트
+const ctx1 = document.getElementById('doughnutChart');
+const doughnutChart = new Chart(ctx1, {
+	  type: 'doughnut',
+	    data: {
+	      labels: ['완료', '진행예정', '진행중'],
+	      datasets: [{
+	        data: [20, 30, 50],     
+	        backgroundColor: [
+	          '#9DCEFF',
+	          '#F9F8CF',
+	          '#FBC5C5',
+	        ],
+	        borderWidth: 0,
+	        scaleBeginAtZero: true,
+	      }
+	    ]
+	  },
+	  options: {
+	    	responsive: false,
+	    	plugins:{
+		        legend: {
+		        	display: true,
+		        	align: 'end',
+		        	reverse: true,
+		        	labels: {
+		        		padding: 5,
+		        		boxWidth: 20,
+		        	}
+		        },
+	        }    
+	    }
+	});
+
+// 2 바차트
+const ctx2 = document.getElementById('barChart1').getContext('2d');
+const barChart1 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['1팀', '2팀', '3팀'],
+        datasets: [{
+            data: [75, 19, 7],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	responsive: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins:{
+            legend: {
+                display: false
+            },
+        }
+    }
+});
+
+//3 바차트
+const ctx3 = document.getElementById('barChart2').getContext('2d');
+const barChart2 = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: ['1팀', '2팀', '3팀'],
+        datasets: [{
+            data: [12, 19, 7],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	responsive: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins:{
+            legend: {
+                display: false
+            },
+        }
+    }
+});
+
+//3 바차트
+const ctx4 = document.getElementById('barChart3');
+const barChart3 = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: ['1분기', '2분기', '3분기', '4분기'],
+        datasets: [{
+            data: [12, 19, 7, 15],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	responsive: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins:{
+            legend: {
+                display: false
+            },
+        }
+    }
+});
+
+</script>
