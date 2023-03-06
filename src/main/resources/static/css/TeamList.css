@@ -1,0 +1,103 @@
+table {
+  border: 1px #9DCEFF solid;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  font-size: .9em;
+  width: 75%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+th {
+  text-align: left;
+}
+  
+thead {
+  font-weight: bold;
+  color: #fff;
+  background: #9DCEFF;
+}
+  
+ td, th {
+  padding: 1em .5em;
+  vertical-align: middle;
+}
+  
+ td {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  background: #fff;
+}
+
+a {
+  color: #73685d;
+}
+  
+ @media all and (max-width: 768px) {
+    
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  
+  th {
+    text-align: right;
+  }
+  
+  table {
+    position: relative; 
+    padding-bottom: 0;
+    border: none;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+  }
+  
+  thead {
+    float: left;
+    white-space: nowrap;
+  }
+  
+  tbody {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  th {
+    border-bottom: 1px solid #a39485;
+  }
+  
+  td {
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+ }
+ 
+ /* pageer */
+.page{padding:30px 0 20px 0;position:relative;}
+.page ul{text-align:center;}
+.page ul li{display:inline;  padding:0px!important;}
+.page ul li a{display:inline-block; zoom:1;*display:inline; width: 35px; height: 35px; line-height: 35px; color:#777777; border:1px solid #dddddd;transition:all 0.25s ease-in-out;-webkit-transition:all 0.25s ease-in-out;font-size:15px;}
+.page ul li a:hover, .page ul li.on a{display:inline-block;zoom:1;*display:inline; border:1px solid #7866c9;background:#fff;color:#7866c9;}
+.page ul li a i{color:#777777;}
+.page ul li a:hover i{color:#7866c9;}
+
+.btn-option{
+	display: inline-block;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    margin-left:-4px;
+    color: #666;
+    text-align: center;
+    border: 1px solid #cfcfcf;
+	background-color:#fff;
+}
+.search_th{width:100px; float:left; text-align:center;}
+.btn-option.on{background-color:#7866c9; color:#fff;}
+p > .btn-option:first-child{border-radius: 5px 0px 0px 5px;}
+p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
