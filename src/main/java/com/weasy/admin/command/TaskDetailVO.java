@@ -15,6 +15,7 @@ public class TaskDetailVO { //상세업무 VO
 	private int boardNo;
 	private String taskDetail;
 	private String userEmail;
+	private int status;
 
 }
 //taskDetailNo  	int PRIMARY KEY auto_increment,

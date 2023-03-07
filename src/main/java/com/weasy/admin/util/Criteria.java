@@ -23,6 +23,11 @@ public class Criteria {
 		return (page - 1) * amount;
 	}
 	
-	
+	// 검색 키워드
+	private String searchName; // 상품명
+	private String searchContent; // 상품내용
+	private String searchPrice; // 정렬방식
+	private String startDate; // 판매 시작일
+	private String endDate; // 판매 종료일
 
 }

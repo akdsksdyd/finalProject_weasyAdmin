@@ -24,6 +24,8 @@ public class BoardController {
 	@GetMapping("/taskProgress")
 	public String taskProgress() {
 		
+		
+		
 		return "board/taskProgress";
 	}
 	
