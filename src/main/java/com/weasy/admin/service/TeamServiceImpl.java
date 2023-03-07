@@ -16,8 +16,8 @@ public class TeamServiceImpl implements TeamService{
 	private TeamMapper teamMapper;
 
 	@Override
-	public ArrayList<TeamVO> getList(Model model, Criteria cri) {
-		return teamMapper.getList(model, cri);
+	public ArrayList<TeamVO> getList(Criteria cri) {
+		return teamMapper.getList(cri);
 	}
 
 	@Override
@@ -25,6 +25,14 @@ public class TeamServiceImpl implements TeamService{
 		// TODO Auto-generated method stub
 		return teamMapper.getTotal(cri);
 	}
+
+	@Override
+	public ArrayList<TeamVO> listFilter(String selval) {
+		System.out.println(selval);
+		return teamMapper.listFilter(selval);
+	}
+	
+	
 
 	
 	

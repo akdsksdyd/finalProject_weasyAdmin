@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+ <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
 <th:block
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
-		<h2>팀 관리</h2>
-		
+		<div class="search-box">
+			<form>
+				<input type="text" placeholder="검색어를 입력하세요" name="keyword">
+				<button class="btn btn-search" type="submit">검색</button>
+			</form>
+		</div>
+
 
 		<table>
+
+			<div>
+				<select class ="teamstatus" onchange=statusCheck(this)>
+					<option>전체</option>
+					<option>진행중</option>
+					<option>종료된 팀</option>
+				</select>
+			</div>
+
+			<h2>팀 관리</h2>
 			<thead>
 				<tr>
 					<th>NO.</th>
@@ -22,11 +37,11 @@
 			</thead>
 			<tbody>
 				<tr th:each=" vo, status : ${list}">
-					<td>[[${status.count}]]</td>
+					<td>[[${vo.teamNo}]]</td>
 					<td>[[${vo.teamName}]]</td>
 					<td>[[${vo.teamGoal}]]</td>
 					<td></td>
-					<td>[[${vo.teamRegdate}]]</td>
+					<td>[[${ #temporals.format(vo.teamRegdate,'yyyy-MM-dd')}]]</td>
 					<td>[[${vo.userEmail}]]</td>
 					<td>[[${vo.teamStatus== 'Y' ? '진행중' : '종료된 팀' }]]</td>
 				</tr>
@@ -36,19 +51,20 @@
 
 		<div class="page">
 			<ul>
-				<li><a><i
-						class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
+				<li><a><i class="fa fa-angle-double-left"
+						aria-hidden="true"></i></a></li>
 				<li style="margin-right: 5px;" th:if=${pageVO.prev}><a><i
 						class="fa fa-angle-left" aria-hidden="true"></i></a></li>
 
 				<th:block th:each=" page : ${pageVO.pageList}">
-					<li th:class="${page == pageVO.page ? 'on' : ''}"><a>[[${page}]]</a></li>
+					<li th:class="${page == pageVO.page ? 'on' : ''}"><a
+						th:href="@{teamList(page=${page}, amount=${pageVO.amount})}">[[${page}]]</a></li>
 				</th:block>
 
 				<li style="margin-left: 5px;" th:if=${pageVO.next}><a><i
 						class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a
-					th:href="@{productList(page=${pageVO.realEnd}, amount=${pageVO.amount})}"><i
+					th:href="@{teamList(page=${pageVO.realEnd}, amount=${pageVO.amount})}"><i
 						class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 			</ul>
 		</div>
@@ -62,7 +78,30 @@
 
 
 	</div>
-
+	
 </th:block>
+
+<script>
+
+	function statusCheck(obj){
+		var selval = $(obj).val();
+		console.log(selval);
+		$.ajax({
+			
+			url: "/listFilter",
+            type: "post",
+            data: {
+            	 selval: selval
+            },
+            success: function(data) {
+                console.log(data);
+            }, error: function(err){
+            	console.log("에러");
+            }
+		})
+		
+	}
+	
+</script>
 
 <link rel="stylesheet" href="../css/TeamList.css">

@@ -1,6 +1,7 @@
 package com.weasy.admin.command;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class TeamVO { //팀 VO
 	
 	private int teamNo;
-	private Timestamp teamRegdate;
-	private Timestamp endDate;
+	private LocalDateTime teamRegdate;
+	private LocalDateTime endDate;
 	private String teamName;
 	private String teamGoal;
 	private String userEmail;
