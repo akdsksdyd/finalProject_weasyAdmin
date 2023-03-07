@@ -3,7 +3,7 @@
 .main-wrapper{
 	margin : 100px 120px 100px 120px; 
 }
-.user_registration {
+.userList {
 	font-size : 38px;
 	font-weight: 550;
 }
@@ -33,12 +33,14 @@
 	float: right;
 }
 
-.user_management{
+
+.userList_table{
 	width:100%; 
 	border-left:1px solid #ededed;  
 	border-top:1px solid #4588fd;
 }
-.user_management tr th{
+
+.userList_table tr th{
 	text-align:center; 
 	background-color: #edf0f5; 
 	text-align: center; 
@@ -47,10 +49,9 @@
 	height: 50px; 
 	line-height: 45px; 
 	min-width:15%; 
-	width:15%;
-}
+	width:15%;}
 
-.user_management tr td{
+.userList_table tr td{
 	text-align:center; 
 	border-bottom: 1px solid #ededed; 
 	text-align: center; 

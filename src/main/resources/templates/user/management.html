@@ -10,12 +10,13 @@
 		<br><br><br><br><br>
 
 		<div>
-			<span class="reporting_date"> 신청일 : </span> 
-			<input type="text" readonly placeholder="날짜선택"> 
-			&nbsp;
 			<span class="name"> 이름 : </span> 
 			<input class="search_name" type="text" placeholder="이름검색">
+			&nbsp;
 
+			<span class="email"> 이메일 : </span> 
+			<input class="search_email" type="text" placeholder="이메일검색">
+			
 			<button class="search_btn" type="submit">검색</button>
 		</div>
 
@@ -35,32 +36,65 @@
 				<th>NO.</th>
 				<th>Name</th>
 				<th>Email</th>
-				<th>Dept.</th>
-				<th>Id</th>
-				<th>RegDate</th>
+				<th>PhoneNum</th>
+				<th>Birth</th>
+				<th>Gender</th>
 				<th>Check</th>
 			</tr>
 			
+			<tr th:each="vo, status : ${list}">
+				<td>[[${status.count}]]</td>
+				<td>[[${vo.userName}]]</td>
+				<td>[[${vo.userEmail}]]</td>
+				<td>[[${vo.phoneNum}]]</td>
+				<td>[[${vo.birth}]]</td>
+				<td>[[${vo.gender}]]</td>
+				<td>
+					<button class="management_modal_btn">[[${vo.permission}]]</button>
+				</td>
+			</tr>
 		</table>
-
+		
 	</div>
 
 </th:block>
 
 <!-- 모달창 -->
-<div class="modal">
-	<div class="modal_body">Modal</div>
-</div>
-<button class="modal_btn">Modal</button>
+<div class="management_modal">
 
-<script src="/js/management_modal.js"></script>
+	<div class="management_modal_header">
+		<button class="management_modal_btn_close">X</button>
+	</div>
+	
+	<div class="management_modal_body">
+		<div class="management_request">회원가입 승인요청</div>
+		<br><br>
+		<div class="management_question">신지수님 회원가입을 승인하시겠습니까?</div>
+		<br>
+			<button class="management_modal_btn_approve">승인</button>
+			<button class="management_modal_btn_refuse">거절</button>
+	</div>
+</div>
+
 <script>
-      const modal = document.querySelector('.modal');
-      const btnOpenPopup = document.querySelector('.modal_btn');
+      const modal = document.querySelector('.management_modal');
+      
+      /* 모달창 열기 */
+      const btnOpenPopup = document.querySelector('.management_modal_btn');
 
       btnOpenPopup.addEventListener('click', () => {
         modal.style.display = 'block';
       });
+      
+      /* 모달창 닫기 */
+      const closeBtn = modal.querySelector('.management_modal_btn_close');
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+      
+      
+      
+      
 </script>
 
 <link th:href="@{/css/management.css}" rel="stylesheet" />

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+
+		<div class="main-wrapper">
+
+		<div class="userList">회원 목록</div>
+		
+		<br><br><br><br><br>
+
+		<div>
+			&nbsp;
+			<span class="name"> 이름 : </span> 
+			<input class="search_name" type="text" placeholder="이름검색">
+			&nbsp;
+			<span class="email"> 이메일 : </span> 
+			<input class="search_email" type="text" placeholder="이메일검색">
+
+			<button class="search_btn" type="submit">검색</button>
+		</div>
+
+		<br><br>
+
+		<select class="data_amount">
+			<option value="10">10개 보기</option>
+			<option value="20">20개 보기</option>
+			<option value="40">50개 보기</option>
+			<option value="80">100개 보기</option>
+		</select>
+		
+		<br><br>
+
+		<table class="userList_table">
+			<tr>
+				<th>NO.</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>PhoneNum</th>
+				<th>Birth</th>
+				<th>Gender</th>
+				<th>NickName</th>
+			</tr>
+			
+			<tr>
+				<td>1.</td>
+				<td>신지수</td>
+				<td>kerri.shin@gmail.com</td>
+				<td>010-8629-1919</td>
+				<td>1998-01-23</td>
+				<td>F</td>
+				<td>kerriii</td>
+			</tr>
+		</table>
+		
+	</div>
+
+</th:block>
+
+<link th:href="@{/css/userList.css}" rel="stylesheet" />
