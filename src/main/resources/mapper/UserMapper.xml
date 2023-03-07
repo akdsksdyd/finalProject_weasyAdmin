@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mappper namespace="com.weasy.admin.sevice.UserMapper">
+<mapper namespace="com.weasy.admin.sevice.UserMapper">
 
 	<select id="getList" resultType="UserVO">
 		select * from users;
 	</select>
-</mappper>
+</mapper>
