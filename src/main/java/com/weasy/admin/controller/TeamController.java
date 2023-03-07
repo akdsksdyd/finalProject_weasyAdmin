@@ -24,10 +24,13 @@ public class TeamController {
 	@GetMapping("/teamList")
 	public String teamList(Model model,Criteria cri) {
 		
-		ArrayList<TeamVO>list = teamService.getList(model, cri);
+		ArrayList<TeamVO>list = teamService.getList(cri);
 		model.addAttribute("list",list);
 		
 		int total = teamService.getTotal(cri);
+		
+		System.out.println("토탈" + total);
+		
 		PageVO pageVO = new PageVO(cri, total);
 		
 		System.out.println(pageVO.toString());

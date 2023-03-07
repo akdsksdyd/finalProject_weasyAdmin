@@ -20,11 +20,12 @@ public class PageVO {
 	private int realEnd; 
 	
 	private Criteria cri;
-	private ArrayList<Integer> pageList; //
+	private ArrayList<Integer> pageList;
 	
 	public PageVO(Criteria cri, int total) {
 		this.page = cri.getPage();
 		this.amount = cri.getAmount();
+		
 		this.total = total;
 		this.cri = cri;
 		
