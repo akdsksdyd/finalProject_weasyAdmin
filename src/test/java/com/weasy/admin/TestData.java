@@ -19,17 +19,17 @@ public class TestData {
 
 	@Test
 	public void test01() {
+		
 
-//		for(int i=11; i<=103; i++) {
-//				for(int k=1; k<=3; k++) {
-//					TaskDetailVO vo2 = TaskDetailVO.builder()
-//							.boardNo(i)
-//							.taskDetail("test")
-//							.status((int)(Math.random()*2)+1)
-//							.build();
-//
-//					boardMapper.taskDetailInsert(vo2);
-//				}
+//		for(int i=1; i<=103; i++) {
+//			
+//			TaskVO vo = TaskVO.builder()
+//							  .taskNo(i)
+//							  .title("업무"+i)
+//							  .build();
+//			
+//			boardMapper.updateStatus(vo);
+//			
 //		}
 		
 		//		TaskVO vo1 = TaskVO.builder()
@@ -41,16 +41,17 @@ public class TestData {
 		//
 		//boardMapper.taskInsert(vo1);
 
-		for(int i=1; i<=103; i++) {
-			
-			TaskVO vo = TaskVO.builder()
-							  .taskNo(i)
-							  .status(i)
-							  .build();
-			
-			
-			
-		}
+//		for(int i=1; i<=103; i++) {
+//			
+//			TaskVO vo = TaskVO.builder()
+//							  .taskNo(i)
+//							  .status((int)(Math.random()*3)+1)
+//							  .build();
+//			
+//			boardMapper.updateStatus(vo);
+//			
+//		}
+		
 		
 	}
 

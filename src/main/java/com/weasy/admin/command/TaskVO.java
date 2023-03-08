@@ -1,6 +1,7 @@
 package com.weasy.admin.command;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class TaskVO { //업무 VO
 	private Timestamp targetDate;
 	private Timestamp realEndDate;
 	private int status;
+	private List<TaskDetailVO> progressList;
 
 }
 //taskNo  		int PRIMARY KEY auto_increment,
