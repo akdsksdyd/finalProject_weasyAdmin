@@ -21,7 +21,7 @@ public class TeamVO { //팀 VO
 	private String teamGoal;
 	private String userEmail;
 	private String teamStatus;
-
+	
 }
 //teamNo  	int PRIMARY KEY auto_increment,
 //teamRegdate   timestamp DEFAULT NOW(),

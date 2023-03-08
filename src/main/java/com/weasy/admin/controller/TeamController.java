@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.weasy.admin.command.TeamVO;
 import com.weasy.admin.service.TeamService;
@@ -23,9 +24,14 @@ public class TeamController {
 	
 	@GetMapping("/teamList")
 	public String teamList(Model model,Criteria cri) {
-		
+
 		ArrayList<TeamVO>list = teamService.getList(cri);
+		
+		
 		model.addAttribute("list",list);
+		
+		System.out.println("카테" + cri.getCategory());
+		System.out.println("검색명" + cri.getKeyword());
 		
 		int total = teamService.getTotal(cri);
 		

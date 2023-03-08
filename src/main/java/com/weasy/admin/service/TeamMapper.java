@@ -13,6 +13,5 @@ import com.weasy.admin.util.Criteria;
 public interface TeamMapper {
 	
 	public ArrayList<TeamVO> getList(@Param("cri")Criteria cri);
-	public int getTotal(Criteria cri);
-	public ArrayList<TeamVO> listFilter(String selval);
+	public int getTotal(@Param("cri")Criteria cri);
 }

@@ -8,4 +8,7 @@
 	<select id="getList" resultType="UserVO">
 		select * from users;
 	</select>
+
 </mapper>
+
+
