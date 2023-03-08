@@ -42,13 +42,13 @@
 				<th>NickName</th>
 			</tr>
 			
-			<tr>
-				<td>1.</td>
-				<td>신지수</td>
-				<td>kerri.shin@gmail.com</td>
-				<td>010-8629-1919</td>
-				<td>1998-01-23</td>
-				<td>F</td>
+			<tr th:each="vo, status : ${list}">
+				<td>[[${status.count}]]</td>
+				<td>[[${vo.userName}]]</td>
+				<td>[[${vo.userEmail}]]</td>
+				<td>[[${vo.phoneNum}]]</td>
+				<td>[[${vo.birth}]]</td>
+				<td>[[${vo.gender}]]</td>
 				<td>kerriii</td>
 			</tr>
 		</table>

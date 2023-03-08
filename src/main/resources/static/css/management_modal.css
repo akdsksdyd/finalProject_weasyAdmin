@@ -16,6 +16,26 @@
   display: block;
 }
 
+.management_modal_header{
+	position: absolute;
+	top: 390px;
+  	left: 1265px;
+  	
+  
+}
+
+.management_modal_btn_close{
+	position: absolute;
+	
+	width: 20px;
+	height: 20px;
+	
+	background-color:transparent;
+	
+	font-weight: bolder; 
+	font-size: large;
+}
+
 .management_modal_body {
   position: absolute;
   top: 50%;
@@ -35,12 +55,8 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
-.management_modal_header{
-	display: flex;
-    width: 100%;
-    height: 40%;
-    justify-content: space-between;
-}
+
+
 
 .management_request {
 	font-weight: bolder;
@@ -55,7 +71,7 @@
 
 .management_modal_btn_approve {
 	background-color: #6aafe6;
-	color: #d4dfe6;
+	color: #fff;
 	border-radius: 12px;
 	height:30px; 
 	width:70px;
