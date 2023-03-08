@@ -14,9 +14,51 @@
 		insert into TASKDETAIL(boardNo, taskDetail, status) 
 		values(#{boardNo}, #{taskDetail}, #{status})
 	</insert>	
-
+	
 	<update id="updateStatus">
-		
+		update TASK set title = #{title}
+		where taskNo = #{taskNo}
 	</update>
+	
+	<!-- taskProgress 화면 게시판 리스트용 -->
+	<select id="getTaskProgressList" resultType="TaskProgressVO">
+		select teamName,
+			   teamNo,
+			   (select count(*) from task a where a.teamNo = b.teamNo and a.status = 1) progress,
+		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 2) unprogress,
+		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 3) complete
+		from team b
+	</select>
+	
+	<!-- taskProgress 디테일 화면 진행중인 것만 -->
+	<select id="getTaskProgressDetail_ing" resultType="TaskDetailVO" >
+		select * from TASKDETAIL a
+		inner join (select *  from TASK a where a.teamNo = (select teamNo from team where teamName = #{teamName})) b
+		on a.boardNo = b.taskNo
+	</select>
+	
+	<!-- taskProgress 디테일 화면 완료, 미진행 목록 -->
+	<select id="getTaskProgressDetail_end" resultType="TaskDetailVO" >
+		select *  from task a 
+		where a.teamNo = (select teamNo from team where teamName = #{teamName}) 
+		and (status = 2 or status = 3)
+	</select>
+	
+	<select id="getTaskProgressRate" resultMap="rateMap">
+		select * from taskdetail a
+		inner join (select *  from task a where a.teamNo = (select teamNo from team where teamName = #{teamName} and a.status = 1 )) b
+		on a.boardNo = b.taskNo
+	</select>
+	
+	<resultMap type="TaskVO" id="rateMap">
+		<result column="taskNo" property="taskNo" />
+		<result column="title" property="title" />
+		<collection property="progressList" resultMap="progressListElement" />
+	</resultMap>
+	
+	<resultMap type="TaskDetailVO" id="progressListElement">
+		<result column="taskDetail" property="taskDetail"/>
+		<result column="status" property="status"/>
+	</resultMap>
 
 </mapper>
