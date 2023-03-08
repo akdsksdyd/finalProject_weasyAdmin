@@ -26,12 +26,6 @@ public class TeamServiceImpl implements TeamService{
 		return teamMapper.getTotal(cri);
 	}
 
-	@Override
-	public ArrayList<TeamVO> listFilter(String selval) {
-		System.out.println(selval);
-		return teamMapper.listFilter(selval);
-	}
-	
 	
 
 	

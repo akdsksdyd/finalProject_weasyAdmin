@@ -7,10 +7,14 @@ public class Criteria {
 	
 	private int page; 
 	private int amount; 
+	private String teamStatus;
+	private String category;
+	private String keyword;
 	
 	public Criteria() {
 		this.page = 1;
 		this.amount = 10;
+		this.teamStatus = "";
 	}
 
 	public Criteria(int page, int amount) {

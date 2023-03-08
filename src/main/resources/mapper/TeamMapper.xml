@@ -6,30 +6,41 @@
  <mapper namespace="com.weasy.admin.service.TeamMapper">
  
  	<select id="getList" resultType="TeamVO">
- 		select * from team limit #{cri.pageStart}, #{cri.amount}
+ 		select * from team 
+ 		<if test = " cri.category == 'teamName'">
+ 			where teamName like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test = " cri.category == 'teamGoal'">
+ 			where teamGoal like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test = " cri.category == 'userEmail'">
+ 			where userEmail like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test = "cri.category != 'defaultsearch' and cri.teamStatus != ''">
+ 			and teamStatus = #{cri.teamStatus}
+ 		</if>
+ 		<if test = "cri.category == 'defaultsearch' and cri.teamStatus != ''">
+ 			where teamStatus = #{cri.teamStatus}
+ 		</if>
+ 		 limit #{cri.pageStart}, #{cri.amount}
  	</select>
  	
  	<select id = "getTotal" resultType="int">
  		select count(*) as total from team
-<!--  		<if test ="cri.startDate != null and cri.startDate !='' ">
-		 and date_format(prod_enddate, '%Y-%m-%d') >= date_format(#{cri.startDate},'%Y-%m-%d')]]>
-		</if>
-		<if test ="cri.endDate != null and cri.endDate !='' ">
-		<![CDATA[ and date_format(prod_enddate, '%Y-%m-%d') <= date_format(#{cri.endDate},'%Y-%m-%d') ]]>
-		</if>
-		<if test ="cri.searchName != null and cri.searchName !='' ">
-		and prod_name like concat('%', #{cri.searchName},'%')
-		</if>
-		<if test ="cri.searchContent != null and cri.searchContent !='' ">
-		and prod_content like concat('%', #{cri.searchContent},'%')
-		</if>
- --> 	</select>
+ 		<if test = "cri.teamStatus != '' ">
+ 			where teamStatus = #{cri.teamStatus}
+ 		</if>
+ 		<if test = " cri.category == 'teamName'">
+ 			where teamName like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test = " cri.category == 'teamGoal'">
+ 			where teamGoal like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test = " cri.category == 'userEmail'">
+ 			where userEmail like concat('%', #{cri.keyword},'%')
+ 		</if>
+</select>
  
- 	<select id="listFilter" resultType="TeamVo">
- 			select * from team
- 			<if test = "selval !=''">
- 				<![CDATA[where teamstatus = #{selval}]]>
- 			</if>
- 	</select>
+ 
  
  </mapper>
