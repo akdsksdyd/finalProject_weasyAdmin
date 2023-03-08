@@ -12,7 +12,10 @@ import com.weasy.admin.util.Criteria;
 public interface UserMapper {
 	
 	//조회: 특정회원정보만 조회
-	public ArrayList<UserVO> getList(@Param("userId") String userId, 
-									 @Param("cri") Criteria cri); 
+	public ArrayList<UserVO>getList(@Param("userId") String userId, 
+									 @Param("cri") Criteria cri);
+
+	public int getTotal(@Param("userId")String userId, 
+						@Param("cri")Criteria cri); 
 
 }

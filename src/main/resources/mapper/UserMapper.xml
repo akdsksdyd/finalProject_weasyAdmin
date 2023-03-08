@@ -3,12 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.weasy.admin.sevice.UserMapper">
+
+<mapper namespace="com.weasy.admin.service.UserMapper">
+
 
 	<select id="getList" resultType="UserVO">
 		select * from users;
 	</select>
 
+	
+	<select id="getTotal" resultType="int">
+		select count(*) as total from users
+  		where userName = #{userId}
+	</select>
+	
 </mapper>
 
 

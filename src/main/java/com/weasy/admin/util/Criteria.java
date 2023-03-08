@@ -33,5 +33,7 @@ public class Criteria {
 	private String searchPrice; // 정렬방식
 	private String startDate; // 판매 시작일
 	private String endDate; // 판매 종료일
+	private String searchEmail;
+	
 
 }
