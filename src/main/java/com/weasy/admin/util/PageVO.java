@@ -17,7 +17,8 @@ public class PageVO {
 	private int page; 
 	private int amount; 
 	private int total; 
-	private int realEnd; 
+	private int realEnd;
+	private String teamStatus;
 	
 	private Criteria cri;
 	private ArrayList<Integer> pageList;
