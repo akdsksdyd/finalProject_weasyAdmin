@@ -26,87 +26,14 @@
 				</thead>
 				<tbody>
 
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
+					<tr class="progressRow" th:each="vo, status : ${list}">
+						<td>[[${status.count}]]</td>
+						<td>[[${vo.teamName}]]</td>
+						<td>[[${vo.progress}]]</td>
+						<td>[[${vo.unprogress}]]</td>
+						<td>[[${vo.complete}]]</td>
+						<td>[[${vo.complete == 0 ? 0 : (((vo.complete*100)/((vo.progress+vo.unprogress+vo.complete))*100)/100)}]]%</td>
 					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-					<tr class="progressRow">
-						<td>1</td>
-						<td>프로젝트 A</td>
-						<td>10</td>
-						<td>5</td>
-						<td>5</td>
-						<td>25%</td>
-					</tr>
-
 
 				</tbody>
 			</table>
@@ -119,6 +46,8 @@
 				<div class="progressModalBody">
 					<div class="progressModalTitle"> ◉ 태스크 진척률 상세 현황</div>
 					
+					
+					<!-- modal taskDetail 화면 -->
 					<div class="progressModalData">
 					
 						<div class="modalChart">
@@ -126,22 +55,17 @@
 						</div>
 						
 						<div class="modalText">
+						
 							<div class="completeList">
 								<div style="font-size: 16px; font-weight: 600;">■ 완료된 업무</div>
 								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
 							</div>
+							
 							<div class="UnprogressList">
 								<div style="font-size: 16px; font-weight: 600;">■ 미진행 업무</div>
 								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
 							</div>
+							
 						</div>
 					</div>
 					
@@ -160,7 +84,22 @@
 <script th:inline="javascript">
 	
 	/* 모달 켜기 */
-	$('.progressRow').click(() => {
+	$('.progressRow').click((e) => {
+		
+		var teamName = e.target.parentElement.children[1].innerHTML;
+		
+		$.ajax({
+			url: "../taskProgressDetail/"+teamName,
+			type: "get",
+			success: (res) => {
+				console.log(res);
+			},
+			error: (err) => {
+				console.log("에러");
+			}
+			
+		}) 
+		
 		$('.progressModal').css({'display':'block'});
 	});
 	

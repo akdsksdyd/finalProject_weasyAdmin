@@ -11,6 +11,5 @@ public interface TeamService {
 	
 	public ArrayList<TeamVO> getList(Criteria cri);
 	public int getTotal(Criteria cri);
-	public ArrayList<TeamVO> listFilter(String selval);
 
 }
