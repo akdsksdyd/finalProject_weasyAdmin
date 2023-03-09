@@ -30,23 +30,16 @@
 		from team b
 	</select>
 	
-	<!-- taskProgress 디테일 화면 진행중인 것만 -->
-	<select id="getTaskProgressDetail_ing" resultType="TaskDetailVO" >
-		select * from TASKDETAIL a
-		inner join (select *  from TASK a where a.teamNo = (select teamNo from team where teamName = #{teamName})) b
-		on a.boardNo = b.taskNo
-	</select>
-	
-	<!-- taskProgress 디테일 화면 완료, 미진행 목록 -->
-	<select id="getTaskProgressDetail_end" resultType="TaskDetailVO" >
-		select *  from task a 
+	<!-- taskProgress 디테일 화면에 미진행, 완료만 -->
+	<select id="getTaskProgressDetail" resultType="TaskVO" >
+		select title, status  from task a 
 		where a.teamNo = (select teamNo from team where teamName = #{teamName}) 
-		and (status = 2 or status = 3)
+					     and (status = 2 or status = 3)
 	</select>
 	
 	<select id="getTaskProgressRate" resultMap="rateMap">
-		select * from taskdetail a
-		inner join (select *  from task a where a.teamNo = (select teamNo from team where teamName = #{teamName} and a.status = 1 )) b
+		select * from TASKDETAIL a
+		inner join (select *  from TASK a where a.teamNo = (select teamNo from TEAM where teamName = #{teamName} and a.status = 1 )) b
 		on a.boardNo = b.taskNo
 	</select>
 	
@@ -57,6 +50,7 @@
 	</resultMap>
 	
 	<resultMap type="TaskDetailVO" id="progressListElement">
+		<result column="taskDetailNo" property="taskDetailNo"/>
 		<result column="taskDetail" property="taskDetail"/>
 		<result column="status" property="status"/>
 	</resultMap>
