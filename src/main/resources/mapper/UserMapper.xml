@@ -8,14 +8,47 @@
 
 
 	<select id="getList" resultType="UserVO">
-		select * from users;
+		select * from users
+  		
+  		<if test="cri.searchName != null and cri.searchName != '' ">
+				and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+				and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  	
+	</select>
+	
+	<select id="memberList" resultType="UserVO">
+	select a.userEmail
+	,a.userName
+    ,a.phoneNum
+    ,a.birth
+    ,a.gender
+    ,a.nickname
+    ,b.loginDate
+	from users as a
+	inner join loginlog as b
+	on a.userEmail=b.userEmail
+  		<if test="cri.searchName != null and cri.searchName != '' ">
+				and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+				and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  	
 	</select>
 
 	
 	<select id="getTotal" resultType="int">
-		select count(*) as total from users
-  		where userName = #{userId}
-	</select>
+  		select count(*) as total from users
+  		
+		<if test="cri.searchName != null and cri.searchName != '' ">
+		and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+		and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  	  
+  	</select>
+  	
 	
 </mapper>
 

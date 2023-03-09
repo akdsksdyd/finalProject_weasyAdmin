@@ -1,5 +1,7 @@
 package com.weasy.admin.command;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +21,7 @@ public class UserVO { //유저 VO
 	private int birth;
 	private String permission;
 	private String nickname;
+	private Timestamp loginDate;
 
 }
 //userEmail   VARCHAR(30) primary key NOT NULL,
