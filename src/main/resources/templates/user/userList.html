@@ -40,6 +40,7 @@
 				<th>Birth</th>
 				<th>Gender</th>
 				<th>NickName</th>
+				<th>LoginLog</th>
 			</tr>
 			
 			<tr th:each="vo, status : ${list}">
@@ -49,7 +50,8 @@
 				<td>[[${vo.phoneNum}]]</td>
 				<td>[[${vo.birth}]]</td>
 				<td>[[${vo.gender}]]</td>
-				<td>kerriii</td>
+				<td>[[${vo.nickname}]]</td>
+				 <td>[[${vo.loginDate}]]</td> 
 			</tr>
 		</table>
 		
