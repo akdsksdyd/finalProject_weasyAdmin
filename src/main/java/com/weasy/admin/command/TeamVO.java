@@ -21,6 +21,7 @@ public class TeamVO { //팀 VO
 	private String teamGoal;
 	private String userEmail;
 	private String teamStatus;
+	private int teamCount;
 	
 }
 //teamNo  	int PRIMARY KEY auto_increment,

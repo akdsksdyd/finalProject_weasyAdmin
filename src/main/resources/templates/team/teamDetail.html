@@ -1,14 +1,97 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"></html>
 
 <th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
+	
+		<table>
+
+				<thead>
+					<tr>
+						<th>이메일</th>	
+						<th>이름</th>
+						<th>생년월일</th>
+						<th>삭제</th>
+					</tr>
+				</thead>
+				<tbody class="tablebodys">
+					<tr class="trbodys">
+						<td>hong@mail.com</td>
+						<td>홍길동</td>
+						<td>010-4441-5555</td>
+					</tr>
+					<tr class="trbodys">
+						<td>hong@mail.com</td>
+						<td>홍길동2</td>
+						<td>010-4442-5555</td>
+					</tr>
+					<tr class="trbodys">
+						<td>hong@mail.com</td>
+						<td>홍길동3</td>
+						<td>010-4443-5555</td>
+						
+					</tr>
+					<tr class="trbodys">
+						<td>hong@mail.com</td>
+						<td>홍길동4</td>
+						<td>010-4445-5555</td>
+						<td><button type ="button" class ="btn_delete">삭제</button></td>
+					</tr>
+				</tbody>
+
+			</table>
 		
 		
 	</div>
 	
 </th:block>
+
+<!-- <script>
+
+	function statusCheck(obj){
+		var selval = $(obj).val();
+		console.log(selval);
+		$.ajax({
+			
+			url: "/listFilter",
+            type: "post",
+            data: {
+            	 selval: selval
+            },
+            success: function(result) {
+                console.log(result);
+             
+            	var str = "";
+             for(var i = 0; i<result.length; i++){
+            	str += "<tr class = 'trbodys'>";
+				str +=	 '<td>' + result[i].teamNo + '</td>';
+				str +=	 '<td>' + result[i].teamName + '</td>';
+				str +=	 '<td>' + result[i].teamGoal + '</td>';
+				str +=	 '<td>' + + '</td>';
+				str +=	 '<td>' + result[i].teamRegdate + '</td>';
+				str +=	 '<td>' + result[i].userEmail + '</td>';
+				str +=	 '<td>' + (result[i].teamStatus == 'Y' ? '진행중' : '종료된 팀')  + '</td>';
+				str += "</tr>";
+             }
+            	 $(".trbodys").remove();
+				$(".tablebodys").append(str);
+                
+            }, error: function(err){
+            	console.log("에러");
+            }
+		})
+		
+	}
+	
+</script> -->
+
+<script>
+	
+	
+</script>
+
+<link rel="stylesheet" href="../css/teamDetail.css">
 
 
 

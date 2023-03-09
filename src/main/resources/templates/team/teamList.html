@@ -11,11 +11,11 @@
 
 			<div class="search-container">
 					<div class="search-category">
-						<select id="category">
-							<option value = "defaultsearch">전체검색</option>
-							<option value="teamName">팀명</option>
-							<option value="teamGoal">팀목표</option>
-							<option value="userEmail">팀생성자</option>
+						<select name="category">
+							<option value = "defaultsearch" th:selected=" ${ pageVO.cri.category == 'defaultsearch'}">전체검색</option>
+							<option value="teamName" th:selected=" ${ pageVO.cri.category == 'teamName'}">팀명</option>
+							<option value="teamGoal" th:selected=" ${ pageVO.cri.category == 'teamGoal'}">팀목표</option>
+							<option value="userEmail" th:selected=" ${ pageVO.cri.category == 'userEmail'}">팀생성자</option>
 						</select>
 					</div>
 				<div class="search-box">
@@ -49,9 +49,9 @@
 				<tbody class="tablebodys">
 					<tr class="trbodys" th:each=" vo, status : ${list}">
 						<td>[[${vo.teamNo}]]</td>
-						<td>[[${vo.teamName}]]</td>
+						<td style="color : blue; cursor: pointer;" th:onclick="|location.href='@{teamDetail(teamName=${vo.teamName})}'|">[[${vo.teamName}]] </td>
 						<td>[[${vo.teamGoal}]]</td>
-						<td></td>
+						<td>[[${vo.teamCount}]]</td>
 						<td>[[${ #temporals.format(vo.teamRegdate,'yyyy-MM-dd')}]]</td>
 						<td>[[${vo.userEmail}]]</td>
 						<td>[[${vo.teamStatus== 'Y' ? '진행중' : '종료된 팀' }]]</td>
@@ -62,10 +62,10 @@
 
 			<div class="page">
 				<ul>
-					<li><a><i class="fa fa-angle-double-left"
+					<!-- <li><a><i class="fa fa-angle-double-left"
 							aria-hidden="true"></i></a></li>
 					<li style="margin-right: 5px;" th:if=${pageVO.prev}><a><i
-							class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+							class="fa fa-angle-left" aria-hidden="true"></i></a></li> -->
 
 					<th:block th:each=" page : ${pageVO.pageList}">
 						<li th:class="${page == pageVO.page ? 'on' : ''}"><a
@@ -75,12 +75,12 @@
 							keyword = ${pageVO.cri.keyword})}
 							">[[${page}]]</a></li>
 					</th:block>
-
+<!-- 
 					<li style="margin-left: 5px;" th:if=${pageVO.next}><a><i
 							class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a
 						th:href="@{teamList(page=${pageVO.realEnd}, amount=${pageVO.amount})}"><i
-							class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+							class="fa fa-angle-double-right" aria-hidden="true"></i></a></li> -->
 				</ul>
 			</div>
 
@@ -98,45 +98,14 @@
 		var form = document.querySelector("form[name=actionForm]");
 		form.submit();
 	}
-</script>
-
-<!-- <script>
-
-	function statusCheck(obj){
-		var selval = $(obj).val();
-		console.log(selval);
-		$.ajax({
-			
-			url: "/listFilter",
-            type: "post",
-            data: {
-            	 selval: selval
-            },
-            success: function(result) {
-                console.log(result);
-             
-            	var str = "";
-             for(var i = 0; i<result.length; i++){
-            	str += "<tr class = 'trbodys'>";
-				str +=	 '<td>' + result[i].teamNo + '</td>';
-				str +=	 '<td>' + result[i].teamName + '</td>';
-				str +=	 '<td>' + result[i].teamGoal + '</td>';
-				str +=	 '<td>' + + '</td>';
-				str +=	 '<td>' + result[i].teamRegdate + '</td>';
-				str +=	 '<td>' + result[i].userEmail + '</td>';
-				str +=	 '<td>' + (result[i].teamStatus == 'Y' ? '진행중' : '종료된 팀')  + '</td>';
-				str += "</tr>";
-             }
-            	 $(".trbodys").remove();
-				$(".tablebodys").append(str);
-                
-            }, error: function(err){
-            	console.log("에러");
-            }
-		})
-		
+	
+	function detail(e){
+		console.log(e.target.value);
+		location.href = "teamDeatil?page=1&amount="+e.target.value;
 	}
 	
-</script> -->
+</script>
+
+
 
 <link rel="stylesheet" href="../css/TeamList.css">
