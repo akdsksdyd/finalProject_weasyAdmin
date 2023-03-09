@@ -20,8 +20,7 @@ public interface BoardMapper {
 	// taskProress 테이블 데이터
 	public ArrayList<TaskProgressVO> getTaskProgressList();
 	// taskProressDetail 화면 데이터
-	public ArrayList<TaskDetailVO> getTaskProgressDetail_ing(String teamName);
-	public ArrayList<TaskDetailVO> getTaskProgressDetail_end(String teamName);
+	public ArrayList<TaskVO> getTaskProgressDetail(String teamName);
 	
-	public TaskVO getTaskProgressRate(String teamName);
+	public ArrayList<TaskVO> getTaskProgressRate(String teamName);
 }

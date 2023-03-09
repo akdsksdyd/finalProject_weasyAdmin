@@ -51,7 +51,7 @@
 					<div class="progressModalData">
 					
 						<div class="modalChart">
-							<canvas id="progressChart" style="height: 50vh; width: 33vw"></canvas>
+							<!-- ajax로 차트 추가 -->
 						</div>
 						
 						<div class="modalText">
@@ -83,7 +83,7 @@
 
 <script th:inline="javascript">
 	
-	/* 모달 켜기 */
+	/* 디테일 모달 켜기 */
 	$('.progressRow').click((e) => {
 		
 		var teamName = e.target.parentElement.children[1].innerHTML;
@@ -92,7 +92,67 @@
 			url: "../taskProgressDetail/"+teamName,
 			type: "get",
 			success: (res) => {
-				console.log(res);
+				
+				var rateArr = [];
+				var titleArr = [];
+				var bgColor = [];
+				var bdColor = [];
+				
+				res.rateList.forEach(task => {
+					
+					// bar별 수치 적용할 배열 초기화
+					var len = task.progressList.length;
+					var done = 0;
+					task.progressList.forEach(todo => {
+						if(todo.status == 2) done++; 
+					})
+					rateArr.push(Math.floor((done/len)*100));
+					
+					// labels 배열 초기화
+					titleArr.push(task.title);
+					
+					// bar 색상 배열 초기화
+					bgColor.push('rgba(54, 162, 235, 0.2)');
+					bdColor.push('rgba(54, 162, 235, 1)');
+					
+				});
+				
+				$('.modalChart').html('<canvas id="progressChart" style="height: 50vh; width: 33vw"></canvas>');
+				
+				/* 진척률 차트 */
+				const ctx = document.getElementById('progressChart');
+				const progressChart = new Chart(ctx, {
+				    type: 'bar',
+				    data: {
+				        labels: titleArr,
+				        datasets: [{
+				            data: rateArr,
+				            backgroundColor: bgColor,
+				            borderColor: bdColor,
+				            borderWidth: 1
+				        }]
+				    },
+				    options: {
+				    	responsive: false,
+				    	indexAxis: 'y',
+				    	scales: {
+				            x: {
+				                suggestedMin: 0,
+				                suggestedMax: 100,
+				                min: 10,
+				            },
+				            y: {
+				            	max: 5,
+				            }
+				        },
+				        plugins:{
+				            legend: {
+				                display: false
+				            },
+				        }
+				    }
+			 	});
+				
 			},
 			error: (err) => {
 				console.log("에러");
@@ -103,60 +163,12 @@
 		$('.progressModal').css({'display':'block'});
 	});
 	
-	/* 모달 끄기 */
+	/* 디테일 모달 끄기 */
 	$('.progressModal').click(() => {
 		$('.progressModal').css({'display':'none'});
 	});
 	
-	/* 진척률 차트 */
-	const ctx = document.getElementById('progressChart');
-	const progressChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['업무1', '업무2', '업무3', '업무4', '업무5', '업무6'],
-        datasets: [{
-            data: [
-            		22, 
-            		11, 
-            		30, 
-            		50, 
-            		20, 
-            		10
-            	  ],
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(25, 19, 164, 0.2)',
-                'rgba(155, 109, 64, 0.2)',
-                'rgba(205, 19, 64, 0.2)',
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(25, 19, 164, 1)',
-                'rgba(155, 109, 64, 1)',
-                'rgba(205, 19, 64, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-    	responsive: false,
-    	indexAxis: 'y',
-    	scales: {
-            x: {
-                suggestedMin: 0,
-                suggestedMax: 100
-            }
-        },
-        plugins:{
-            legend: {
-                display: false
-            },
-        }
-    }
-});
 
 </script>
+
+

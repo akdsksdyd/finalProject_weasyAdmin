@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskProgressVO;
+import com.weasy.admin.command.TaskVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -23,12 +24,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Map<String, ArrayList<TaskDetailVO>> getTaskProgressDetail(String teamName) {
+	public Map<String, ArrayList<TaskVO>> getTaskProgressDetail(String teamName) {
 		
+		Map<String, ArrayList<TaskVO>> map = new HashMap<>();
 		
-		Map<String, ArrayList<TaskDetailVO>> map = new HashMap<>();
-		
-		
+		map.put("rateList", boardMapper.getTaskProgressRate(teamName));
+		map.put("statusList", boardMapper.getTaskProgressDetail(teamName));
 		
 		return map;
 	}
