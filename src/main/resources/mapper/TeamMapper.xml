@@ -5,8 +5,12 @@
   
  <mapper namespace="com.weasy.admin.service.TeamMapper">
  
+ 
+ 
  	<select id="getList" resultType="TeamVO">
- 		select * from team 
+ 		select t.teamNO,t.teamRegdate,t.teamName,t.teamGoal,t.teamGoal,t.userEmail,t.teamStatus, COUNT(a.teamNo) as teamCount
+ 		from team t
+ 		LEFT OUTER JOIN authority a ON t.teamNo = a.teamNo
  		<if test = " cri.category == 'teamName'">
  			where teamName like concat('%', #{cri.keyword},'%')
  		</if>
@@ -22,14 +26,12 @@
  		<if test = "cri.category == 'defaultsearch' and cri.teamStatus != ''">
  			where teamStatus = #{cri.teamStatus}
  		</if>
+ 		 GROUP BY t.teamNO
  		 limit #{cri.pageStart}, #{cri.amount}
  	</select>
  	
  	<select id = "getTotal" resultType="int">
  		select count(*) as total from team
- 		<if test = "cri.teamStatus != '' ">
- 			where teamStatus = #{cri.teamStatus}
- 		</if>
  		<if test = " cri.category == 'teamName'">
  			where teamName like concat('%', #{cri.keyword},'%')
  		</if>
@@ -38,6 +40,12 @@
  		</if>
  		<if test = " cri.category == 'userEmail'">
  			where userEmail like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test = "cri.category != 'defaultsearch' and cri.teamStatus != ''">
+ 			and teamStatus = #{cri.teamStatus}
+ 		</if>
+ 		<if test = "cri.category == 'defaultsearch' and cri.teamStatus != ''">
+ 			where teamStatus = #{cri.teamStatus}
  		</if>
 </select>
  

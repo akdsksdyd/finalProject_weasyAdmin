@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.weasy.admin.command.TeamVO;
+import com.weasy.admin.command.UserVO;
 import com.weasy.admin.util.Criteria;
 
 @Service("TeamService")
@@ -22,9 +23,15 @@ public class TeamServiceImpl implements TeamService{
 
 	@Override
 	public int getTotal(Criteria cri) {
-		// TODO Auto-generated method stub
 		return teamMapper.getTotal(cri);
 	}
+
+	@Override
+	public ArrayList<UserVO> getTeamList(String teamName) {
+		return null;
+	}
+	
+	
 
 	
 

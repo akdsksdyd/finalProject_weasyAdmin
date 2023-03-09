@@ -46,7 +46,10 @@ public class TeamController {
 	}
 	
 	@GetMapping("/teamDetail")
-	public String teamDetail() {
+	public String teamDetail(@RequestParam("teamName")String teamName,Model model) {
+		System.out.println("팀이름값" + teamName);
+		
+		teamService.getTeamList(teamName);
 		
 		return "team/teamDetail";
 	}
