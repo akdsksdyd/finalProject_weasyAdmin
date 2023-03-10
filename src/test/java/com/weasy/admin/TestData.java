@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.weasy.admin.command.AuthorityVO;
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskVO;
 import com.weasy.admin.service.BoardMapper;
@@ -19,7 +20,6 @@ public class TestData {
 
 	@Test
 	public void test01() {
-		
 
 //		for(int i=1; i<=103; i++) {
 //			
@@ -50,6 +50,22 @@ public class TestData {
 //			
 //			boardMapper.updateStatus(vo);
 //			
+//		}
+		
+		
+		
+//		for(int i=1; i<=11; i++) {
+//			
+//			int n = (int)(Math.random()*5)+4;
+//			
+//			for(int j=1; j<=n; j++) {
+//				AuthorityVO vo = AuthorityVO.builder()
+//											.userEmail("user"+j)
+//											.teamNo(i)
+//											.role( j==n ? 1 : 0)
+//											.build();
+//				boardMapper.setAuthority(vo);
+//			}
 //		}
 		
 		

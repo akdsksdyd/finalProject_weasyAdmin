@@ -29,9 +29,9 @@
 					<tr class="progressRow" th:each="vo, status : ${list}">
 						<td>[[${status.count}]]</td>
 						<td>[[${vo.teamName}]]</td>
-						<td>[[${vo.progress}]]</td>
-						<td>[[${vo.unprogress}]]</td>
-						<td>[[${vo.complete}]]</td>
+						<td>[[${vo.progress}]]건</td>
+						<td>[[${vo.unprogress}]]건</td>
+						<td>[[${vo.complete}]]건</td>
 						<td>[[${vo.complete == 0 ? 0 : (((vo.complete*100)/((vo.progress+vo.unprogress+vo.complete))*100)/100)}]]%</td>
 					</tr>
 
@@ -44,26 +44,25 @@
 
 			<div class="progressModal">
 				<div class="progressModalBody">
-					<div class="progressModalTitle"> ◉ 태스크 진척률 상세 현황</div>
+					<div class="progressModalTitle"> ◉ 태스크 상세 현황</div>
 					
 					
 					<!-- modal taskDetail 화면 -->
 					<div class="progressModalData">
 					
 						<div class="modalChart">
+							<div class="modalChartTitle" style="font-size: 16px; font-weight: 600;"> ■ 진행중인 태스크별 진척률</div>
 							<!-- ajax로 차트 추가 -->
 						</div>
 						
 						<div class="modalText">
 						
 							<div class="completeList">
-								<div style="font-size: 16px; font-weight: 600;">■ 완료된 업무</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 완료1</div>
+								<div class="completeListTitle" style="font-size: 16px; font-weight: 600;">■ 완료된 태스크 목록</div>
 							</div>
 							
 							<div class="UnprogressList">
-								<div style="font-size: 16px; font-weight: 600;">■ 미진행 업무</div>
-								<div style="font-size: 14px; padding: 10px 0 0 5px">• 미진행1</div>
+								<div class="UnprogressListTitle" style="font-size: 16px; font-weight: 600;">■ 미진행 태스크 목록</div>
 							</div>
 							
 						</div>
@@ -93,6 +92,7 @@
 			type: "get",
 			success: (res) => {
 				
+				// 진행중 업무 chart
 				var rateArr = [];
 				var titleArr = [];
 				var bgColor = [];
@@ -111,13 +111,16 @@
 					// labels 배열 초기화
 					titleArr.push(task.title);
 					
+					var color1 = Math.floor(Math.random()*250)+1;
+					var color2 = Math.floor(Math.random()*250)+1;
+					var color3 = Math.floor(Math.random()*250)+1;
 					// bar 색상 배열 초기화
-					bgColor.push('rgba(54, 162, 235, 0.2)');
-					bdColor.push('rgba(54, 162, 235, 1)');
+					bgColor.push('rgba(' +color1+ ', ' +color2+ ', ' +color3+ ', 0.2)');
+					bdColor.push('rgba(' +color1+ ', ' +color2+ ', ' +color3+ ', 1)');
 					
 				});
 				
-				$('.modalChart').html('<canvas id="progressChart" style="height: 50vh; width: 33vw"></canvas>');
+				$('.modalChart').append('<canvas id="progressChart" style="height: 50vh; width: 33vw"></canvas>');
 				
 				/* 진척률 차트 */
 				const ctx = document.getElementById('progressChart');
@@ -135,15 +138,12 @@
 				    options: {
 				    	responsive: false,
 				    	indexAxis: 'y',
+				    	barThickness: 25,
 				    	scales: {
 				            x: {
 				                suggestedMin: 0,
 				                suggestedMax: 100,
-				                min: 10,
 				            },
-				            y: {
-				            	max: 5,
-				            }
 				        },
 				        plugins:{
 				            legend: {
@@ -152,6 +152,18 @@
 				        }
 				    }
 			 	});
+				
+				// 미진행, 완료 업무 목록
+				res.statusList.forEach(status => {
+					if(status.status == 2) {
+						$('.completeList').append('<div style="font-size: 14px; padding: 10px 0 0 5px">• '+ status.title +'</div>');
+					}else {
+						$('.UnprogressList').append('<div style="font-size: 14px; padding: 10px 0 0 5px">• '+ status.title +'</div>');
+					}
+				});
+				
+				if($('.completeList').children().size() == 1) $('.completeList').append('<div style="color: #A4A4A4;font-size: 14px; padding: 10px 0 0 5px"> 없음</div>');
+				if($('.UnprogressList').children().size() == 1) $('.UnprogressList').append('<div style="color: #A4A4A4;font-size: 14px; padding: 10px 0 0 5px"> 없음</div>');
 				
 			},
 			error: (err) => {
@@ -165,6 +177,10 @@
 	
 	/* 디테일 모달 끄기 */
 	$('.progressModal').click(() => {
+		
+		$('#progressChart').remove();
+		$('.completeListTitle').nextAll().remove();
+		$('.UnprogressListTitle').nextAll().remove();
 		$('.progressModal').css({'display':'none'});
 	});
 	
