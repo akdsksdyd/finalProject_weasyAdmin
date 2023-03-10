@@ -16,12 +16,13 @@ public class UserVO { //유저 VO
 	private String userEmail;
 	private String userPw;
 	private String userName;
-	private int phoneNum;
+	private String phoneNum;
 	private String gender;
 	private int birth;
 	private String permission;
 	private String nickname;
 	private Timestamp loginDate;
+	private int teamNo;
 
 }
 //userEmail   VARCHAR(30) primary key NOT NULL,

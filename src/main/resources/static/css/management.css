@@ -46,8 +46,8 @@
 	border-right: 1px solid #ededed; 
 	height: 50px; 
 	line-height: 45px; 
-	min-width:15%; 
-	width:15%;
+	min-width:10%; 
+	width:10%;
 }
 
 .user_management tr td{

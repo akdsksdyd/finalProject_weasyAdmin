@@ -13,8 +13,6 @@
 		<br>
 		<br> 
 		
-		<form name="actionForm" action="productList" method="get" >
-		
 		<input type="hidden" name="page" th:value="1"> 
 		<input type="hidden" name="amount" th:value="${pageVO.amount}">
 
@@ -116,7 +114,6 @@
 				</li>
 			</ul>
 		</div>
-		</form>
 	</div>
 	
 	
@@ -124,12 +121,8 @@
 </th:block>
 
 <!-- 모달창 -->
-<div class="management_modal">
+<div id="basicModal" class="management_modal">
 
-	<div class="management_modal_header">
-		<button class="management_modal_btn_close">X</button>
-	</div>
-	
 	<div class="management_modal_body">
 		<div class="management_request">회원가입 승인요청</div>
 		<br><br>
@@ -140,16 +133,7 @@
 	</div>
 </div>
 
-<script>    
-    //dataHandler
-  	var handleAmount = document.getElementById("handleAmount");
-  	handleAmount.onchange = function(e) {
-
-  		document.actionForm.amount.value = e.target.value;
-  		document.actionForm.submit();
-  	}
-   
-</script>
+<script src="/js/management_modal.js"></script>
 
 <script>
       const modal = document.querySelector('.management_modal');
@@ -161,14 +145,18 @@
         modal.style.display = 'block';
       });
       
-      /* 모달창 닫기 */
-      const closeBtn = modal.querySelector('.management_modal_btn_close');
-      closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
-      </script>
+</script>
       
+<script>    
+    //dataHandler
+  	var handleAmount = document.getElementById("handleAmount");
+  	handleAmount.onchange = function(e) {
 
+  		document.actionForm.amount.value = e.target.value;
+  		document.actionForm.submit();
+  	}
+   
+</script>
 
 <link th:href="@{/css/management.css}" rel="stylesheet" />
 <link th:href="@{/css/management_modal.css}" rel="stylesheet" />

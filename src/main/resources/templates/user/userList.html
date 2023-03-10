@@ -41,6 +41,7 @@
 				<th>Gender</th>
 				<th>NickName</th>
 				<th>LoginLog</th>
+				<th>PW Reset</th>
 			</tr>
 			
 			<tr th:each="vo, status : ${list}">
@@ -51,7 +52,10 @@
 				<td>[[${vo.birth}]]</td>
 				<td>[[${vo.gender}]]</td>
 				<td>[[${vo.nickname}]]</td>
-				 <td>[[${vo.loginDate}]]</td> 
+				<td>[[${vo.loginDate}]]</td> 
+				<td>
+					<button class="pwreset_modal_btn" type="submit">RESET</button>
+				</td>
 			</tr>
 		</table>
 		
@@ -59,4 +63,34 @@
 
 </th:block>
 
+<!-- pw Rest 모달창 -->
+<div class="userList_modal">
+
+	<div class="userList_modal_body">
+		<div class="userList_request">PW RESET</div>
+		<br><br>
+		<div class="userList_question">비밀번호를 초기화 하시겠습니까?</div>
+		<br>
+			<button class="userList_modal_btn_YES">YES</button>
+			<button class="userList_modal_btn_NO">NO</button>
+	</div>
+</div>
+
+<script src="/js/userList_modal.js"></script>
+
+<!-- 
+<script>
+      const modal = document.querySelector('.userList_modal');
+      
+      /* 모달창 열기 */
+      const btnOpenPopup = document.querySelector('.pwreset_modal_btn');
+
+      btnOpenPopup.addEventListener('click', () => {
+        modal.style.display = 'block';
+      });
+      
+</script>
+ -->
+
 <link th:href="@{/css/userList.css}" rel="stylesheet" />
+<link th:href="@{/css/userList_modal.css}" rel="stylesheet" />
