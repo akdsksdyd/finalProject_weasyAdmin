@@ -1,6 +1,7 @@
 package com.weasy.admin.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +17,5 @@ public interface TeamMapper {
 	public ArrayList<TeamVO> getList(@Param("cri")Criteria cri);
 	public int getTotal(@Param("cri")Criteria cri);
 	public ArrayList<UserVO> getTeamList(String teamName);
+	public int deleteTeam(String userEmail);
 }

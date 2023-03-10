@@ -5,8 +5,9 @@
 
 	<div class="main-wrapper">
 	
+	<h2 style="margin-top: 20px;margin-bottom: 20px;" >팀원 관리창</h2>
+	<hr/>
 		<table>
-
 				<thead>
 					<tr>
 						<th>이메일</th>	
@@ -16,27 +17,12 @@
 					</tr>
 				</thead>
 				<tbody class="tablebodys">
-					<tr class="trbodys">
-						<td>hong@mail.com</td>
-						<td>홍길동</td>
-						<td>010-4441-5555</td>
-					</tr>
-					<tr class="trbodys">
-						<td>hong@mail.com</td>
-						<td>홍길동2</td>
-						<td>010-4442-5555</td>
-					</tr>
-					<tr class="trbodys">
-						<td>hong@mail.com</td>
-						<td>홍길동3</td>
-						<td>010-4443-5555</td>
-						
-					</tr>
-					<tr class="trbodys">
-						<td>hong@mail.com</td>
-						<td>홍길동4</td>
-						<td>010-4445-5555</td>
-						<td><button type ="button" class ="btn_delete">삭제</button></td>
+					<tr class="trbodys" th:each=" vo, status : ${list}">
+						<td class = "userEmail">[[${vo.userEmail}]]</td>
+						<td>[[${vo.userName}]]</td>
+						<td>[[${vo.birth}]]</td>
+						<td><button type ="button" class ="btn_delete" th:value = ${vo.userEmail}>삭제</button></td>
+						<input class ="tnodate" type = "hidden" th:value =${vo.teamNo}>
 					</tr>
 				</tbody>
 
@@ -47,49 +33,69 @@
 	
 </th:block>
 
-<!-- <script>
+<script>
 
-	function statusCheck(obj){
-		var selval = $(obj).val();
-		console.log(selval);
-		$.ajax({
-			
-			url: "/listFilter",
-            type: "post",
-            data: {
-            	 selval: selval
-            },
-            success: function(result) {
-                console.log(result);
-             
-            	var str = "";
-             for(var i = 0; i<result.length; i++){
-            	str += "<tr class = 'trbodys'>";
-				str +=	 '<td>' + result[i].teamNo + '</td>';
-				str +=	 '<td>' + result[i].teamName + '</td>';
-				str +=	 '<td>' + result[i].teamGoal + '</td>';
-				str +=	 '<td>' + + '</td>';
-				str +=	 '<td>' + result[i].teamRegdate + '</td>';
-				str +=	 '<td>' + result[i].userEmail + '</td>';
-				str +=	 '<td>' + (result[i].teamStatus == 'Y' ? '진행중' : '종료된 팀')  + '</td>';
-				str += "</tr>";
-             }
-            	 $(".trbodys").remove();
-				$(".tablebodys").append(str);
-                
-            }, error: function(err){
-            	console.log("에러");
-            }
-		})
+
+
+$('.tablebodys').on('click','button',function(e){
+	if(confirm("정말로 삭제하시겠습니까?")){
 		
+		var userEmail = e.target.value;
+		console.log('첫번재이메일' + userEmail);
+		var teamNo = $('.tnodate').eq(0).val();
+		
+			 $.ajax({
+				
+				url: "/deleteTeam",
+	            type: "post",
+	            data: {
+	            	 userEmail : userEmail
+	            },
+	            success: function(result) {
+	               alert(result);
+	               
+	               $.ajax({
+	   				
+	   				url: "/teamListUpdate",
+	   	            type: "post",
+	   	            data: {
+	   	            	 teamNo : teamNo
+	   	            },
+	   	            success: function(result) {
+	   	            	var str = "";
+	   	             for(var i = 0; i<result.length; i++){
+	   	            	str += "<tr class = 'trbodys'>";
+	   					str +=	 '<td class ="userEmail">' + result[i].userEmail + '</td>';
+	   					str +=	 '<td>' + result[i].userName+ '</td>';
+	   					str +=	 '<td>' + result[i].birth + '</td>';
+	   					str += '<td><button type ="button" class ="btn_delete" value ='  + result[i].userEmail + '>삭제</button></td>';
+	   					str += ' <input class ="tnodate" type = "hidden" value = ' + result[i].teamNo+'>'
+	   					str += "</tr>";
+	   	             }
+	   	            	
+	   					$(".tablebodys").html(str);
+	   	            	
+	   	            }, error: function(err){
+	   	            	console.log("에러");
+	   	            }
+	   			})  
+	               
+	                
+	            }, error: function(err){
+	            	console.log("에러");
+	            }
+			}) 
+			
 	}
 	
-</script> -->
+		});
+		
 
-<script>
-	
-	
 </script>
+
+
+
+
 
 <link rel="stylesheet" href="../css/teamDetail.css">
 

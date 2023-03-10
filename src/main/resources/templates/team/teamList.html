@@ -5,6 +5,9 @@
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
+	
+	<h2 style="margin-top: 20px;margin-bottom: 20px; " >팀 관리창</h2>
+	
 		<form name="actionForm" action="teamList" method="get">
 
 			<input type="hidden" name="teamStatus" value="">
@@ -49,7 +52,7 @@
 				<tbody class="tablebodys">
 					<tr class="trbodys" th:each=" vo, status : ${list}">
 						<td>[[${vo.teamNo}]]</td>
-						<td style="color : blue; cursor: pointer;" th:onclick="|location.href='@{teamDetail(teamName=${vo.teamName})}'|">[[${vo.teamName}]] </td>
+						<td style="color : blue; cursor: pointer;" th:onclick="|location.href='@{teamDetail(teamName=${vo.teamNo})}'|">[[${vo.teamName}]] </td>
 						<td>[[${vo.teamGoal}]]</td>
 						<td>[[${vo.teamCount}]]</td>
 						<td>[[${ #temporals.format(vo.teamRegdate,'yyyy-MM-dd')}]]</td>

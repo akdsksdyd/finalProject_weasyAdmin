@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.weasy.admin.command.TeamVO;
+import com.weasy.admin.command.UserVO;
 import com.weasy.admin.service.TeamService;
 import com.weasy.admin.util.Criteria;
 import com.weasy.admin.util.PageVO;
@@ -49,7 +50,9 @@ public class TeamController {
 	public String teamDetail(@RequestParam("teamName")String teamName,Model model) {
 		System.out.println("팀이름값" + teamName);
 		
-		teamService.getTeamList(teamName);
+		ArrayList<UserVO>list = teamService.getTeamList(teamName);
+		
+		model.addAttribute("list",list);
 		
 		return "team/teamDetail";
 	}
