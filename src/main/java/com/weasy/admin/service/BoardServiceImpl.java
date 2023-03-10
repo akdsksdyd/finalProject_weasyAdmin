@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.weasy.admin.command.AuthorityVO;
+import com.weasy.admin.command.TaskCurrentCardVO;
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskProgressVO;
 import com.weasy.admin.command.TaskVO;
@@ -32,6 +34,12 @@ public class BoardServiceImpl implements BoardService {
 		map.put("statusList", boardMapper.getTaskProgressDetail(teamName));
 		
 		return map;
+	}
+
+	@Override
+	public ArrayList<TaskCurrentCardVO> getTaskCurrentList() {
+		
+		return boardMapper.getTaskCurrentList();
 	}
 	
 }

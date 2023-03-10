@@ -100,8 +100,27 @@
 	padding: 5px 0 10px 20px;
 }
 
+.completeListTitle {
+	border: 1px #a39485 solid;
+	border-radius: 5px;
+	padding: 7px;
+}
+
 .UnprogressList {
 	padding: 5px 0 10px 20px;
+}
+
+.UnprogressListTitle {
+	border: 1px #a39485 solid;
+	border-radius: 5px;
+	padding: 7px;
+}
+
+.modalChartTitle {
+	border: 1px #a39485 solid;
+	border-radius: 5px;
+	padding: 7px;
+	margin: 5px 30px 0 0;
 }
 
 
