@@ -1,0 +1,85 @@
+@charset "UTF-8";
+.userList_modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: none;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.userList_modal.show {
+  display: block;
+}
+
+.userList_modal_header{
+	position: absolute;
+	top: 390px;
+  	left: 1265px;
+  	
+  
+}
+
+.userList_modal_btn_close{
+	position: absolute;
+	
+	width: 20px;
+	height: 20px;
+	
+	background-color:transparent;
+	
+	font-weight: bolder; 
+	font-size: large;
+}
+
+.userList_modal_body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 450px;
+  height: 200px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.userList_request {
+	font-weight: bolder;
+	font-size: 30px;
+}
+
+.userList_question {
+	font-weight: normal;
+	font-size: 20px;
+	
+}
+
+.userList_modal_btn_YES {
+	background-color: #6aafe6;
+	color: #fff;
+	border-radius: 12px;
+	height:30px; 
+	width:70px;
+}
+
+.userList_modal_btn_NO{
+	background-color: #d4dfe6;
+	color: black;
+	border-radius: 12px;
+	height:30px; 
+	width:70px;
+	
+}
+

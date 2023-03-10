@@ -1,7 +1,6 @@
 package com.weasy.admin.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,18 +24,22 @@ public class UserServiceImpl implements UserService {
 		return userMapper.memberList(userId, cri);
 	}
 
-//	@Override
-//	public List<UserLogVO> loginlogList(UserLogVO vo) {
-//		return userMapper.loginlogList(vo);
-//	}
-
+	@Override
+	public void pwReset(UserVO vo) {
+	}
+	
 	@Override
 	public int getTotal(String userId, Criteria cri) {
 		return userMapper.getTotal(userId,cri);
 	}
 
+
+
 //	@Override
-//	public ArrayList<UserLogVO> userlogList(String userId, Criteria cri) {
-//		return userMapper.userlogList(userId, cri);
+//	public int userRegist(UserVO vo) {
+//		return userMapper.userRegist(vo);
 //	}
+
+	
+
 }

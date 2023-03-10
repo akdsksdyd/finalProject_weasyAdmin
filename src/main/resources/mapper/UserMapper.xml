@@ -6,29 +6,27 @@
 
 <mapper namespace="com.weasy.admin.service.UserMapper">
 
-
+<!-- testcode -->
+	<insert id="userRegist"  parameterType="UserVO">
+		insert all 
+		into Users(userEmail,
+							userName,
+							phoneNum,
+							birth,
+							gender,
+							nickname)
+	
+		values ( #{userEmail},
+					#{userName},
+					#{phoneNum},
+					#{birth},
+					#{gender},
+					#{nickname})
+	</insert>
+	
+<!-- management -->
 	<select id="getList" resultType="UserVO">
 		select * from users
-  		
-  		<if test="cri.searchName != null and cri.searchName != '' ">
-				and userName like concat('%', #{cri.searchName}, '%')
-		</if>
-		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
-				and userEmail like concat('%', #{cri.searchEmail}, '%')
-		</if>  	
-	</select>
-	
-	<select id="memberList" resultType="UserVO">
-	select a.userEmail
-	,a.userName
-    ,a.phoneNum
-    ,a.birth
-    ,a.gender
-    ,a.nickname
-    ,b.loginDate
-	from users as a
-	inner join loginlog as b
-	on a.userEmail=b.userEmail
   		<if test="cri.searchName != null and cri.searchName != '' ">
 				and userName like concat('%', #{cri.searchName}, '%')
 		</if>
@@ -37,7 +35,34 @@
 		</if>  	
 	</select>
 
-	
+<!-- userList -->
+	<select id="memberList" resultType="UserVO">
+		select a.userEmail
+		,a.userName
+	    ,a.phoneNum
+	    ,a.birth
+	    ,a.gender
+	    ,a.nickname
+	    ,b.loginDate
+		from users as a
+		inner join loginlog as b
+		on a.userEmail=b.userEmail
+		
+  		<if test="cri.searchName != null and cri.searchName != '' ">
+				and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+				and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  	
+	</select>
+
+<!-- Pw Reset -->
+	<update id="modify">
+	UPDATE USERS set userPw='' where userEmail=#{userEmail};
+	</update>	
+
+
+
 	<select id="getTotal" resultType="int">
   		select count(*) as total from users
   		
@@ -49,7 +74,6 @@
 		</if>  	  
   	</select>
   	
-	
 </mapper>
 
 

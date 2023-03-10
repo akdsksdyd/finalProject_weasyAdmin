@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.weasy.admin.command.UserLogVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.service.UserService;
 import com.weasy.admin.util.Criteria;
@@ -51,19 +50,14 @@ public class UserController {
 						   Model model,
 						   Criteria cri) {
 		
+		session.setAttribute("userName", "admin"); 
+		
 		//로그인 한 회원만 조회
 		String userId = (String)session.getAttribute("userId");
 		
 		ArrayList<UserVO> list = userService.memberList(userId, cri);
 		model.addAttribute("list", list);
 		
-//		ArrayList<UserLogVO> loglist = userService.userlogList(userId, cri);
-//		model.addAttribute("list2", loglist);
-		
-//		UserLogVO userlogVO = new UserLogVO();
-//		model.addAttribute("userlogVO", userlogVO);
-		
-				
 		return "user/userList";
 	}
 
