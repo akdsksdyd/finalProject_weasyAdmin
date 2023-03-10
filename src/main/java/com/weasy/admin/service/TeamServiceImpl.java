@@ -1,6 +1,7 @@
 package com.weasy.admin.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,19 @@ public class TeamServiceImpl implements TeamService{
 
 	@Override
 	public ArrayList<UserVO> getTeamList(String teamName) {
-		return null;
+		return teamMapper.getTeamList(teamName);
 	}
+
+	@Override
+	public int deleteTeam(String userEmail) {
+		
+		return teamMapper.deleteTeam(userEmail);
+	}
+	
+
+	
+	
+	
 	
 	
 

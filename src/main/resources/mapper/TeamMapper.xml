@@ -48,7 +48,18 @@
  			where teamStatus = #{cri.teamStatus}
  		</if>
 </select>
- 
- 
+
+	  <select id = "getTeamList" resultType="userVO">
+	  		select u.userEmail,u.userName,u.birth,u.nickname,a.teamNo from 
+	  		authority a left outer join users u
+			on a.userEmail = u.userEmail
+			where teamNo = #{teamName}
+	  </select>
+	  
+	   <delete id="deleteTeam">
+	   		delete from authority
+	   		where userEmail = #{userEmail}
+	   </delete>
+	   
  
  </mapper>

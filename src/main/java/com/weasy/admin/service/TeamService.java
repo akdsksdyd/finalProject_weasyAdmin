@@ -1,6 +1,7 @@
 package com.weasy.admin.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.ui.Model;
 
@@ -13,5 +14,7 @@ public interface TeamService {
 	public ArrayList<TeamVO> getList(Criteria cri);
 	public int getTotal(Criteria cri);
 	public ArrayList<UserVO> getTeamList(String teamName);
+	public int deleteTeam(String userEmail);
+	
 
 }
