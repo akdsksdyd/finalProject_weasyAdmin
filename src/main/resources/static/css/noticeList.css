@@ -1,0 +1,167 @@
+@charset "UTF-8";
+
+* {padding: 0; margin: 0; box-sizing: border-box;}
+a {text-decoration: none;}
+
+/*************/
+/* 검색, 페이징 */
+/*************/
+
+.noticeWrap {
+	width: 80%;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	margin-top: 60px;
+	color: #595757;
+	position: relative;
+}
+
+.noticeTitle {
+	width: 90%;
+	height: 30px;
+	margin: 0 auto;
+	margin-top: 30px;
+	font-size: 22px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.noticeTitle:hover {
+	color: #0080FF;
+}
+
+/****************/
+/* 페이지 버튼 부분 */
+/****************/
+.noticePagingWrap {
+	width: 90%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.noticePaging {
+	width: 30%;
+	height: 80px;
+	padding: 25px 0 15px 0;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.pagingBtnWrap{
+	margin: 0 auto;
+	width: 50%;
+}
+
+
+
+/************/
+/* 검색창 부분 */
+/************/
+.searchBox {
+	overflow: hidden;
+	width: 90%;
+	margin: 0 auto;
+	margin-bottom: 5px;
+}
+
+.searchArea {
+	float: right;
+}
+
+.searchBtn {
+	cursor: pointer;
+	background-color: #9DCEFF;
+	color: white;
+	font-weight: 600;
+	padding: 0 10px;
+}
+
+.searchInput:focus {
+	border: 1px solid black;
+}
+
+/************/
+/* 테이블 부분 */
+/************/
+
+.progressRow {
+	cursor: pointer;
+}
+
+.progressRow:hover td {
+	background-color: rgba(54, 162, 235, 0.1);
+}
+
+table {
+	border: 1px #9DCEFF solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	font-size: .9em;
+	width: 90%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 0 auto;
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+thead {
+	font-weight: bold;
+	color: #fff;
+	background: #9DCEFF;
+}
+
+td, th {
+	padding: 1em .5em;
+	vertical-align: middle;
+}
+
+td {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	background: #fff;
+}
+
+a {
+	color: #73685d;
+}
+
+@media all and (max-width: 768px) {
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+	th {
+		text-align: right;
+	}
+	table {
+		position: relative;
+		padding-bottom: 0;
+		border: none;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	}
+	thead {
+		float: left;
+		white-space: nowrap;
+	}
+	tbody {
+		overflow-x: auto;
+		overflow-y: hidden;
+		position: relative;
+		white-space: nowrap;
+	}
+	tr {
+		display: inline-block;
+		vertical-align: top;
+	}
+	th {
+		border-bottom: 1px solid #a39485;
+	}
+	td {
+		border-bottom: 1px solid #e5e5e5;
+	}
+}
+

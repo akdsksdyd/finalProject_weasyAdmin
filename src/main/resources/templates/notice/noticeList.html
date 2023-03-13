@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+
+	<div class="main-wrapper">
+	
+		<div class="noticeWrap">
+
+			<div class="noticeTitle">• 공지사항</div>
+
+			<form action="searchNotice" name="searchNotice" method="get">
+			
+				<!-- 검색창 -->
+				<div class="searchBox">
+					<div class="searchArea">
+						<input type="text" name="searchText" required
+							placeholder=" 검색어를 입력해주세요." class="searchInput" /> <input
+							type="submit" value="검색" class="searchBtn">
+					</div>
+				</div>
+
+				<!-- 테이블 부분 -->
+				<table>
+					<thead>
+						<tr>
+							<th style="width: 10%;">번호</th>
+							<th style="width: 40%;">제목</th>
+							<th style="width: 20%;">작성자</th>
+							<th style="width: 20%;">등록일시</th>
+							<th style="width: 10%;">조회수</th>
+
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr class="progressRow">
+							<td>1</td>
+							<td>테스트 공지 1</td>
+							<td>admin1</td>
+							<td>2023-03-13</td>
+							<td>10</td>
+						</tr>
+						<tr class="progressRow">
+							<td>1</td>
+							<td>테스트 공지 1</td>
+							<td>admin1</td>
+							<td>2023-03-13</td>
+							<td>10</td>
+						</tr>
+						<tr class="progressRow">
+							<td>1</td>
+							<td>테스트 공지 1</td>
+							<td>admin1</td>
+							<td>2023-03-13</td>
+							<td>10</td>
+						</tr>
+						<tr class="progressRow">
+							<td>1</td>
+							<td>테스트 공지 1</td>
+							<td>admin1</td>
+							<td>2023-03-13</td>
+							<td>10</td>
+						</tr>
+						<tr class="progressRow">
+							<td>1</td>
+							<td>테스트 공지 1</td>
+							<td>admin1</td>
+							<td>2023-03-13</td>
+							<td>10</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<!-- 페이지네이션 -->
+				<div class="noticePagingWrap">
+					<div class="noticePaging">
+						<div class="pagingBtnWrap">
+						
+							<nav>
+								<ul class="pagination">
+								
+									<li class="page-item">
+										<a class="page-link" href="#"> 
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href="#"> 
+											<span aria-hidden="true">&lsaquo;</span>
+										</a>
+									</li>
+									
+									<li >
+										<a class="page-link" href="#">
+											1
+										</a>
+									</li>
+									
+									<li class="page-item">
+										<a class="page-link" href="#"> 
+											<span aria-hidden="true">&rsaquo;</span>
+										</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href="#"> 
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+									
+								</ul>
+							</nav>
+							
+						</div>
+					</div>
+				</div>
+
+			</form>
+
+			
+		</div>
+	
+	</div>
+
+</th:block>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/noticeList.css">
+<link rel="stylesheet" href="../css/style.min.css">
+
+

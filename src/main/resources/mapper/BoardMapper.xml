@@ -21,6 +21,9 @@
 		where taskNo = #{taskNo}
 	</update>
 	
+	<select id="setAuthority">
+		insert into authority(userEmail, teamNo, role) values(#{userEmail}, #{teamNo}, #{role})
+	</select>
 	
 	
 	<!-- taskProgress 화면 게시판 리스트용 -->
@@ -31,10 +34,11 @@
 		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 2) unprogress,
 		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 3) complete
 		from team b
-	</select>
-	
-	<select id="setAuthority">
-		insert into authority(userEmail, teamNo, role) values(#{userEmail}, #{teamNo}, #{role})
+		where b.teamStatus = 1
+		<if test="searchTeamName != '' and searchTeamName != null">
+			and b.teamName like concat('%', #{searchTeamName}, '%')
+		</if>
+		limit #{pageStart}, #{amount}
 	</select>
 	
 	<!-- taskProgress 디테일 화면에 미진행, 완료만 -->
@@ -45,8 +49,8 @@
 	</select>
 	
 	<select id="getTaskProgressRate" resultMap="rateMap">
-		select * from TASKDETAIL a
-		inner join (select *  from TASK a where a.teamNo = (select teamNo from TEAM where teamName = #{teamName} and a.status = 1 )) b
+		select taskDetailNo, boardNo, taskDetail, status, taskNo, title from TASKDETAIL a
+		inner join (select taskNo, title from TASK a where a.teamNo = (select teamNo from TEAM where teamName = #{teamName} and a.status = 1 )) b
 		on a.boardNo = b.taskNo
 	</select>
 	
@@ -66,13 +70,66 @@
 	<select id="getTaskCurrentList" resultType="TaskCurrentCardVO">
 		select teamNo,
 			   teamName, 
-		       timestampdiff(day, teamRegdate, endDate) remain, 
+		       timestampdiff(day, now(), endDate) remain, 
 		       (select count(*) from task b where b.teamNo = a.teamNo) taskCount,
 		       (select count(*) from task b where b.teamNo = a.teamNo and status = 1) progress,
 		       (select count(*) from task b where b.teamNo = a.teamNo and status = 2) unprogress,
 		       (select count(*) from task b where b.teamNo = a.teamNo and status = 3) complete,
 		       (select count(*) from authority b where b.teamNo = a.teamNo) teamCount
 	   from team a
+	   where a.teamStatus = 1
+	</select>
+	
+	<!-- dashBoardSummary 화면 차트 데이터  -->
+	<select id="getTaskCountChart" resultType="TaskCountChartVO">
+		select a.teamNo teamNo, a.teamName teamName,b.total total
+		from team a
+		inner join(select teamNo, count(*) total from task
+				   group by teamNo
+				   order by total desc
+				   limit 3) b
+			   on a.teamNo = b.teamNo;
+	</select>
+	
+	<select id="getCompleteTaskChart" resultType="CompleteTaskChartVO">
+		select a.teamNo teamNo, a.teamName teamName,b.complete complete 
+		from team a
+		inner join(select teamNo, count(*) complete from task
+				   where status = 3
+				   group by teamNo
+				   order by complete desc
+				   limit 3) b
+			   on a.teamNo = b.teamNo;
+	</select>
+	
+	<select id="getTeamTotal" resultType="int">
+		select count(*) from team where teamStatus = 1
+		<if test="searchTeamName != '' and searchTeamName != null">
+			and teamName like concat('%', #{searchTeamName}, '%')
+		</if>
+	</select>
+	
+	<select id="getProgressingTaskChart" resultType="ProgressingTaskChartVO">
+		select a.teamNo teamNo, a.teamName teamName,b.progressing progressing 
+		from team a
+		inner join(select teamNo, count(*) progressing from task
+				   where status = 1
+				   group by teamNo
+				   order by progressing desc
+				   limit 4) b
+	   on a.teamNo = b.teamNo;
+	</select>
+	
+	<select id="getTotalTaskProgress" resultType="int">
+		select status from task a
+		left outer join (select teamNo from team where teamStatus = 1) b
+		on a.teamNo = b.teamNo;
+	</select>
+	
+	
+	<!-- 로그인 인터셉트용 -->
+	<select id="loginCheck" resultType="int">
+		select count(*) from admins where userEmail = #{id} and userPw = #{pw}	
 	</select>
 
 </mapper>

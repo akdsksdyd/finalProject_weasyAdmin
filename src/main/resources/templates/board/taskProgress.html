@@ -5,84 +5,160 @@
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
-
+		
 		<div class="progressWrap">
 
 			<div class="progressTitle">• 팀별 태스크 진척률 현황</div>
 
+			<form action="taskProgress" name="taskProgress" method="get">
+			
+				<input type="hidden" name="page" value="1"> 
+				<input type="hidden" name="amount" th:value="${pageVO.amount}">
 
-			<!-- 테이블 부분 -->
-			<table>
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>팀명</th>
-						<th>진행</th>
-						<th>미진행</th>
-						<th>완료</th>
-						<th>진척률</th>
+				<!-- 검색창 -->
+				<div class="searchBox">
+					<div class="searchArea">
+						<input type="text" name="searchTeamName" required
+							placeholder=" 팀명을 입력해주세요." class="searchInput" th:value="${pageVO.cri.searchTeamName}"/> <input
+							type="submit" value="검색" class="searchBtn">
+					</div>
+				</div>
 
-					</tr>
-				</thead>
-				<tbody>
+				<!-- 테이블 부분 -->
+				<table>
+					<thead>
+						<tr>
+							<th style="width: 5%;">번호</th>
+							<th style="width: 30%;">팀명</th>
+							<th style="width: 10%;">진행</th>
+							<th style="width: 10%;">미진행</th>
+							<th style="width: 10%;">완료</th>
+							<th style="width: 35%;">진척률</th>
 
-					<tr class="progressRow" th:each="vo, status : ${list}">
-						<td>[[${status.count}]]</td>
-						<td>[[${vo.teamName}]]</td>
-						<td>[[${vo.progress}]]건</td>
-						<td>[[${vo.unprogress}]]건</td>
-						<td>[[${vo.complete}]]건</td>
-						<td>[[${vo.complete == 0 ? 0 : (((vo.complete*100)/((vo.progress+vo.unprogress+vo.complete))*100)/100)}]]%</td>
-					</tr>
+						</tr>
+					</thead>
+					<tbody>
 
-				</tbody>
-			</table>
+						<tr class="progressRow" th:each="vo, status : ${list}">
+							<td>[[${status.count}]]</td>
+							<td>[[${vo.teamName}]]</td>
+							<td>[[${vo.progress}]]건</td>
+							<td>[[${vo.unprogress}]]건</td>
+							<td>[[${vo.complete}]]건</td>
+							<td class="gageChart">
+								<div class="gage">
+									<div class="gage_value"></div>
+								</div>
+								<div class="complete">[[${vo.complete == 0 ? 0 :
+									(((vo.complete*100)/((vo.progress+vo.unprogress+vo.complete))*100)/100)}]]%</div>
+							</td>
+						</tr>
 
-			<div class="progressPagingWrap">
-				<div class="progressPaging">12345</div>
-			</div>
+					</tbody>
+				</table>
 
-			<div class="progressModal">
-				<div class="progressModalBody">
-					<div class="progressModalTitle"> ◉ 태스크 상세 현황</div>
-					
-					
-					<!-- modal taskDetail 화면 -->
-					<div class="progressModalData">
-					
-						<div class="modalChart">
-							<div class="modalChartTitle" style="font-size: 16px; font-weight: 600;"> ■ 진행중인 태스크별 진척률</div>
-							<!-- ajax로 차트 추가 -->
-						</div>
+				<!-- 페이지네이션 -->
+				<div class="progressPagingWrap">
+					<div class="progressPaging">
+						<div class="pagingBtnWrap">
 						
-						<div class="modalText">
-						
-							<div class="completeList">
-								<div class="completeListTitle" style="font-size: 16px; font-weight: 600;">■ 완료된 태스크 목록</div>
-							</div>
-							
-							<div class="UnprogressList">
-								<div class="UnprogressListTitle" style="font-size: 16px; font-weight: 600;">■ 미진행 태스크 목록</div>
-							</div>
+							<nav>
+								<ul class="pagination">
+								
+									<li class="page-item">
+										<a class="page-link" th:href="@{taskProgress(page=1, 
+																		   		     amount=${pageVO.amount},
+																		   		     searchTeamName=${pageVO.cri.searchTeamName}
+																		   		  )}"> 
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li class="page-item" th:if="${pageVO.prev}">
+										<a class="page-link" href="#"> 
+											<span aria-hidden="true">&lsaquo;</span>
+										</a>
+									</li>
+									
+									<li th:each="btn, status : ${pageVO.pageList}"
+														th:class="${btn == pageVO.page ? 'page-item active' : 'page-item'}">
+										<a class="page-link" th:href="@{taskProgress(page=${btn}, 
+																		   		  amount=${pageVO.amount},
+																		   		  searchTeamName=${pageVO.cri.searchTeamName}
+																		   		  )}">
+											[[${btn}]]
+										</a>
+									</li>
+									
+									<li class="page-item" th:if="${pageVO.next}">
+										<a class="page-link" href="#"> 
+											<span aria-hidden="true">&rsaquo;</span>
+										</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" th:href="@{taskProgress(page=${pageVO.realEnd}, 
+																		   		  amount=${pageVO.amount},
+																		   		  searchTeamName=${pageVO.cri.searchTeamName}
+																		   		  )}"> 
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+									
+								</ul>
+							</nav>
 							
 						</div>
 					</div>
-					
+				</div>
+
+			</form>
+
+			<div class="progressModal">
+				<div class="progressModalBody">
+					<div class="progressModalTitle">◉ 태스크 상세 현황</div>
+
+
+					<!-- modal taskDetail 화면 -->
+					<div class="progressModalData">
+
+						<div class="modalChart">
+							<div class="modalChartTitle"
+								style="font-size: 16px; font-weight: 600;">■ 진행중인 태스크별 진척률</div>
+							<!-- ajax로 차트 추가 -->
+						</div>
+
+						<div class="modalText">
+
+							<div class="completeList">
+								<div class="completeListTitle"
+									style="font-size: 16px; font-weight: 600;">■ 완료된 태스크 목록</div>
+							</div>
+
+							<div class="UnprogressList">
+								<div class="UnprogressListTitle"
+									style="font-size: 16px; font-weight: 600;">■ 미진행 태스크 목록</div>
+							</div>
+
+						</div>
+					</div>
+
 				</div>
 			</div>
-	
+
 		</div>
 
-		<!-- main-wrapper 끝 -->
+	<!-- main-wrapper 끝 -->
 	</div>
 
 </th:block>
 
+<!-- 페이지 버튼 부트스트랩 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/taskProgress.css">
+<link rel="stylesheet" href="../css/style.min.css">
 
 <script th:inline="javascript">
 	
-	/* 디테일 모달 켜기 */
+	// 디테일 모달 켜기
 	$('.progressRow').click((e) => {
 		
 		var teamName = e.target.parentElement.children[1].innerHTML;
@@ -106,64 +182,70 @@
 					task.progressList.forEach(todo => {
 						if(todo.status == 2) done++; 
 					})
-					rateArr.push(Math.floor((done/len)*100));
+					var rate = Math.floor((done/len)*100);
+					rateArr.push(rate);
 					
 					// labels 배열 초기화
 					titleArr.push(task.title);
 					
-					var color1 = Math.floor(Math.random()*250)+1;
-					var color2 = Math.floor(Math.random()*250)+1;
-					var color3 = Math.floor(Math.random()*250)+1;
+					var color1 = rate < 33 ? 'rgba(255, 159, 164, 0.2)' : (rate > 66 ? 'rgba(75, 192, 192, 0.2)' : 'rgba(54, 162, 235, 0.2)');
+					var color2 = rate < 33 ? 'rgba(255, 159, 164, 1)' : (rate > 66 ? 'rgba(75, 192, 192, 1)' : 'rgba(54, 162, 235, 1)');
 					// bar 색상 배열 초기화
-					bgColor.push('rgba(' +color1+ ', ' +color2+ ', ' +color3+ ', 0.2)');
-					bdColor.push('rgba(' +color1+ ', ' +color2+ ', ' +color3+ ', 1)');
+					bgColor.push(color1);
+					bdColor.push(color2);
 					
 				});
 				
-				$('.modalChart').append('<canvas id="progressChart" style="height: 50vh; width: 33vw"></canvas>');
-				
-				/* 진척률 차트 */
-				const ctx = document.getElementById('progressChart');
-				const progressChart = new Chart(ctx, {
-				    type: 'bar',
-				    data: {
-				        labels: titleArr,
-				        datasets: [{
-				            data: rateArr,
-				            backgroundColor: bgColor,
-				            borderColor: bdColor,
-				            borderWidth: 1
-				        }]
-				    },
-				    options: {
-				    	responsive: false,
-				    	indexAxis: 'y',
-				    	barThickness: 25,
-				    	scales: {
-				            x: {
-				                suggestedMin: 0,
-				                suggestedMax: 100,
-				            },
-				        },
-				        plugins:{
-				            legend: {
-				                display: false
-				            },
-				        }
-				    }
-			 	});
+				// 차트 영역에 canvas 태그 추가
+				if(rateArr.length == 0) {
+					$('.modalChart').append('<div style="color: #A4A4A4;font-size: 14px; padding: 10px 0 0 5px"> 없음</div>');
+				}else {
+					$('.modalChart').append('<canvas id="progressChart" style="height: ' +(rateArr.length == 1 ? rateArr.length*120 : rateArr.length*70)+ 'px; width: 33vw"></canvas>');
+					// 차트 세팅
+					const ctx = document.getElementById('progressChart');
+					const progressChart = new Chart(ctx, {
+					    type: 'bar',
+					    data: {
+					        labels: titleArr,
+					        datasets: [{
+					            data: rateArr,
+					            backgroundColor: bgColor,
+					            borderColor: bdColor,
+					            borderWidth: 1
+					        }]
+					    },
+					    options: {
+					    	responsive: false,
+					    	indexAxis: 'y',
+					    	barThickness: 25,
+					    	scales: {
+					            x: {
+					                suggestedMin: 0,
+					                suggestedMax: 100,
+					            },
+					        },
+					        plugins:{
+					            legend: {
+					                display: false
+					            },
+					        }
+					    }
+				 	});
+				}
 				
 				// 미진행, 완료 업무 목록
 				res.statusList.forEach(status => {
-					if(status.status == 2) {
+					if(status.status == 3) {
 						$('.completeList').append('<div style="font-size: 14px; padding: 10px 0 0 5px">• '+ status.title +'</div>');
 					}else {
 						$('.UnprogressList').append('<div style="font-size: 14px; padding: 10px 0 0 5px">• '+ status.title +'</div>');
 					}
 				});
-				
-				if($('.completeList').children().size() == 1) $('.completeList').append('<div style="color: #A4A4A4;font-size: 14px; padding: 10px 0 0 5px"> 없음</div>');
-				if($('.UnprogressList').children().size() == 1) $('.UnprogressList').append('<div style="color: #A4A4A4;font-size: 14px; padding: 10px 0 0 5px"> 없음</div>');
+				// 목록이 비었다면 '없음' 표기
+				if($('.completeList').children().size() == 1) 
+					$('.completeList').append('<div style="color: #A4A4A4;font-size: 14px; padding: 10px 0 0 5px"> 없음</div>');
+				if($('.UnprogressList').children().size() == 1) 
+					$('.UnprogressList').append('<div style="color: #A4A4A4;font-size: 14px; padding: 10px 0 0 5px"> 없음</div>');
 				
 			},
 			error: (err) => {
@@ -172,19 +254,31 @@
 			
 		}) 
 		
+		// 데이터 삽입 후 모달 켜기
 		$('.progressModal').css({'display':'block'});
 	});
 	
-	/* 디테일 모달 끄기 */
+	// 디테일 모달 끄기
 	$('.progressModal').click(() => {
 		
-		$('#progressChart').remove();
+		// 모달에 그려진 데이터 지우기
+		$('.modalChartTitle').nextAll().remove();
 		$('.completeListTitle').nextAll().remove();
 		$('.UnprogressListTitle').nextAll().remove();
 		$('.progressModal').css({'display':'none'});
 	});
 	
+	// 테이블 진척률 게이지 반영
+	var dataList = JSON.parse('[[${list}]]');
+	var gageList = document.querySelectorAll('.gage_value');
+	dataList.forEach((vo, idx) => {
+		var length = vo.complete == 0 ? 0 : (((vo.complete*100)/((vo.progress+vo.unprogress+vo.complete))*100)/100);
+		gageList[idx].style.width = Math.floor(length)+'%';
+	})
+	
+	// 타이틀 누르면 기본 페이지로 이동
+	$(".progressTitle").click(() => {
+		window.location.href = "taskProgress";
+	})
 
 </script>
-
-

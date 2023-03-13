@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.weasy.admin.command.AuthorityVO;
+import com.weasy.admin.command.CompleteTaskChartVO;
+import com.weasy.admin.command.ProgressingTaskChartVO;
+import com.weasy.admin.command.TaskCountChartVO;
 import com.weasy.admin.command.TaskCurrentCardVO;
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskProgressVO;
 import com.weasy.admin.command.TaskVO;
+import com.weasy.admin.util.BoardCriteria;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -20,9 +24,9 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper boardMapper;
 
 	@Override
-	public ArrayList<TaskProgressVO> getTaskProgressList() {
+	public ArrayList<TaskProgressVO> getTaskProgressList(BoardCriteria cri) {
 		
-		return boardMapper.getTaskProgressList();
+		return boardMapper.getTaskProgressList(cri);
 	}
 
 	@Override
@@ -40,6 +44,41 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<TaskCurrentCardVO> getTaskCurrentList() {
 		
 		return boardMapper.getTaskCurrentList();
+	}
+
+	@Override
+	public Map<String, Object> getDashboardSummaryChart() {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		// 차트용
+		ArrayList<TaskCountChartVO> taskCountChart = boardMapper.getTaskCountChart();
+		ArrayList<CompleteTaskChartVO> completeTaskChart = boardMapper.getCompleteTaskChart();
+		ArrayList<ProgressingTaskChartVO> progressingTaskChart = boardMapper.getProgressingTaskChart();
+		int[] totalTaskProgress = boardMapper.getTotalTaskProgress();
+		
+		// 단일 데이터
+		int teamTotal = boardMapper.getTeamTotal();
+		
+		map.put("taskCountChart", taskCountChart);
+		map.put("completeTaskChart", completeTaskChart);
+		map.put("progressingTaskChart", progressingTaskChart);
+		map.put("teamTotal", teamTotal);
+		map.put("totalTaskProgress", totalTaskProgress);
+		
+		return map;
+	}
+
+	@Override
+	public int getTeamTotal(BoardCriteria cri) {
+		
+		return boardMapper.getTeamTotal(cri);
+	}
+
+	@Override
+	public int loginCheck(String id, String pw) {
+		
+		return boardMapper.loginCheck(id, pw);
 	}
 	
 }

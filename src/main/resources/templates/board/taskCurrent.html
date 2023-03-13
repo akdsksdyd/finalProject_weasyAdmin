@@ -39,8 +39,8 @@
 						<div class="cardChart">
 							<div class="cardChartTitle">
 								• 태스크 현황
-							</div>
-							<canvas id="doughnutChart" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>
+							</div> 
+							
 						</div>
 					</div>
 					
@@ -61,51 +61,62 @@
 
 <script th:inline="javascript">
 
-var list = JSON.parse('[[${list}]]');
-console.log(document.querySelectorAll('.currentCard')[0]);
+var chartList = JSON.parse('[[${list}]]');
+var cardList = document.querySelectorAll('.cardChart');
 
-list.forEach((chart, idx) => {
+chartList.forEach((chart, idx) => {
 	
-	var str = '<canvas id="'+'doughnutChart'+'idx'+'" style="height: 200px; width: 200px; margin-top: 20px;"></canvas>';
+	// 1. canvas 태그 세팅
+	var tag = document.createElement('canvas');
+	tag.id = 'doughnutChart'+idx;
+	tag.style.height = '200px';
+	tag.style.width = '200px';
+	tag.style.marginTop = '20px';
 	
-	/* $('.currentCard')[idx]; */
+	// 2. chart 영역에 추가
+	cardList[idx].appendChild(tag);
 	
-});
+	// 3. 추가 후에 chart데이터 세팅
+	var total = chart.taskCount;
+	var progress = chart.progress == 0 ? 0 : (chart.progress/total)*100;
+	var unprogress = chart.unprogress == 0 ? 0: (chart.unprogress/total)*100
+	var complete = chart.complete == 0 ? 0: (chart.complete/total)*100;
+	
+	var ctx = document.getElementById('doughnutChart'+idx);
+	var doughnutChart = new Chart(ctx, {
+		  type: 'doughnut',
+		    data: {
+		      labels: ['완료', '진행예정', '진행중'],
+		      datasets: [{
+		        data: [progress, unprogress, complete],     
+		        backgroundColor: [
+		          'rgba(157, 206, 255, 0.8)',
+		          'rgba(206, 226, 197, 0.8)',
+		          'rgba(251, 197, 197, 0.8)',
+		        ],
+		        borderWidth: 0.5,
+		        scaleBeginAtZero: true,
+		      }
+		    ]
+		  },
+		  options: {
+		    	responsive: false,
+		    	plugins:{
+			        legend: {
+			        	display: true,
+			        	align: 'center',
+			        	reverse: true,
+			        	labels: {
+			        		padding: 3,
+			        		boxWidth: 10,
+			        	}
+			        },
+		        }    
+		    }
+		});
+	
+}); 
 
-
-const ctx1 = document.getElementById('doughnutChart');
-const doughnutChart = new Chart(ctx1, {
-	  type: 'doughnut',
-	    data: {
-	      labels: ['완료', '진행예정', '진행중'],
-	      datasets: [{
-	        data: [20, 30, 50],     
-	        backgroundColor: [
-	          '#9DCEFF',
-	          '#F9F8CF',
-	          '#FBC5C5',
-	        ],
-	        borderWidth: 0,
-	        scaleBeginAtZero: true,
-	      }
-	    ]
-	  },
-	  options: {
-	    	responsive: false,
-	    	plugins:{
-		        legend: {
-		        	display: true,
-		        	align: 'center',
-		        	reverse: true,
-		        	labels: {
-		        		padding: 3,
-		        		boxWidth: 10,
-		        	}
-		        },
-	        }    
-	    }
-	});
-	
 	
 </script>
 

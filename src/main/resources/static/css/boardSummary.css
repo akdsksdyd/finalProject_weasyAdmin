@@ -6,13 +6,13 @@
 /*  차트 부분   */
 /**************/
 
-.summaryWrap {
+.summaryChartWrap {
 	width: 100%;
-	padding-top: 30px;
+	padding-top: 20px;
 }
 
 .chartWrap {
-	width: 80%;
+	width: 83.5%;
 	overflow: hidden;
 	margin: 0 auto;
 	padding: 30px;
@@ -24,6 +24,7 @@
 	border-radius: 10px;
 	border: 1px #a39485 solid;
   	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  	padding: 0 10px 0 10px;
 }
 
 .doughnutWrap {
@@ -72,7 +73,7 @@
 }
 
 /**************/
-/* 테이블 템플릿 */
+/* 하단 부분  */
 /**************/
 
 .summaryNoticeWrap {
@@ -102,6 +103,10 @@
 	background-color: rgba(54, 162, 235, 0.2);
 }
 
+.noticeRow:hover td {
+	background-color: rgba(54, 162, 235, 0.1);
+}
+
 table {
   border: 1px #9DCEFF solid;
   box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -126,6 +131,7 @@ thead {
  td, th {
   padding: 1em .5em;
   vertical-align: middle;
+  cursor: pointer;
 }
   
  td {

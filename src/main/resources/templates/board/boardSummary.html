@@ -6,14 +6,14 @@
 
 	<div class="main-wrapper">
 
-		<div class="summaryWrap">
+		<div class="summaryChartWrap">
 
 			<div class="chartWrap">
 
 				<div class="barWrap">
-					<a href="#" class="teamTotal">» 진행중인 프로젝트 수: 12</a>
+					<a href="#" class="teamTotal">» 진행중인 프로젝트: [[${dataMap.teamTotal}]]팀</a>
 					<div class="barList">
-						<div class="barTitle">• 태스크 수 상위 3팀</div>
+						<div class="barTitle">• 총 태스크 수 상위 3팀</div>
 						<canvas id="barChart1" style="height: 30vh; width: 10vw"></canvas>
 					</div>
 					<div class="barList">
@@ -21,21 +21,21 @@
 						<canvas id="barChart2" style="height: 30vh; width: 10vw"></canvas>
 					</div>
 					<div class="barList">
-						<div class="barTitle">• 분기별 프로젝트 수</div>
+						<div class="barTitle">• 진행중인 태스크 수 상위 4팀</div>
 						<canvas id="barChart3" style="height: 30vh; width: 10vw"></canvas>
 					</div>
 
 				</div>
 
 				<div class="doughnutWrap">
-					<div class="doughnutTitle">• 금년도 프로젝트 전체 현황</div>
+					<div class="doughnutTitle">• 진행중인 프로젝트 태스크 전체 현황</div>
 					<canvas id="doughnutChart" style="height: 40vh; width: 20vw"></canvas>
 				</div>
 
 			</div>
 
 		</div>
-
+		
 		<div class="summaryNoticeWrap">
 		
 			<div class="noticeWrap">
@@ -57,35 +57,35 @@
 					</thead>
 					<tbody>
 					
-						<tr>
+						<tr class="noticeRow">
 							<td>1</td>
 							<td>테스트 공지</td>
 							<td>admin</td>
 							<td>2023-03-01</td>
 							<td>1</td>
 						</tr>
-						<tr>
+						<tr class="noticeRow">
 							<td>1</td>
 							<td>테스트 공지</td>
 							<td>admin</td>
 							<td>2023-03-01</td>
 							<td>1</td>
 						</tr>
-						<tr>
+						<tr class="noticeRow">
 							<td>1</td>
 							<td>테스트 공지</td>
 							<td>admin</td>
 							<td>2023-03-01</td>
 							<td>1</td>
 						</tr>
-						<tr>
+						<tr class="noticeRow">
 							<td>1</td>
 							<td>테스트 공지</td>
 							<td>admin</td>
 							<td>2023-03-01</td>
 							<td>1</td>
 						</tr>
-						<tr>
+						<tr class="noticeRow"> 
 							<td>1</td>
 							<td>테스트 공지</td>
 							<td>admin</td>
@@ -109,48 +109,17 @@
 
 <script th:inline="javascript">
 
-// 1 도넛차트
-const ctx1 = document.getElementById('doughnutChart');
-const doughnutChart = new Chart(ctx1, {
-	  type: 'doughnut',
-	    data: {
-	      labels: ['완료', '진행예정', '진행중'],
-	      datasets: [{
-	        data: [20, 30, 50],     
-	        backgroundColor: [
-	          '#9DCEFF',
-	          '#F9F8CF',
-	          '#FBC5C5',
-	        ],
-	        borderWidth: 0,
-	        scaleBeginAtZero: true,
-	      }
-	    ]
-	  },
-	  options: {
-	    	responsive: false,
-	    	plugins:{
-		        legend: {
-		        	display: true,
-		        	align: 'end',
-		        	reverse: true,
-		        	labels: {
-		        		padding: 5,
-		        		boxWidth: 20,
-		        	}
-		        },
-	        }    
-	    }
-	});
+// 넘어온 데이터 받기
+var dataMap = JSON.parse('[[${dataMap}]]');
 
-// 2 바차트
-const ctx2 = document.getElementById('barChart1').getContext('2d');
-const barChart1 = new Chart(ctx2, {
+// 1. 태스크 수 상위 3팀 차트
+const ctx1 = document.getElementById('barChart1');
+const barChart1 = new Chart(ctx1, {
     type: 'bar',
     data: {
-        labels: ['1팀', '2팀', '3팀'],
+        labels: dataMap.taskCountChart.map(item => item.teamName),
         datasets: [{
-            data: [75, 19, 7],
+            data: dataMap.taskCountChart.map(item => item.total),
             backgroundColor: [
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
@@ -179,14 +148,14 @@ const barChart1 = new Chart(ctx2, {
     }
 });
 
-//3 바차트
-const ctx3 = document.getElementById('barChart2').getContext('2d');
-const barChart2 = new Chart(ctx3, {
+// 2. 완료 태스크 수 상위 3팀 차트
+const ctx2 = document.getElementById('barChart2');
+const barChart2 = new Chart(ctx2, {
     type: 'bar',
     data: {
-        labels: ['1팀', '2팀', '3팀'],
-        datasets: [{
-            data: [12, 19, 7],
+    	labels: dataMap.completeTaskChart.map(item => item.teamName),
+   	    datasets: [{
+    	    data: dataMap.completeTaskChart.map(item => item.complete),
             backgroundColor: [
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
@@ -215,14 +184,14 @@ const barChart2 = new Chart(ctx3, {
     }
 });
 
-//3 바차트
-const ctx4 = document.getElementById('barChart3');
-const barChart3 = new Chart(ctx4, {
+// 3. 진행중 태스크 수 상위 3팀
+const ctx3 = document.getElementById('barChart3');
+const barChart3 = new Chart(ctx3, {
     type: 'bar',
     data: {
-        labels: ['1분기', '2분기', '3분기', '4분기'],
+        labels: dataMap.progressingTaskChart.map(item => item.teamName),
         datasets: [{
-            data: [12, 19, 7, 15],
+            data: dataMap.progressingTaskChart.map(item => item.progressing),
             backgroundColor: [
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
@@ -252,4 +221,51 @@ const barChart3 = new Chart(ctx4, {
         }
     }
 });
+
+// 4. 진행중 프로젝트 전체 현황(도넛차트)
+var doing = 0;
+var todo = 0;
+var done = 0;
+
+dataMap.totalTaskProgress.forEach(n => {
+	if(n == 1) doing++;
+	else if(n == 2) todo++;
+	else done++;
+})
+var total = doing + todo + done;
+
+
+const ctx4 = document.getElementById('doughnutChart');
+const doughnutChart = new Chart(ctx4, {
+	  type: 'doughnut',
+	    data: {
+	      labels: ['완료', '진행예정', '진행중'],
+	      datasets: [{
+	        data: [Math.floor((done/total)*100), Math.floor((todo/total)*100), Math.floor((doing/total)*100)],     
+	        backgroundColor: [
+	        	'rgba(157, 206, 255, 0.8)',
+		        'rgba(206, 226, 197, 0.8)',
+		        'rgba(251, 197, 197, 0.8)',
+	        ],
+	        borderWidth: 1,
+	        scaleBeginAtZero: true,
+	      }
+	    ]
+	  },
+	  options: {
+	    	responsive: false,
+	    	plugins:{
+		        legend: {
+		        	display: true,
+		        	align: 'end',
+		        	reverse: true,
+		        	labels: {
+		        		padding: 5,
+		        		boxWidth: 20,
+		        	}
+		        },
+	        }    
+	    }
+	});
+
 </script>
