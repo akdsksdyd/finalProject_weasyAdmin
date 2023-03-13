@@ -37,6 +37,14 @@ public class TeamServiceImpl implements TeamService{
 		
 		return teamMapper.deleteTeam(userEmail);
 	}
+
+	@Override
+	public ArrayList<UserVO> searchId(String searchId, int teamNo) {
+		return teamMapper.searchId(searchId, teamNo);
+	}
+
+	
+	
 	
 
 	

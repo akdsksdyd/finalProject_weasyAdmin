@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
 <th:block
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
 	
-	<h2 style="margin-top: 20px;margin-bottom: 20px; " >팀 관리창</h2>
 	
 		<form name="actionForm" action="teamList" method="get">
 
 			<input type="hidden" name="teamStatus" value="">
 
 			<div class="search-container">
+			<span class ="teamHeader">팀 관리창</span>
 					<div class="search-category">
-						<select name="category">
+						<select name="category" class = "categorysel">
 							<option value = "defaultsearch" th:selected=" ${ pageVO.cri.category == 'defaultsearch'}">전체검색</option>
 							<option value="teamName" th:selected=" ${ pageVO.cri.category == 'teamName'}">팀명</option>
 							<option value="teamGoal" th:selected=" ${ pageVO.cri.category == 'teamGoal'}">팀목표</option>
@@ -90,7 +89,7 @@
 		</form>
 </th:block>
 
-<script>
+<script th:inline="javascript">
 	var handleAmount = document.getElementById("handleAmount");
 	handleAmount.onchange = function(e) {
 		// hidden input의 값을 변경

@@ -15,6 +15,7 @@ public interface TeamService {
 	public int getTotal(Criteria cri);
 	public ArrayList<UserVO> getTeamList(String teamName);
 	public int deleteTeam(String userEmail);
+	public ArrayList<UserVO> searchId(String searchId,int teamNo);
 	
 
 }

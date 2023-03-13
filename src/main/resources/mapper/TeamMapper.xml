@@ -61,5 +61,16 @@
 	   		where userEmail = #{userEmail}
 	   </delete>
 	   
+	   <select id = "searchId" resultType="userVO">
+	   		select u.userEmail,u.nickname from (select userEmail,nickname from users
+				where userEmail like concat('%', #{searchId},'%')
+				or nickname like concat('%', #{searchId},'%')) u
+				left outer join authority a
+				on u.userEMail = a.userEmail	
+				where a.teamNo != #{teamNo}
+				or teamNO is null
+				group by u.userEmail
+	   </select>
+	   
  
  </mapper>
