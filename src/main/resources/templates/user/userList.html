@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+	
 
 		<div class="main-wrapper">
-
+		
 		<div class="userList">회원 목록</div>
 		
 		<br><br><br><br><br>
@@ -12,85 +13,98 @@
 		<div>
 			&nbsp;
 			<span class="name"> 이름 : </span> 
-			<input class="search_name" type="text" placeholder="이름검색">
+			<input class="search_name" type="text" placeholder="이름검색" >
 			&nbsp;
 			<span class="email"> 이메일 : </span> 
-			<input class="search_email" type="text" placeholder="이메일검색">
+			<input class="search_email" type="text" placeholder="이메일검색" >
 
-			<button class="search_btn" type="submit">검색</button>
 		</div>
 
 		<br><br>
 
-		<select class="data_amount">
-			<option value="10">10개 보기</option>
-			<option value="20">20개 보기</option>
-			<option value="40">50개 보기</option>
-			<option value="80">100개 보기</option>
-		</select>
-		
 		<br><br>
 
-		<table class="userList_table">
-			<tr>
-				<th>NO.</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>PhoneNum</th>
-				<th>Birth</th>
-				<th>Gender</th>
-				<th>NickName</th>
-				<th>LoginLog</th>
-				<th>PW Reset</th>
-			</tr>
+		<table class="userList_table" id="usertable">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>PhoneNum</th>
+					<th>Birth</th>
+					<th>Gender</th>
+					<th>NickName</th>
+					<th>LoginLog</th>
+					<th>PW Reset</th>
+				</tr>
+			</thead>
 			
-			<tr th:each="vo, status : ${list}">
-				<td>[[${status.count}]]</td>
-				<td>[[${vo.userName}]]</td>
-				<td>[[${vo.userEmail}]]</td>
-				<td>[[${vo.phoneNum}]]</td>
-				<td>[[${vo.birth}]]</td>
-				<td>[[${vo.gender}]]</td>
-				<td>[[${vo.nickname}]]</td>
-				<td>[[${vo.loginDate}]]</td> 
-				<td>
-					<button class="pwreset_modal_btn" type="submit">RESET</button>
-				</td>
-			</tr>
+			<tbody>
+				<tr th:each="vo : ${list}">
+					<td>[[${vo.userName}]]</td>
+					<td>[[${vo.userEmail}]]</td>
+					<td>[[${vo.phoneNum}]]</td>
+					<td>[[${vo.birth}]]</td>
+					<td>[[${vo.gender}]]</td>
+					<td>[[${vo.nickname}]]</td>
+					<td>[[${vo.loginDate}]]</td> 
+					<td>
+						<input class="pwreset_modal_btn" type="submit">
+					</td>
+				</tr>
+			</tbody>
 		</table>
-		
 	</div>
 
 </th:block>
 
-<!-- pw Rest 모달창 -->
-<div class="userList_modal">
 
-	<div class="userList_modal_body">
-		<div class="userList_request">PW RESET</div>
-		<br><br>
-		<div class="userList_question">비밀번호를 초기화 하시겠습니까?</div>
-		<br>
-			<button class="userList_modal_btn_YES">YES</button>
-			<button class="userList_modal_btn_NO">NO</button>
+<script>
+/* search */
+	$('input').keyup(function(){
+		//keyup 이벤트 발생 시 해당 input의 value 가져오기.
+		var val = $(this).val();
+		//실시간 검색이 필요한 table의 모든 행(tr) 숨김 처리
+		$("#usertable > tbody > tr").hide();
+		//해당 table에서 input에 입력한 데이터가 있는 td Element 찾기.
+		var temp = $("#usertable > tbody > tr > td:contains('"+ val +"')");
+		//입력한 데이터가 있는 Elemnet의 부모 Elemnet(td)만 표시.
+		$("thead").show();
+		$(temp).parent().show();
+	});
+</script>
+
+<!-- pw Rest 모달창 -->
+
+<form id="actionForm" action="userList" method="get">
+	<div class="userList_modal">
+	
+		<div class="userList_modal_body">
+			<div class="userList_request">PW RESET</div>
+			<br><br>
+			<div class="userList_question">비밀번호를 초기화 하시겠습니까?</div>
+			<br>
+				<input type="hidden" name="userPw" value="">
+				<input class="userList_modal_btn_YES" type="submit">
+				<button class="userList_modal_btn_NO" type="button">NO</button>
+		</div>
 	</div>
-</div>
+</form>
 
 <script src="/js/userList_modal.js"></script>
-
-<!-- 
 <script>
-      const modal = document.querySelector('.userList_modal');
-      
-      /* 모달창 열기 */
-      const btnOpenPopup = document.querySelector('.pwreset_modal_btn');
-
-      btnOpenPopup.addEventListener('click', () => {
-        modal.style.display = 'block';
-      });
-      
+$(".userList_modal_btn_YES").click(function(e) {
+	e.preventDefault();
+	
+	var userPw = document.querySelector("input[name=userPw]");
+	console.log(userPw);
+	userPw.value = this.value;
+	
+	var form = document.querySelector("form[name=actionForm]");
+	console.log(form);
+	form.submit();
+	
+});
 </script>
- -->
 
 <link th:href="@{/css/userList.css}" rel="stylesheet" />
 <link th:href="@{/css/userList_modal.css}" rel="stylesheet" />

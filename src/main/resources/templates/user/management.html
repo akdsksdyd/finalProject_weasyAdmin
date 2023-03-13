@@ -4,6 +4,8 @@
 <th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
+	
+	<form id="actionForm" action="management" method="get">
 
 		<div class="user_registration">신규 회원 등록 (승인)</div>
 
@@ -12,35 +14,23 @@
 		<br>
 		<br>
 		<br> 
-		
-		<input type="hidden" name="page" th:value="1"> 
-		<input type="hidden" name="amount" th:value="${pageVO.amount}">
 
 		<div>
 			<span class="name"> 이름 : </span> 
-			<input class="search_name" type="text" name="searchName" 
-					th:value="${pageVO.cri.searchName}" placeholder="이름검색"> &nbsp; 
+			<input type="text" name="searchName" placeholder="이름검색" class="a" > &nbsp; 
 			
 			<span class="email"> 이메일 : </span> 
-			<input class="search_email" type="text" name="searchEmail"
-					th:value="${pageVO.cri.searchEmail}" placeholder="이메일검색">
+			<input type="text" name="searchEmail" placeholder="이메일검색" >
 			
-			<input type="submit" value="검색">
-			<button class="search_btn" type="submit">검색</button>
 		</div>
 
 		<br>
-		<br> <select class="data_amount" id="handleAmount">
-			<option value="10" th:selected="${pageVO.amount} == 10">10개 보기</option>
-			<option value="20" th:shandleAmountelected="${pageVO.amount} == 20">20개 보기</option>
-			<option value="50" th:selected="${pageVO.amount} == 50">50개 보기</option>
-			<option value="100" th:selected="${pageVO.amount} == 100">100개 보기</option>
-		</select> <br>
 		<br>
 
-		<table class="user_management">
+		<table class="user_management" id="usertable">
+		
+			<thead>
 			<tr>
-				<th>NO.</th>
 				<th>Name</th>
 				<th>Email</th>
 				<th>PhoneNum</th>
@@ -48,115 +38,69 @@
 				<th>Gender</th>
 				<th>Check</th>
 			</tr>
-
-			<tr th:each="vo, status : ${list}">
-				<td>[[${status.count}]]</td>
-				<td>[[${vo.userName}]]</td>
-				<td>[[${vo.userEmail}]]</td>
-				<td>[[${vo.phoneNum}]]</td>
-				<td>[[${vo.birth}]]</td>
-				<td>[[${vo.gender}]]</td>
-				<td>
-					<button class="management_modal_btn">[[${vo.permission}]]</button>
-				</td>
-			</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="vo : ${list}" th:if="${vo.permission == 'N'}" >
+					<td>[[${vo.userName}]]</td>
+					<td>[[${vo.userEmail}]]</td>
+					<td>[[${vo.phoneNum}]]</td>
+					<td>[[${vo.birth}]]</td>
+					<td>[[${vo.gender}]]</td>
+					<td>
+						<input class="management_modal_btn" type="submit" name="permission" >
+					</td>
+				</tr>
+			</tbody>
+			<!-- console.log(e.target.parentElement.parentElement.children[1].innerHTML); -->
 		</table>
-
-		<div class="page">
-			<ul>
-				<li>
-					<a th:href="@{management(page=1, 
-											amount=${pageVO.amount},
-											searchName=${pageVO.cri.searchName},
-											searchEmail=${pageVO.cri.searchEmail})}">
-						<i class="fa fa-angle-double-left" aria-hidden="true"></i>
-					</a>
-				</li>
-
-				<th:block th:if="${pageVO.prev}">
-					<li style="margin-right: 5px;">
-						<a th:href="@{management(page=${pageVO.start - 1},
-												amount=${pageVO.amount},
-												searchName=${pageVO.cri.searchName},
-												searchEmail=${pageVO.cri.searchEmail})}">
-							<i class="fa fa-angle-left" aria-hidden="true"></i>
-						</a>
-					</li>
-				</th:block>
-
-				<th:block th:each="page : ${pageVO.pageList}">
-					<li th:class="${page == pageVO.page ? 'on' : ''}">
-						<a th:href="@{management(page=${page},
-												amount=${pageVO.amount},
-												searchName=${pageVO.cri.searchName},
-												searchEmail=${pageVO.cri.searchEmail})}">[[${page}]]
-						</a>
-					</li>
-				</th:block>
-
-				<th:block th:if="${pageVO.next}">
-					<li style="margin-left: 5px;">
-						<a th:href="@{management(page=${pageVO.end + 1},
-												amount=${pageVO.amount},
-												searchName=${pageVO.cri.searchName},
-												searchEmail=${pageVO.cri.searchEmail})}">
-							<i class="fa fa-angle-right" aria-hidden="true"></i>
-						</a>
-					</li>
-				</th:block>
-
-				<li><a th:href="@{management(page=${pageVO.realEnd},
-											amount=${pageVO.amount},
-											searchName=${pageVO.cri.searchName},
-											searchEmail=${pageVO.cri.searchEmail})}">
-						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-					</a>
-				</li>
-			</ul>
-		</div>
+		
+	</form>
 	</div>
-	
-	
-
 </th:block>
 
+<script>
+/* search */
+	$('input').keyup(function(){
+		//keyup 이벤트 발생 시 해당 input의 value 가져오기.
+		var val = $(this).val();
+		//실시간 검색이 필요한 table의 모든 행(tr) 숨김 처리
+		$("#usertable > tbody > tr").hide();
+		//해당 table에서 input에 입력한 데이터가 있는 td Element 찾기.
+		var temp = $("#usertable > tbody > tr > td:contains('"+ val +"')");
+		//입력한 데이터가 있는 Elemnet의 부모 Elemnet(td)만 표시.
+		$("thead").show();
+		$(temp).parent().show();
+	});
+	
+</script>
+
+<script th:inline="javascript">
+// permission
+$(document).ready(function(){
+	var permission = $("form[name='actionForm']");
+	$(".management_modal_btn").on("click", function(e){
+		e.preventDefault();
+		console.log(e.target.parentElement.parentElement.children[1].innerHTML);
+		permission.submit();				
+	});
+});
+</script>
+
 <!-- 모달창 -->
+<!-- 
 <div id="basicModal" class="management_modal">
 
 	<div class="management_modal_body">
 		<div class="management_request">회원가입 승인요청</div>
 		<br><br>
-		<div class="management_question">신지수님 회원가입을 승인하시겠습니까?</div>
+		<div class="management_question">ooo님 회원가입을 승인하시겠습니까?</div>
 		<br>
 			<button class="management_modal_btn_approve">승인</button>
 			<button class="management_modal_btn_refuse">거절</button>
 	</div>
 </div>
-
 <script src="/js/management_modal.js"></script>
-
-<script>
-      const modal = document.querySelector('.management_modal');
-      
-      /* 모달창 열기 */
-      const btnOpenPopup = document.querySelector('.management_modal_btn');
-
-      btnOpenPopup.addEventListener('click', () => {
-        modal.style.display = 'block';
-      });
-      
-</script>
-      
-<script>    
-    //dataHandler
-  	var handleAmount = document.getElementById("handleAmount");
-  	handleAmount.onchange = function(e) {
-
-  		document.actionForm.amount.value = e.target.value;
-  		document.actionForm.submit();
-  	}
-   
-</script>
-
-<link th:href="@{/css/management.css}" rel="stylesheet" />
 <link th:href="@{/css/management_modal.css}" rel="stylesheet" />
+ -->
+<link th:href="@{/css/management.css}" rel="stylesheet" />
