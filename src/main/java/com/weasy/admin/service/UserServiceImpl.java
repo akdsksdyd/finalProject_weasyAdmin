@@ -15,23 +15,25 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
-	public ArrayList<UserVO>getList(String userId, Criteria cri) {
-		return userMapper.getList(userId, cri);
+	public ArrayList<UserVO>managementList(Criteria cri) {
+		return userMapper.managementList(cri);
 	}
 
-	@Override
-	public ArrayList<UserVO> memberList(String userId, Criteria cri) {
-		return userMapper.memberList(userId, cri);
-	}
-
-	@Override
-	public void pwReset(UserVO vo) {
-	}
 	
 	@Override
-	public int getTotal(String userId, Criteria cri) {
-		return userMapper.getTotal(userId,cri);
+	public ArrayList<UserVO> userList(Criteria cri) {
+		return userMapper.userList(cri);
 	}
+
+
+	@Override
+	public int permission(UserVO permission) {
+		return userMapper.permission(permission);
+	}
+
+
+
+	
 
 
 

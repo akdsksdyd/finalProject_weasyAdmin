@@ -6,37 +6,13 @@
 
 <mapper namespace="com.weasy.admin.service.UserMapper">
 
-<!-- testcode -->
-	<insert id="userRegist"  parameterType="UserVO">
-		insert all 
-		into Users(userEmail,
-							userName,
-							phoneNum,
-							birth,
-							gender,
-							nickname)
-	
-		values ( #{userEmail},
-					#{userName},
-					#{phoneNum},
-					#{birth},
-					#{gender},
-					#{nickname})
-	</insert>
-	
 <!-- management -->
-	<select id="getList" resultType="UserVO">
-		select * from users
-  		<if test="cri.searchName != null and cri.searchName != '' ">
-				and userName like concat('%', #{cri.searchName}, '%')
-		</if>
-		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
-				and userEmail like concat('%', #{cri.searchEmail}, '%')
-		</if>  	
+	<select id="managementList" resultType="UserVO">
+		select userName, userEmail, phoneNum, birth, gender, permission from users;
 	</select>
 
 <!-- userList -->
-	<select id="memberList" resultType="UserVO">
+	<select id="userList" resultType="UserVO">
 		select a.userEmail
 		,a.userName
 	    ,a.phoneNum
@@ -44,36 +20,25 @@
 	    ,a.gender
 	    ,a.nickname
 	    ,b.loginDate
+	    ,a.userPw
 		from users as a
 		inner join loginlog as b
 		on a.userEmail=b.userEmail
 		
-  		<if test="cri.searchName != null and cri.searchName != '' ">
-				and userName like concat('%', #{cri.searchName}, '%')
-		</if>
-		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
-				and userEmail like concat('%', #{cri.searchEmail}, '%')
-		</if>  	
 	</select>
+	
+<!-- permission -->
+	<update id="permissionList" >
+		UPDATE USERS set permission="Y" where userEmail=#{userEmail};
+	</update>	
 
 <!-- Pw Reset -->
-	<update id="modify">
-	UPDATE USERS set userPw='' where userEmail=#{userEmail};
+	<update id="resetPw">
+	UPDATE USERS set userPw="" where userEmail=#{userEmail};
 	</update>	
 
 
 
-	<select id="getTotal" resultType="int">
-  		select count(*) as total from users
-  		
-		<if test="cri.searchName != null and cri.searchName != '' ">
-		and userName like concat('%', #{cri.searchName}, '%')
-		</if>
-		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
-		and userEmail like concat('%', #{cri.searchEmail}, '%')
-		</if>  	  
-  	</select>
-  	
 </mapper>
 
 

@@ -12,23 +12,16 @@ import com.weasy.admin.util.Criteria;
 public interface UserMapper {
 	
 	//management
-	public ArrayList<UserVO>getList(@Param("userId") String userId, 
-									@Param("cri") Criteria cri);
-	
+	public ArrayList<UserVO>managementList(@Param("cri") Criteria cri);
+ 	
 	//userList
-	public ArrayList<UserVO>memberList(@Param("userId") String userId, 
-									   @Param("cri") Criteria cri);
+	public ArrayList<UserVO>userList(@Param("cri") Criteria cri);
 	
-	//PW Reset
-	public void pwReset(UserVO vo); 
-
-	//testCode
-//	public int userRegist(UserVO vo);
+	//permission
+	 public int permission(UserVO permission);
 	
 	
 	
-	public int getTotal(@Param("userId")String userId, 
-						@Param("cri")Criteria cri);
 
 
 

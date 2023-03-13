@@ -8,18 +8,13 @@ import com.weasy.admin.util.Criteria;
 public interface UserService {
 	
 	//management
-	public ArrayList<UserVO> getList(String userId, Criteria cri);
+	public ArrayList<UserVO> managementList(Criteria cri);
 	
 	//userList
-	public ArrayList<UserVO> memberList(String userId, Criteria cri);
+	public ArrayList<UserVO> userList(Criteria cri);
 	
-	//PW Reset
-	public void pwReset(UserVO vo);
+	//permission
+	 public int permission(UserVO permission);
 	
-	//testCode
-//	public int userRegist(UserVO vo);
-	
-	
-	public int getTotal(String userId, Criteria cri); 
 
 }
