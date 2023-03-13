@@ -41,6 +41,15 @@ com.weasy.admin.service.TeamService;
 
 		return list;
 	}
+	
+	
+	@PostMapping("/searchId")
+	public ArrayList<UserVO> searchId(@RequestParam("searchId") String searchId,@RequestParam("teamNo") int teamNo){
+			System.out.println("메일" + searchId);
+			System.out.println("팀번호" + teamNo);
+		ArrayList<UserVO> list = teamService.searchId(searchId, teamNo);
+		return list;
+	}
 
 
 }
