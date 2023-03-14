@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+
+	<div class="main-wrapper">
+		
+		<div class="noticeRegistWrap">
+			
+			<div class="noticeRegistTitle">• 공지사항 등록</div>
+			
+			<div class="formWrap">
+				<form name="noticeForm" action="noticeForm" method="post" enctype="multipart/form-data">
+					
+					<div class="inputBox">
+						<div class="inputTitle">중요도</div> 
+						<input type="checkbox" name="noticeLevel" value="중요" style="width: 25px; height: 25px; position: relative; top: 6px;"/>
+						<span style="font-weight: 600; color: #0061f7">중요 공지 설정</span>
+					</div>
+					<br/>
+					<div class="inputBox">
+						<div class="inputTitle">제목</div> 
+						<input type="text" name="noticeTitle" style="width: 80%;"/>
+					</div>
+					</br>
+					<div class="inputBox">
+						<div class="inputTitle">작성자</div> 
+						<input type="text" name="userEmail" value="admin1" readonly style="width: 80%;" />
+					</div>	
+					</br>
+					<div class="inputBox">
+						<div class="inputTitle">내용</div>
+						<textarea class="textBox" name="noticeContent" required></textarea> 
+					</div>
+					</br>
+					<div class="inputBox">
+						<div class="inputTitle">파일첨부</div> 
+						<input type="file" name="fileName" style="padding-top: 6px;"/>
+					</div>
+					<div class="inputBox" style="margin-top: 20px;">
+						<div class="inputBtnBox">
+							<input type="submit" value="등록" />
+							<input type="button" value="취소" />		
+						</div>
+					</div>
+				
+				</form>
+			</div>
+		
+		</div>
+		
+	</div>
+
+</th:block>
+
+<link rel="stylesheet" href="../css/noticeRegist.css">
+
+
+

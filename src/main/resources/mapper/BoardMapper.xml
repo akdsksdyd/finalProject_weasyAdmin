@@ -80,7 +80,7 @@
 	   where a.teamStatus = 1
 	</select>
 	
-	<!-- dashBoardSummary 화면 차트 데이터  -->
+	<!-- BoardSummary 화면 차트 데이터  -->
 	<select id="getTaskCountChart" resultType="TaskCountChartVO">
 		select a.teamNo teamNo, a.teamName teamName,b.total total
 		from team a

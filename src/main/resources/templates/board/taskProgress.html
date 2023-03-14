@@ -73,12 +73,11 @@
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
-									<li class="page-item" th:if="${pageVO.prev}">
+									<!-- <li class="page-item" th:if="${pageVO.prev}">
 										<a class="page-link" href="#"> 
 											<span aria-hidden="true">&lsaquo;</span>
 										</a>
-									</li>
-									
+									</li> -->
 									<li th:each="btn, status : ${pageVO.pageList}"
 														th:class="${btn == pageVO.page ? 'page-item active' : 'page-item'}">
 										<a class="page-link" th:href="@{taskProgress(page=${btn}, 
@@ -88,12 +87,11 @@
 											[[${btn}]]
 										</a>
 									</li>
-									
-									<li class="page-item" th:if="${pageVO.next}">
+									<!-- <li class="page-item" th:if="${pageVO.next}">
 										<a class="page-link" href="#"> 
 											<span aria-hidden="true">&rsaquo;</span>
 										</a>
-									</li>
+									</li> -->
 									<li class="page-item">
 										<a class="page-link" th:href="@{taskProgress(page=${pageVO.realEnd}, 
 																		   		  amount=${pageVO.amount},

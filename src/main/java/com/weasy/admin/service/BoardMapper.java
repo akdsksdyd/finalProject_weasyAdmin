@@ -17,7 +17,7 @@ import com.weasy.admin.util.BoardCriteria;
 
 @Mapper
 public interface BoardMapper {
-
+	
 	// 샘플데이터 삽입용 
 	public void taskInsert(TaskVO vo);
 	public void taskDetailInsert(TaskDetailVO vo);

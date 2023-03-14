@@ -23,10 +23,10 @@ public class WebConfig implements WebMvcConfigurer {
 
 		// 프리핸들러  
 		// 인터셉터 + 가로챌 경로 추가
-		registry.addInterceptor(userAuthHandler())
-		.addPathPatterns("/board/*")
-		.addPathPatterns("/user/*")
-		.addPathPatterns("/team/*"); 
+//		registry.addInterceptor(userAuthHandler())
+//		.addPathPatterns("/board/*")
+//		.addPathPatterns("/user/*")
+//		.addPathPatterns("/team/*"); 
 
 	}
 
