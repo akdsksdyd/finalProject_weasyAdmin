@@ -20,6 +20,7 @@ public class AWSTest {
 		// C:\Users\이성호\Downloads
 		File file = new File("C:\\Users\\이성호\\Downloads\\test.jpg");
 		String key = "img/test1";
+		String k = "dd";
 		
 		awsS3.upload(file, key);
 		
