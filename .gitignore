@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 application.properties
-.MailService
+MailService.java
 
 ### IntelliJ IDEA ###
 .idea
