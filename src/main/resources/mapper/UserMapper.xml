@@ -24,18 +24,19 @@
 		from users as a
 		inner join loginlog as b
 		on a.userEmail=b.userEmail
-		
 	</select>
 	
+<!-- Pw Reset -->
+	<update id="pwReset">
+		update users set userPw=#{birth} where userEmail=#{userEmail};
+	</update>
+	
 <!-- permission -->
-	<update id="permissionList" >
+	<update id="permission" >
 		UPDATE USERS set permission="Y" where userEmail=#{userEmail};
 	</update>	
 
-<!-- Pw Reset -->
-	<update id="resetPw">
-	UPDATE USERS set userPw="" where userEmail=#{userEmail};
-	</update>	
+	
 
 
 

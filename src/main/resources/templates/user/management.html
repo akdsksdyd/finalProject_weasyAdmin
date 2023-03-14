@@ -4,9 +4,6 @@
 <th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
-	
-	<form id="actionForm" action="management" method="get">
-
 		<div class="user_registration">신규 회원 등록 (승인)</div>
 
 		<br>
@@ -48,14 +45,13 @@
 					<td>[[${vo.birth}]]</td>
 					<td>[[${vo.gender}]]</td>
 					<td>
-						<input class="management_modal_btn" type="submit" name="permission" >
+						<button class="management_modal_btn" type="submit" name="permission" value="hidden" >[[${vo.permission}]]</button>
+						<input type="hidden" th:value="${vo.userEmail}">
 					</td>
 				</tr>
 			</tbody>
 			<!-- console.log(e.target.parentElement.parentElement.children[1].innerHTML); -->
 		</table>
-		
-	</form>
 	</div>
 </th:block>
 
@@ -72,35 +68,29 @@
 		$("thead").show();
 		$(temp).parent().show();
 	});
-	
 </script>
 
 <script th:inline="javascript">
-// permission
-$(document).ready(function(){
-	var permission = $("form[name='actionForm']");
-	$(".management_modal_btn").on("click", function(e){
-		e.preventDefault();
-		console.log(e.target.parentElement.parentElement.children[1].innerHTML);
-		permission.submit();				
-	});
+//permission
+$(".management_modal_btn").click(function(e){
+	window.location.href = "permission/"+$(e.target).next().val();
+	alert("승인완료 메일이 발송되었습니다")
 });
 </script>
-
 <!-- 모달창 -->
 <!-- 
 <div id="basicModal" class="management_modal">
-
 	<div class="management_modal_body">
 		<div class="management_request">회원가입 승인요청</div>
 		<br><br>
-		<div class="management_question">ooo님 회원가입을 승인하시겠습니까?</div>
+		<div class="management_question">회원가입을 승인하시겠습니까?</div>
 		<br>
 			<button class="management_modal_btn_approve">승인</button>
 			<button class="management_modal_btn_refuse">거절</button>
 	</div>
 </div>
-<script src="/js/management_modal.js"></script>
-<link th:href="@{/css/management_modal.css}" rel="stylesheet" />
  -->
+ 
+<script src="/js/userModal.js"></script>
+<link th:href="@{/css/userModal.css}" rel="stylesheet" />
 <link th:href="@{/css/management.css}" rel="stylesheet" />

@@ -17,12 +17,11 @@ public interface UserMapper {
 	//userList
 	public ArrayList<UserVO>userList(@Param("cri") Criteria cri);
 	
+	//pwReset
+	public int pwReset(@Param("userEmail") String userEmail,
+					   @Param("birth") String birth);
+		
 	//permission
-	 public int permission(UserVO permission);
-	
-	
-	
-
-
+	public int permission(String userEmail);
 
 }

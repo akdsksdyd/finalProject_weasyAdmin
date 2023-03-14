@@ -37,6 +37,7 @@
 	width:100%; 
 	border-left:1px solid #ededed;  
 	border-top:1px solid #4588fd;
+	overflow: scroll;
 }
 .user_management tr th{
 	text-align:center; 

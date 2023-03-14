@@ -48,15 +48,17 @@
 					<td>[[${vo.nickname}]]</td>
 					<td>[[${vo.loginDate}]]</td> 
 					<td>
-						<input class="pwreset_modal_btn" type="submit">
+						<button class="pwreset_modal_btn">RESET</button>
+						<input type="hidden" th:value="${vo.userEmail}">
+						<input type="hidden" th:value="${vo.birth}">
 					</td>
 				</tr>
 			</tbody>
 		</table>
+
 	</div>
 
 </th:block>
-
 
 <script>
 /* search */
@@ -73,8 +75,23 @@
 	});
 </script>
 
-<!-- pw Rest 모달창 -->
+<!-- pw Rest -->
+<script>
+$(".pwreset_modal_btn").click(function(e) {
+	
+	if(confirm('비밀번호를 초기화 시키겠습니까?')){
+		alert('초기화완료 메일이 발송되었습니다.');
+		window.location.href = "pwReset/"
+								+$(e.target).next().val()+ "/"
+								+$(e.target).next().next().val();
+		
+	} else {
+		alert('초기화 취소되었습니다.');
+	}
+});	
+</script>
 
+<!-- 
 <form id="actionForm" action="userList" method="get">
 	<div class="userList_modal">
 	
@@ -91,20 +108,7 @@
 </form>
 
 <script src="/js/userList_modal.js"></script>
-<script>
-$(".userList_modal_btn_YES").click(function(e) {
-	e.preventDefault();
-	
-	var userPw = document.querySelector("input[name=userPw]");
-	console.log(userPw);
-	userPw.value = this.value;
-	
-	var form = document.querySelector("form[name=actionForm]");
-	console.log(form);
-	form.submit();
-	
-});
-</script>
 
-<link th:href="@{/css/userList.css}" rel="stylesheet" />
 <link th:href="@{/css/userList_modal.css}" rel="stylesheet" />
+ -->
+<link th:href="@{/css/userList.css}" rel="stylesheet" />
