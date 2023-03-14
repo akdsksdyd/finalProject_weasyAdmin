@@ -13,8 +13,13 @@ public interface UserService {
 	//userList
 	public ArrayList<UserVO> userList(Criteria cri);
 	
+	//pwReset
+	public int pwReset(String userEmail, String birth);
+	
 	//permission
-	 public int permission(UserVO permission);
+	public int permission(String userEmail);
+	
+	
 	
 
 }

@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public class UserAjaxController {
 	
+	public void permmission() {
+		
+	}
 	
+	
+	
+	/*
 	@RequestMapping(value="/getPw", method = {RequestMethod.POST})
 	public String getPw(@RequestParam("resetOk") String resetOk) {		
 		
@@ -17,5 +23,6 @@ public class UserAjaxController {
 		System.out.println(resetOk);
 		return "getPw";
 	}
+	*/
 
 }

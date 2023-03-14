@@ -18,29 +18,32 @@ public class UserServiceImpl implements UserService {
 	public ArrayList<UserVO>managementList(Criteria cri) {
 		return userMapper.managementList(cri);
 	}
-
 	
 	@Override
 	public ArrayList<UserVO> userList(Criteria cri) {
 		return userMapper.userList(cri);
 	}
-
+	
+	@Override
+	public int pwReset(String userEmail, String birth) {
+		return userMapper.pwReset(userEmail, birth);
+	}
 
 	@Override
-	public int permission(UserVO permission) {
-		return userMapper.permission(permission);
+	public int permission(String userEmail) {
+		return userMapper.permission(userEmail);
 	}
 
 
 
 	
+	/*
+	@Override
+	public int permission(UserVO permission) {
+		return userMapper.permission(permission);
+	}
+	*/
 
-
-
-//	@Override
-//	public int userRegist(UserVO vo) {
-//		return userMapper.userRegist(vo);
-//	}
 
 	
 
