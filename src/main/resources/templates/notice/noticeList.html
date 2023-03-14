@@ -10,14 +10,15 @@
 
 			<div class="noticeTitle">• 공지사항</div>
 
-			<form action="searchNotice" name="searchNotice" method="get">
+			<form action="noticeList" name="noticeList" method="get">
 			
 				<!-- 검색창 -->
 				<div class="searchBox">
 					<div class="searchArea">
 						<input type="text" name="searchText" required
-							placeholder=" 검색어를 입력해주세요." class="searchInput" /> <input
-							type="submit" value="검색" class="searchBtn">
+							placeholder=" 검색어를 입력해주세요." class="searchInput" /> 
+						<input type="submit" value="검색" class="searchBtn">
+						<a href="noticeRegist" class="noticeRegistBtn">등록</a>	
 					</div>
 				</div>
 
@@ -28,47 +29,16 @@
 							<th style="width: 10%;">번호</th>
 							<th style="width: 40%;">제목</th>
 							<th style="width: 20%;">작성자</th>
-							<th style="width: 20%;">등록일시</th>
-							<th style="width: 10%;">조회수</th>
-
+							<th style="width: 30%;">등록일시</th>
 						</tr>
 					</thead>
 					<tbody>
 
-						<tr class="progressRow">
-							<td>1</td>
-							<td>테스트 공지 1</td>
-							<td>admin1</td>
-							<td>2023-03-13</td>
-							<td>10</td>
-						</tr>
-						<tr class="progressRow">
-							<td>1</td>
-							<td>테스트 공지 1</td>
-							<td>admin1</td>
-							<td>2023-03-13</td>
-							<td>10</td>
-						</tr>
-						<tr class="progressRow">
-							<td>1</td>
-							<td>테스트 공지 1</td>
-							<td>admin1</td>
-							<td>2023-03-13</td>
-							<td>10</td>
-						</tr>
-						<tr class="progressRow">
-							<td>1</td>
-							<td>테스트 공지 1</td>
-							<td>admin1</td>
-							<td>2023-03-13</td>
-							<td>10</td>
-						</tr>
-						<tr class="progressRow">
-							<td>1</td>
-							<td>테스트 공지 1</td>
-							<td>admin1</td>
-							<td>2023-03-13</td>
-							<td>10</td>
+						<tr class="progressRow" th:each="vo, status : ${list}">
+							<td>[[${status.count}]]</td>
+							<td>[[${vo.noticeTitle}]]</td>
+							<td>[[${vo.userEmail}]]</td>
+							<td>[[${#dates.format(vo.noticeRegdate, 'yyyy-MM-dd HH:mm')}]]</td>
 						</tr>
 
 					</tbody>
@@ -83,29 +53,29 @@
 								<ul class="pagination">
 								
 									<li class="page-item">
-										<a class="page-link" href="#"> 
+										<a class="page-link" th:href="@{noticeList(page=1, 
+																		   		     amount=${pageVO.amount},
+																		   		     searchText=${pageVO.cri.searchText}
+																		   		  )}">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
-									<li class="page-item">
-										<a class="page-link" href="#"> 
-											<span aria-hidden="true">&lsaquo;</span>
+									
+									<li th:each="btn, status : ${pageVO.pageList}"
+														th:class="${btn == pageVO.page ? 'page-item active' : 'page-item'}">
+										<a class="page-link" th:href="@{noticeList(page=${btn}, 
+																		   		   amount=${pageVO.amount},
+																		   		   searchText=${pageVO.cri.searchText}
+																		   		  )}">
+											[[${btn}]]
 										</a>
 									</li>
 									
-									<li >
-										<a class="page-link" href="#">
-											1
-										</a>
-									</li>
-									
 									<li class="page-item">
-										<a class="page-link" href="#"> 
-											<span aria-hidden="true">&rsaquo;</span>
-										</a>
-									</li>
-									<li class="page-item">
-										<a class="page-link" href="#"> 
+										<a class="page-link" th:href="@{noticeList(page=${pageVO.realEnd}, 
+																		   		   amount=${pageVO.amount},
+																		   		   searchText=${pageVO.cri.searchText}
+																		   		   )}"> 
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>
@@ -129,5 +99,22 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/noticeList.css">
 <link rel="stylesheet" href="../css/style.min.css">
+
+<script th:inline="javascript">
+
+//타이틀 누르면 기본 페이지로 이동
+$(".noticeTitle").click(() => {
+	window.location.href = "noticeList";
+})
+
+var msg = JSON.parse('[[${msg}]]');
+if(msg != null){
+	alert(msg);
+}
+
+</script>
+
+
+
 
 
