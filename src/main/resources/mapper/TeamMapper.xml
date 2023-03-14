@@ -50,10 +50,22 @@
 </select>
 
 	  <select id = "getTeamList" resultType="userVO">
-	  		select u.userEmail,u.userName,u.birth,u.nickname,a.teamNo from 
-	  		authority a left outer join users u
-			on a.userEmail = u.userEmail
-			where teamNo = #{teamName}
+	  		SELECT 
+  			  a.userEmail, 
+			  u.userName, 
+			  u.birth, 
+			  u.nickName, 
+			  a.teamNo, 
+			  a.role, 
+			  CASE WHEN a.userEmail = t.userEmail THEN 'T' ELSE 'F' END AS is_same 
+			FROM 
+			  authority a 
+			  JOIN users u ON a.userEmail = u.userEmail 
+			  JOIN team t ON a.teamNO = t.teamNo 
+			WHERE 
+			  a.teamNo = #{teamName}
+			  and u.permission = 'Y' 
+			  order by is_same desc	,a.role
 	  </select>
 	  
 	   <delete id="deleteTeam">
@@ -62,15 +74,27 @@
 	   </delete>
 	   
 	   <select id = "searchId" resultType="userVO">
-	   		select u.userEmail,u.nickname from (select userEmail,nickname from users
+	   		select u.userEmail,u.nickName,u.userName from (select userName,userEmail,nickname from users
 				where userEmail like concat('%', #{searchId},'%')
-				or nickname like concat('%', #{searchId},'%')) u
+				or nickname like concat('%', #{searchId},'%') and permission = 'Y' ) u
 				left outer join authority a
 				on u.userEMail = a.userEmail	
 				where a.teamNo != #{teamNo}
 				or teamNO is null
 				group by u.userEmail
 	   </select>
+	   
+	   <select id="insertTeam">
+	   		insert into authority(userEmail,teamNo,role)
+	   		values(#{userEmail},#{teamNo},#{role})
+	   </select>
+	   
+	   <update id = "updateRole">
+	   		update authority
+	   		set role = #{role}
+	   		where userEmail = #{userEmail}
+	   		and teamNO = #{teamNo}
+	   </update>
 	   
  
  </mapper>

@@ -45,10 +45,36 @@ com.weasy.admin.service.TeamService;
 	
 	@PostMapping("/searchId")
 	public ArrayList<UserVO> searchId(@RequestParam("searchId") String searchId,@RequestParam("teamNo") int teamNo){
-			System.out.println("메일" + searchId);
-			System.out.println("팀번호" + teamNo);
 		ArrayList<UserVO> list = teamService.searchId(searchId, teamNo);
 		return list;
+	}
+	@PostMapping("/insertTeam")
+	public ArrayList<UserVO> insertTeam(@RequestParam("userEmail")String userEmail,@RequestParam("teamNo") int teamNo, @RequestParam("role") int role,@RequestParam("searchId") String searchId) {
+		
+		Integer result = teamService.insertTeam(userEmail, teamNo,role);
+		System.out.println("성공여부" + result);
+		ArrayList<UserVO> list = teamService.searchId(searchId, teamNo);
+		
+		
+		if(result == null) {
+			return list;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	@PostMapping("/updateRole")
+	public String updateRole(@RequestParam("role")int role,@RequestParam("userEmail")String userEmail,@RequestParam("teamNo")int teamNo) {
+		
+		int result = teamService.updateRole(role,userEmail,teamNo);
+		
+		if(result == 1) {
+			return "권한변경" + role;
+		}else {
+			return "권한변경실패" + role;
+		}
+		
 	}
 
 

@@ -20,9 +20,11 @@ public class UserVO { //유저 VO
 	private String gender;
 	private int birth;
 	private String permission;
-	private String nickname;
+	private String nickName;
 	private Timestamp loginDate;
 	private int teamNo;
+	private int role;
+	private String is_same;
 
 }
 //userEmail   VARCHAR(30) primary key NOT NULL,
