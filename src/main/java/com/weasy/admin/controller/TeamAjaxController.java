@@ -70,9 +70,9 @@ com.weasy.admin.service.TeamService;
 		int result = teamService.updateRole(role,userEmail,teamNo);
 		
 		if(result == 1) {
-			return "권한변경" + role;
+			return "권한변경";
 		}else {
-			return "권한변경실패" + role;
+			return "권한변경실패";
 		}
 		
 	}
