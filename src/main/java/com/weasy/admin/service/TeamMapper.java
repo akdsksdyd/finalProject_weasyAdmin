@@ -19,4 +19,6 @@ public interface TeamMapper {
 	public ArrayList<UserVO> getTeamList(String teamName);
 	public int deleteTeam(String userEmail);
 	public ArrayList<UserVO> searchId(@Param("searchId")String searchId,@Param("teamNo")int teamNo);
+	public Integer insertTeam(@Param("userEmail") String userEmail,@Param("teamNo") int teamNo ,@Param("role")int role);
+    public int updateRole(@Param("role") int role,@Param("userEmail")String userEmail,@Param("teamNo") int teamNo);
 }

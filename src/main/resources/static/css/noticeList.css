@@ -3,9 +3,9 @@
 * {padding: 0; margin: 0; box-sizing: border-box;}
 a {text-decoration: none;}
 
-/*************/
-/* 검색, 페이징 */
-/*************/
+/******************/
+/* 검색, 페이징, 등록 */
+/******************/
 
 .noticeWrap {
 	width: 80%;
@@ -26,6 +26,15 @@ a {text-decoration: none;}
 	font-size: 22px;
 	font-weight: 600;
 	cursor: pointer;
+}
+
+.noticeRegistBtn {
+	border: 1px solid #9DCEFF;
+	border-radius: 7px;
+	background-color: #9DCEFF;
+	padding: 10px 10px;
+	font-weight: 600;
+	color: white;
 }
 
 .noticeTitle:hover {

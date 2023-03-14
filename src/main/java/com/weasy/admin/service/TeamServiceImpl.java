@@ -43,6 +43,20 @@ public class TeamServiceImpl implements TeamService{
 		return teamMapper.searchId(searchId, teamNo);
 	}
 
+	@Override
+	public Integer insertTeam(String userEmail, int teamNo, int role) {
+		return teamMapper.insertTeam(userEmail, teamNo, role);
+	}
+
+	@Override
+	public int updateRole(int role,String userEmail,int teamNo) {
+		return teamMapper.updateRole(role,userEmail,teamNo);
+	}
+	
+	
+
+	
+
 	
 	
 	
