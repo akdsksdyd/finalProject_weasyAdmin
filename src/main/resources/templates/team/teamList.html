@@ -103,8 +103,20 @@
 	
 	function detail(e){
 		console.log(e.target.value);
-		location.href = "teamDeatil?page=1&amount="+e.target.value;
+		location.href = "teamDeatil?page=1&amount="+e.target.value + keyword.val() ;
 	}
+	
+
+	  
+	  $(document).ready(() => {
+	    var saveSearch = getUrlParameter('keyword');
+	    $('input[name="keyword"]').val(saveSearch);
+	  });
+
+	  function getUrlParameter(name) {
+	    const urlParams = new URLSearchParams(window.location.search);
+	    return urlParams.get(name);
+	  }
 	
 </script>
 

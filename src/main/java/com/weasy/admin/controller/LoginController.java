@@ -30,7 +30,7 @@ public class LoginController {
 		
 		if(check != 0) {
 			request.getSession().setAttribute("user_id", id);
-			return "redirect:/board/boardSummary";
+			return "redirect:/team/teamList";
 		}else {
 			ra.addFlashAttribute("msg", "아이디 또는 비밀번호를 확인해주세요.");
 			return "redirect:/";
