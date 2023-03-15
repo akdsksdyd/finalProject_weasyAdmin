@@ -9,6 +9,51 @@
 			[[${list[0].teamNo}]]팀 관리창</h2>
 
 		<hr />
+		
+		<div class="currentWrap">
+		
+			<div class="currentList">
+			
+				<div class="currentTitle">
+					• [[${list[0].teamNo}]]팀 태스크 현황
+				</div>
+				
+				<div class="listWrap">
+					
+					
+					<div class="currentCard" th:each="voo, status : ${lists}">
+						<div class="cardText">
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀명</p>
+								<p style="font-size: 12px; padding-top: 5px;">[[${voo.teamName}]]</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">총 태스크 수</p>
+								<p style="font-size: 12px; padding-top: 5px;">[[${voo.taskCount}]]건</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 13px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">프로젝트 종료까지 남은 기간</p>
+								<p style="font-size: 12px; padding-top: 5px;">[[${voo.remain}]]일</p>
+							</div>
+							<div class="cardTextDetail">
+								<p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
+								<p style="font-size: 12px; padding-top: 5px;">[[${voo.teamCount}]]명</p>
+							</div>
+						</div>
+						<div class="cardChart">
+							<div class="cardChartTitle">
+								• 태스크 현황
+							</div> 
+							
+						</div>
+					</div>
+					
+					
+					
+					
+				</div>
+				
+			</div>
 		<table>
 			`
 			<thead>
@@ -18,7 +63,7 @@
 					<th>이메일</th>
 					<th>생년월일</th>
 					<th>유저권한</th>
-					<th></th>
+					<th>추가/삭제</th>
 				</tr>
 			</thead>
 			<tbody class="tablebodys">
@@ -29,14 +74,19 @@
 					<td>[[${vo.nickName}]]</td>
 					<td class="userEmail">[[${vo.userEmail}]]</td>
 					<td>[[${vo.birth}]]</td>
-					<td th:if="${vo.is_same == 'T'} and ${vo.role == 0}">팀장</td>
+					<td class ="cc" th:if="${vo.is_same == 'T'} and ${vo.role == 0}">팀장</td>
 
-					<td><select class="selrole" th:if="${vo.is_same != 'T'}">
+					<td class ="bb" th:unless="${vo.is_same == 'T'} and ${vo.role == 0}">
+						<select class="selrole">
 							<option th:selected="${vo.role == 0}">팀원</option>
 							<option th:selected="${vo.role == 1}">옵저버</option>
-					</select></td>
-					<td th:if="${vo.is_same != 'T'}"><button type="button"
-							class="btn_del" th:value=${vo.userEmail}>삭제</button></td>
+						</select>
+					</td>
+					
+					<td>
+   				 		<button th:if="${vo.is_same != 'T'}" type="button" class="btn_del" th:value="${vo.userEmail}">삭제</button>
+    					<button th:unless="${vo.is_same != 'T'}" class="btn-open-popup">팀원추가</button>
+					</td>
 					<input class="tnodate" type="hidden" th:value=${vo.teamNo}>
 				</tr>
 			</tbody>
@@ -53,12 +103,75 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn-open-popup">팀원추가</button>
+		
+		
+		
+		</div>
 </th:block>
 
 
 
+
+
 <script th:inline="javascript">
+	
+var chartList = JSON.parse('[[${lists}]]');
+var cardList = document.querySelectorAll('.cardChart');
+
+chartList.forEach((chart, idx) => {
+	
+	// 1. canvas 태그 세팅
+	var tag = document.createElement('canvas');
+	tag.id = 'doughnutChart'+idx;
+	tag.style.height = '200px';
+	tag.style.width = '200px';
+	tag.style.marginTop = '20px';
+	
+	// 2. chart 영역에 추가
+	cardList[idx].appendChild(tag);
+	
+	// 3. 추가 후에 chart데이터 세팅
+	var total = chart.taskCount;
+	var progress = chart.progress == 0 ? 0 : (chart.progress/total)*100;
+	var unprogress = chart.unprogress == 0 ? 0: (chart.unprogress/total)*100
+	var complete = chart.complete == 0 ? 0: (chart.complete/total)*100;
+	
+	var ctx = document.getElementById('doughnutChart'+idx);
+	var doughnutChart = new Chart(ctx, {
+		  type: 'doughnut',
+		    data: {
+		      labels: ['완료', '진행예정', '진행중'],
+		      datasets: [{
+		        data: [progress, unprogress, complete],     
+		        backgroundColor: [
+		          'rgba(157, 206, 255, 0.8)',
+		          'rgba(206, 226, 197, 0.8)',
+		          'rgba(251, 197, 197, 0.8)',
+		        ],
+		        borderWidth: 0.5,
+		        scaleBeginAtZero: true,
+		      }
+		    ]
+		  },
+		  options: {
+		    	responsive: false,
+		    	plugins:{
+			        legend: {
+			        	display: true,
+			        	align: 'center',
+			        	reverse: true,
+			        	labels: {
+			        		padding: 3,
+			        		boxWidth: 10,
+			        	}
+			        },
+		        }    
+		    }
+		});
+	
+}); 
+
+
 	$('.selrole').change(function(e) {
 		
 		 var role = $(e.target).val() == "팀원" ? 0 : 1;
@@ -267,3 +380,4 @@ function regetBodyLists(result) {
 	 
 </script>
 <link rel="stylesheet" href="../css/teamDetail.css">
+<link rel="stylesheet" href="../css/teamCurrent.css">

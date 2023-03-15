@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.weasy.admin.command.TaskCurrentCardVO;
 import com.weasy.admin.command.TeamVO;
 import com.weasy.admin.command.UserVO;
+import com.weasy.admin.service.BoardService;
 import com.weasy.admin.service.TeamService;
 import com.weasy.admin.util.Criteria;
 import com.weasy.admin.util.PageVO;
@@ -27,7 +29,6 @@ public class TeamController {
 	public String teamList(Model model,Criteria cri) {
 
 		ArrayList<TeamVO>list = teamService.getList(cri);
-		
 		
 		model.addAttribute("list",list);
 		
@@ -48,10 +49,9 @@ public class TeamController {
 	
 	@GetMapping("/teamDetail")
 	public String teamDetail(@RequestParam("teamName")String teamName,Model model) {
-		System.out.println("팀이름값" + teamName);
-		
+		ArrayList<TaskCurrentCardVO> lists = teamService.teamCurrentList(teamName);
 		ArrayList<UserVO>list = teamService.getTeamList(teamName);
-		
+		model.addAttribute("lists",lists);
 		model.addAttribute("list",list);
 		
 		return "team/teamDetail";
