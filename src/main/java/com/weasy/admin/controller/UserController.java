@@ -38,13 +38,12 @@ public class UserController {
 	 
 	@GetMapping("/management")
 	public String management(Model model,
-			 				@RequestParam(value = "permission",required=false) String permission ,
-			 				Criteria cri) {
+			 				 Criteria cri
+			 				) {
 		
 		ArrayList<UserVO> list = userService.managementList(cri);
 		model.addAttribute("list", list);
 		
-		System.out.println("실행");
 		
 		return "user/management";
 	}
