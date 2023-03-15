@@ -187,3 +187,11 @@ p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
 .btn-search:hover {
   background-color: #3e8e41;
 }
+
+.btm_image2{
+	top:15px;
+	left:15px;
+	max-width: 25px;
+  position: relative;
+  background-color:  #9DCEFF;
+}

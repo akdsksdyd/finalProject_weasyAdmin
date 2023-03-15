@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.weasy.admin.command.TaskCurrentCardVO;
 import com.weasy.admin.command.TeamVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.util.Criteria;
@@ -52,6 +53,14 @@ public class TeamServiceImpl implements TeamService{
 	public int updateRole(int role,String userEmail,int teamNo) {
 		return teamMapper.updateRole(role,userEmail,teamNo);
 	}
+
+	@Override
+	public ArrayList<TaskCurrentCardVO> teamCurrentList(String TeamName) {
+		System.out.println( teamMapper.teamCurrentList(TeamName));
+		return teamMapper.teamCurrentList(TeamName);
+	}
+	
+	
 	
 	
 

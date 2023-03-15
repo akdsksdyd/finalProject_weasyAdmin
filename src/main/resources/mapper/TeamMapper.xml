@@ -18,7 +18,12 @@
  			where teamGoal like concat('%', #{cri.keyword},'%')
  		</if>
  		<if test = " cri.category == 'userEmail'">
- 			where userEmail like concat('%', #{cri.keyword},'%')
+ 			where t.userEmail like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test =  "cri.category == 'defaultsearch' and cri.keyword != null">
+ 			where teamName like concat('%', #{cri.keyword},'%') or
+ 				  teamGoal like concat('%', #{cri.keyword},'%') or
+ 				  t.userEmail like concat('%', #{cri.keyword},'%')
  		</if>
  		<if test = "cri.category != 'defaultsearch' and cri.teamStatus != ''">
  			and teamStatus = #{cri.teamStatus}
@@ -26,10 +31,10 @@
  		<if test = "cri.category == 'defaultsearch' and cri.teamStatus != ''">
  			where teamStatus = #{cri.teamStatus}
  		</if>
+ 		
  		 GROUP BY t.teamNO
  		 limit #{cri.pageStart}, #{cri.amount}
  	</select>
- 	
  	<select id = "getTotal" resultType="int">
  		select count(*) as total from team
  		<if test = " cri.category == 'teamName'">
@@ -40,6 +45,11 @@
  		</if>
  		<if test = " cri.category == 'userEmail'">
  			where userEmail like concat('%', #{cri.keyword},'%')
+ 		</if>
+ 		<if test =  "cri.category == 'defaultsearch' and cri.keyword != null">
+ 			where teamName like concat('%', #{cri.keyword},'%') or
+ 				  teamGoal like concat('%', #{cri.keyword},'%') or
+ 				  userEmail like concat('%', #{cri.keyword},'%')
  		</if>
  		<if test = "cri.category != 'defaultsearch' and cri.teamStatus != ''">
  			and teamStatus = #{cri.teamStatus}
@@ -74,14 +84,16 @@
 	   </delete>
 	   
 	   <select id = "searchId" resultType="userVO">
-	   		select u.userEmail,u.nickName,u.userName from (select userName,userEmail,nickname from users
-				where userEmail like concat('%', #{searchId},'%')
-				or nickname like concat('%', #{searchId},'%') and permission = 'Y' ) u
-				left outer join authority a
-				on u.userEMail = a.userEmail	
-				where a.teamNo != #{teamNo}
-				or teamNO is null
-				group by u.userEmail
+	   		SELECT u.userEmail, u.nickName, u.userName
+				FROM (
+				    SELECT userName, userEmail, nickName
+				    FROM users
+				    WHERE (userEmail LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
+				       OR (nickname LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
+				) u
+				LEFT OUTER JOIN authority a ON u.userEmail = a.userEmail	
+				WHERE a.teamNo != 2 OR teamNO IS NULL
+				GROUP BY u.userEmail;
 	   </select>
 	   
 	   <select id="insertTeam">
@@ -95,6 +107,20 @@
 	   		where userEmail = #{userEmail}
 	   		and teamNO = #{teamNo}
 	   </update>
+	   
+	   <!-- taskCurrent 화면 리스트 데이터 -->
+	<select id="teamCurrentList" resultType="TaskCurrentCardVO">
+		select teamNo,
+			   teamName, 
+		       timestampdiff(day, now(), endDate) remain, 
+		       (select count(*) from task b where b.teamNo = a.teamNo) taskCount,
+		       (select count(*) from task b where b.teamNo = a.teamNo and status = 0) progress,
+		       (select count(*) from task b where b.teamNo = a.teamNo and status = 1) unprogress,
+		       (select count(*) from task b where b.teamNo = a.teamNo and status = 2) complete,
+		       (select count(*) from authority b where b.teamNo = a.teamNo) teamCount
+	   from team a
+	   where a.teamStatus = 'Y' and a.teamNo = #{teamName}
+	</select>
 	   
  
  </mapper>
