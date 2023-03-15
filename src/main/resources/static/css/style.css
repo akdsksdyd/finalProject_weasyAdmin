@@ -1444,14 +1444,14 @@ button.disabled:focus {
   color: #2f49d1;
 }
 
-.sidebar-toggle {
+ .sidebar-toggle {
   opacity: 0.6;
   -webkit-transition: 0.3s all;
   -o-transition: 0.3s all;
   transition: 0.3s all;
-}
+} 
 
-.sidebar-toggle:hover {
+ .sidebar-toggle:hover {
   opacity: 1;
 }
 

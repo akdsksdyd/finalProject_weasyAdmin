@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "aws_region",
+    "type": "java.lang.String",
+    "description": "A description for 'aws_region'"
+  },
+  {
+    "name": "aws_secretAccessKey",
+    "type": "java.lang.String",
+    "description": "A description for 'aws_secretAccessKey'"
+  },
+  {
+    "name": "aws_accessKey",
+    "type": "java.lang.String",
+    "description": "A description for 'aws_accessKey'"
+  }
+]}

@@ -27,4 +27,6 @@ public class BoardAjaxController {
 		return map;
 	}
 	
+	
+	
 }

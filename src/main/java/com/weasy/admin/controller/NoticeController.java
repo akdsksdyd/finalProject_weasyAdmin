@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.weasy.admin.command.noticeListVO;
@@ -42,9 +44,11 @@ public class NoticeController {
 	
 	@PostMapping("/noticeForm")
 	public String noticeForm(noticeListVO vo,
-							 RedirectAttributes ra) {
+							 RedirectAttributes ra,
+							 @RequestPart("fileName") MultipartFile multipartFile) {
 		
 		int result = noticeService.noticeRegist(vo);
+		int file_result = noticeService.noticeFileRegist(multipartFile);
 		
 		if(result == 1) ra.addFlashAttribute("msg", "공지사항이 등록되었습니다.");
 		else ra.addFlashAttribute("msg", "공지사항 등록에 실패했습니다.");
