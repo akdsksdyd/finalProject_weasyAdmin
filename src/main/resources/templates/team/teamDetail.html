@@ -85,7 +85,7 @@
 					
 					<td>
    				 		<button th:if="${vo.is_same != 'T'}" type="button" class="btn_del" th:value="${vo.userEmail}">삭제</button>
-    					<button th:unless="${vo.is_same != 'T'}" class="btn-open-popup">팀원추가</button>
+    					<button th:unless="${vo.is_same != 'T'}" class="btn-open-popup">추가</button>
 					</td>
 					<input class="tnodate" type="hidden" th:value=${vo.teamNo}>
 				</tr>
@@ -275,13 +275,10 @@ $('.modalbodys').on('click','button',function(e){
 	var userEmail = e.target.value;
 	console.log(userEmail);
 	var teamNo = $(".tnodate").val();
-	console.log("팀번호" +teamNo);
 	
 	var role = $(".role").val();
-	console.log(role);
 	
 	var searchId = $(".modalSearch").val();
-	console.log(searchId);
 	
 	 $.ajax({
 		
@@ -309,11 +306,14 @@ $('.modalbodys').on('click','button',function(e){
 });
 		
 var modal = document.querySelector('.modal');
-var btnOpenPopup = document.querySelector('.btn-open-popup');
+/* var btnOpenPopup = document.querySelector('.btn-open-popup');
 
 btnOpenPopup.addEventListener('click', () => {
   modal.style.display = 'block';
-});
+}); */
+$('.tablebodys').on('click',".btn-open-popup", function(e){
+	 modal.style.display = 'block';
+})
 
 modal.addEventListener('click', (event) => {
 	  if (event.target === modal) {
@@ -346,7 +346,7 @@ function regetList(result){
 				str +=	 '<td>' + result[i].userName + '</td>';
 				str +=	 '<td>' + result[i].nickName + '</td>';
 				str += '<td><select class ="role"><option value = 0>팀원</option><option value = 1>옵저버</option></select></td>';
-				str += '<td><button type ="button" class ="btn btn-success" value ='  + result[i].userEmail + '>추가</button></td>';
+				str += '<td><button type ="button" class ="btn-success" value ='  + result[i].userEmail + '>추가</button></td>';
 				str += ' <input class ="tnodate" type = "hidden" value = ' + result[i].userEmail +'>'
 				str += "</tr>";
             }
@@ -369,6 +369,8 @@ function regetBodyLists(result) {
 		}
 		if(result[i].is_same == "F"){
 		str += '<td if = "${vo.is_same != T}"><button type ="button" class ="btn_del" value ='  + result[i].userEmail + '>삭제</button></td>';
+		}else if(result[i].is_same == "T"){
+		str +=	'<td><button class="btn-open-popup">추가</button><td/>'
 		}
 		str += ' <input class ="tnodate" type = "hidden" value = ' + result[i].teamNo+'>'
 		str += "</tr>";
