@@ -32,9 +32,6 @@ public class TeamController {
 		
 		model.addAttribute("list",list);
 		
-		System.out.println("카테" + cri.getCategory());
-		System.out.println("검색명" + cri.getKeyword());
-		
 		int total = teamService.getTotal(cri);
 		
 		System.out.println("토탈" + total);
@@ -55,6 +52,16 @@ public class TeamController {
 		model.addAttribute("list",list);
 		
 		return "team/teamDetail";
+	}
+	
+	@GetMapping("/statusChange")
+	public String statusChange(@RequestParam("teamNo")int teamNo,@RequestParam("teamStatus")String teamStatus) {
+		
+		int result = teamService.statusChange(teamNo,teamStatus);
+		
+		System.out.println("업뎃결과" + result);
+		
+		return "team/teamList";
 	}
 
 }

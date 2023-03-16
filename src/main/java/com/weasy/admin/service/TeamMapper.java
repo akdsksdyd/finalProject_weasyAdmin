@@ -23,4 +23,5 @@ public interface TeamMapper {
 	public Integer insertTeam(@Param("userEmail") String userEmail,@Param("teamNo") int teamNo ,@Param("role")int role);
     public int updateRole(@Param("role") int role,@Param("userEmail")String userEmail,@Param("teamNo") int teamNo);
     public ArrayList<TaskCurrentCardVO> teamCurrentList(String TeamName);
+    public int statusChange(@Param("teamNo")int teamNo,@Param("teamStatus")String teamStatus);
 }

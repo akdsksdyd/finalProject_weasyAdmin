@@ -59,6 +59,13 @@ public class TeamServiceImpl implements TeamService{
 		System.out.println( teamMapper.teamCurrentList(TeamName));
 		return teamMapper.teamCurrentList(TeamName);
 	}
+
+	@Override
+	public int statusChange(int teamNo,String teamStatus) {
+		return teamMapper.statusChange(teamNo,teamStatus);
+	}
+	
+	
 	
 	
 	

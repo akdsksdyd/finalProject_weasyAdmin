@@ -2,125 +2,175 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
- <mapper namespace="com.weasy.admin.service.TeamMapper">
- 
- 
- 
- 	<select id="getList" resultType="TeamVO">
- 		select t.teamNO,t.teamRegdate,t.teamName,t.teamGoal,t.teamGoal,t.userEmail,t.teamStatus, COUNT(a.teamNo) as teamCount
- 		from team t
- 		LEFT OUTER JOIN authority a ON t.teamNo = a.teamNo
- 		<if test = " cri.category == 'teamName'">
- 			where teamName like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test = " cri.category == 'teamGoal'">
- 			where teamGoal like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test = " cri.category == 'userEmail'">
- 			where t.userEmail like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test =  "cri.category == 'defaultsearch' and cri.keyword != null">
- 			where teamName like concat('%', #{cri.keyword},'%') or
- 				  teamGoal like concat('%', #{cri.keyword},'%') or
- 				  t.userEmail like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test = "cri.category != 'defaultsearch' and cri.teamStatus != ''">
- 			and teamStatus = #{cri.teamStatus}
- 		</if>
- 		<if test = "cri.category == 'defaultsearch' and cri.teamStatus != ''">
- 			where teamStatus = #{cri.teamStatus}
- 		</if>
- 		
- 		 GROUP BY t.teamNO
- 		 limit #{cri.pageStart}, #{cri.amount}
- 	</select>
- 	<select id = "getTotal" resultType="int">
- 		select count(*) as total from team
- 		<if test = " cri.category == 'teamName'">
- 			where teamName like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test = " cri.category == 'teamGoal'">
- 			where teamGoal like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test = " cri.category == 'userEmail'">
- 			where userEmail like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test =  "cri.category == 'defaultsearch' and cri.keyword != null">
- 			where teamName like concat('%', #{cri.keyword},'%') or
- 				  teamGoal like concat('%', #{cri.keyword},'%') or
- 				  userEmail like concat('%', #{cri.keyword},'%')
- 		</if>
- 		<if test = "cri.category != 'defaultsearch' and cri.teamStatus != ''">
- 			and teamStatus = #{cri.teamStatus}
- 		</if>
- 		<if test = "cri.category == 'defaultsearch' and cri.teamStatus != ''">
- 			where teamStatus = #{cri.teamStatus}
- 		</if>
-</select>
 
-	  <select id = "getTeamList" resultType="userVO">
-	  		SELECT 
-  			  a.userEmail, 
-			  u.userName, 
-			  u.birth, 
-			  u.nickName, 
-			  a.teamNo, 
-			  a.role, 
-			  CASE WHEN a.userEmail = t.userEmail THEN 'T' ELSE 'F' END AS is_same 
-			FROM 
-			  authority a 
-			  JOIN users u ON a.userEmail = u.userEmail 
-			  JOIN team t ON a.teamNO = t.teamNo 
-			WHERE 
-			  a.teamNo = #{teamName}
-			  and u.permission = 'Y' 
-			  order by is_same desc	,a.role
-	  </select>
-	  
-	   <delete id="deleteTeam">
-	   		delete from authority
-	   		where userEmail = #{userEmail}
-	   </delete>
-	   
-	   <select id = "searchId" resultType="userVO">
-	   		SELECT u.userEmail, u.nickName, u.userName
-				FROM (
-				    SELECT userName, userEmail, nickName
-				    FROM users
-				    WHERE (userEmail LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
-				       OR (nickname LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
-				) u
-				LEFT OUTER JOIN authority a ON u.userEmail = a.userEmail	
-				WHERE a.teamNo != 2 OR teamNO IS NULL
-				GROUP BY u.userEmail;
-	   </select>
-	   
-	   <select id="insertTeam">
-	   		insert into authority(userEmail,teamNo,role)
-	   		values(#{userEmail},#{teamNo},#{role})
-	   </select>
-	   
-	   <update id = "updateRole">
-	   		update authority
-	   		set role = #{role}
-	   		where userEmail = #{userEmail}
-	   		and teamNO = #{teamNo}
-	   </update>
-	   
-	   <!-- taskCurrent 화면 리스트 데이터 -->
+<mapper namespace="com.weasy.admin.service.TeamMapper">
+
+
+	<!-- 팀리스트출력 -->
+	<select id="getList" resultType="TeamVO">
+		select
+		t.teamNO,t.teamRegdate,t.teamName,t.teamGoal,t.teamGoal,t.userEmail,t.teamStatus,
+		COUNT(a.teamNo) as teamCount
+		from team t
+		LEFT OUTER JOIN authority a ON t.teamNo = a.teamNo
+		<if test=" cri.category == 'teamName'">
+			WHERE teamName like concat('%', #{cri.keyword},'%')
+		</if>
+		<if test=" cri.category == 'teamGoal'">
+			WHERE teamGoal like concat('%', #{cri.keyword},'%')
+		</if>
+		<if test=" cri.category == 'userEmail'">
+			WHERE t.userEmail like concat('%', #{cri.keyword},'%')
+		</if>
+		<if test="cri.category == 'defaultsearch' and cri.keyword != null">
+			WHERE (teamName like concat('%', #{cri.keyword},'%')
+			OR teamGoal like concat('%', #{cri.keyword},'%')
+			OR t.userEmail like concat('%', #{cri.keyword},'%'))
+		</if>
+		<if test="cri.category != 'defaultsearch' and cri.teamStatus != ''">
+			AND teamStatus = #{cri.teamStatus}
+		</if>
+		<if test="cri.category == 'defaultsearch' and cri.teamStatus != ''">
+			AND teamStatus = #{cri.teamStatus}
+		</if>
+
+		GROUP BY t.teamNO
+		<if test ="cri.teamSort == 'teamNameDesc'">
+			order by teamName desc
+		</if>
+		<if test ="cri.teamSort == 'teamNameAsc'">
+			order by teamName asc
+		</if>
+		<if test ="cri.teamSort == 'countAsc'">
+			order by teamCount asc
+		</if>
+		<if test ="cri.teamSort == 'countDesc'">
+			order by teamCount Desc
+		</if>
+		<if test ="cri.teamSort == 'dateAsc'">
+			order by teamRegdate asc
+		</if>
+		<if test ="cri.teamSort == 'dateDesc'">
+			order by teamRegdate Desc
+		</if>
+		<if test ="cri.teamSort == 'userAsc'">
+			order by userEmail asc
+		</if>
+		<if test ="cri.teamSort == 'userDesc'">
+			order by userEmail Desc
+		</if>
+		limit #{cri.pageStart}, #{cri.amount}
+		
+	</select>
+	
+	<!-- 페이지네이션용 게시글수 구하기 -->
+	<select id="getTotal" resultType="int">
+		select count(*) as total from team
+		<if test=" cri.category == 'teamName'">
+			where teamName like concat('%', #{cri.keyword},'%')
+		</if>
+		<if test=" cri.category == 'teamGoal'">
+			where teamGoal like concat('%', #{cri.keyword},'%')
+		</if>
+		<if test=" cri.category == 'userEmail'">
+			where userEmail like concat('%', #{cri.keyword},'%')
+		</if>
+		<if test="cri.category == 'defaultsearch' and cri.keyword != null">
+			where (teamName like concat('%', #{cri.keyword},'%') or
+			teamGoal like concat('%', #{cri.keyword},'%') or
+			userEmail like concat('%', #{cri.keyword},'%') )
+		</if>
+		<if test="cri.category != 'defaultsearch' and cri.teamStatus != ''">
+			and teamStatus = #{cri.teamStatus}
+		</if>
+		<if test="cri.category == 'defaultsearch' and cri.teamStatus != ''">
+			and teamStatus = #{cri.teamStatus}
+		</if>
+		
+	</select>
+
+	<!-- 팀원디테일화면 -->
+	<select id="getTeamList" resultType="userVO">
+		SELECT
+		a.userEmail,
+		u.userName,
+		u.birth,
+		u.nickName,
+		a.teamNo,
+		a.role,
+		CASE WHEN a.userEmail = t.userEmail THEN 'T' ELSE 'F' END AS is_same
+		FROM
+		authority a
+		JOIN users u ON a.userEmail = u.userEmail
+		JOIN team t ON a.teamNO = t.teamNo
+		WHERE
+		a.teamNo = #{teamName}
+		and u.permission = 'Y'
+		order by is_same desc ,a.role
+	</select>
+
+	<!-- 팀원삭제 -->
+	<delete id="deleteTeam">
+		delete from authority
+		where userEmail = #{userEmail}
+	</delete>
+
+	<!-- 모달창에서 팀원ID검색 -->
+	<select id="searchId" resultType="userVO">
+		SELECT u.userEmail, u.nickName, u.userName
+		FROM (
+		SELECT userName, userEmail, nickName
+		FROM users
+		WHERE (userEmail LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
+		OR (nickname LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
+		) u
+		LEFT OUTER JOIN authority a ON u.userEmail = a.userEmail
+		WHERE a.teamNo != 2 OR teamNO IS NULL
+		GROUP BY u.userEmail;
+	</select>
+	
+	<!-- 모달창에서 팀원추가 -->
+	<select id="insertTeam">
+		insert into authority(userEmail,teamNo,role)
+		values(#{userEmail},#{teamNo},#{role})
+	</select>
+	
+	<!-- 권한변경 -->
+	<update id="updateRole">
+		update authority
+		set role = #{role}
+		where userEmail = #{userEmail}
+		and teamNO = #{teamNo}
+	</update>
+
+	<!-- taskCurrent 화면 리스트 데이터 -->
 	<select id="teamCurrentList" resultType="TaskCurrentCardVO">
 		select teamNo,
-			   teamName, 
-		       timestampdiff(day, now(), endDate) remain, 
-		       (select count(*) from task b where b.teamNo = a.teamNo) taskCount,
-		       (select count(*) from task b where b.teamNo = a.teamNo and status = 0) progress,
-		       (select count(*) from task b where b.teamNo = a.teamNo and status = 1) unprogress,
-		       (select count(*) from task b where b.teamNo = a.teamNo and status = 2) complete,
-		       (select count(*) from authority b where b.teamNo = a.teamNo) teamCount
-	   from team a
-	   where a.teamStatus = 'Y' and a.teamNo = #{teamName}
+		teamName,
+		timestampdiff(day, now(), endDate) remain,
+		(select count(*) from task b where b.teamNo = a.teamNo) taskCount,
+		(select count(*) from task b where b.teamNo = a.teamNo and status = 0)
+		progress,
+		(select count(*) from task b where b.teamNo = a.teamNo and status = 1)
+		unprogress,
+		(select count(*) from task b where b.teamNo = a.teamNo and status = 2)
+		complete,
+		(select count(*) from authority b where b.teamNo = a.teamNo) teamCount
+		from team a
+		where a.teamStatus = 'Y' and a.teamNo = #{teamName}
 	</select>
-	   
- 
- </mapper>
+	
+	<!-- 팀상태변경 -->
+	<update id="statusChange">
+		update team
+		<if test = "#{teamStatus} == 'Y'">
+		set teamStatus = 'N'
+		</if>
+		<if test = "#{teamStatus} == 'N'">
+		set teamStatus = 'Y'
+		</if>
+		where teamNO = #{teamNo}
+	</update>
+
+
+</mapper>

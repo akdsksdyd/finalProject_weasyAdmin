@@ -4,22 +4,27 @@
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
-	
-	
+
+
 		<form name="actionForm" action="teamList" method="get">
 
 			<input type="hidden" name="teamStatus" value="">
+			<input type="hidden" name="teamSort" value="">
 
 			<div class="search-container">
-			<span class ="teamHeader">팀 관리창</span>
-					<div class="search-category">
-						<select name="category" class = "categorysel">
-							<option value = "defaultsearch" th:selected=" ${ pageVO.cri.category == 'defaultsearch'}">전체검색</option>
-							<option value="teamName" th:selected=" ${ pageVO.cri.category == 'teamName'}">팀명</option>
-							<option value="teamGoal" th:selected=" ${ pageVO.cri.category == 'teamGoal'}">팀목표</option>
-							<option value="userEmail" th:selected=" ${ pageVO.cri.category == 'userEmail'}">팀생성자</option>
-						</select>
-					</div>
+				<span class="teamHeader">팀 관리창</span>
+				<div class="search-category">
+					<select name="category" class="categorysel">
+						<option value="defaultsearch"
+							th:selected=" ${ pageVO.cri.category == 'defaultsearch'}">전체검색</option>
+						<option value="teamName"
+							th:selected=" ${ pageVO.cri.category == 'teamName'}">팀명</option>
+						<option value="teamGoal"
+							th:selected=" ${ pageVO.cri.category == 'teamGoal'}">팀목표</option>
+						<option value="userEmail"
+							th:selected=" ${ pageVO.cri.category == 'userEmail'}">팀생성자</option>
+					</select>
+				</div>
 				<div class="search-box">
 					<input type="text" placeholder="검색어를 입력하세요" name="keyword">
 					<button class="btn-search" type="submit">검색</button>
@@ -39,87 +44,213 @@
 
 				<thead>
 					<tr>
-						<th >NO.</th>
-						<th>팀명</button></th>
-						<th>팀목표</th>
-						<th>팀인원</th>
-						<th>팀 생성일</th>
-						<th>팀 생성자</th>
-						<th>팀 상태</th>
+						<th style="width: 10%"><span>팀번호</span></th>
+						<th style="width: 15%"><span>팀명</span>
+							<button class="btn_sort" type="button" value="teamNameDesc"
+								name="teamSort">
+								<img class="teamSort" src="../img/button/btn_down.png"
+								>
+							</button></th>
+						<th style="width: 15%"><span>팀목표</span></th>
+						<th style="width: 10%"><span>팀인원</span>
+							<button class="btn_sort" type="button" value="countDesc"
+								name="countSort">
+								<img class="countSort" src="../img/button/btn_down.png">
+							</button></th>
+						<th style="width: 20%"><span>팀 생성일</span>
+							<button class="btn_sort" type="button" value="dateDesc"
+								name="dateSort">
+								<img class="dateSort" src="../img/button/btn_down.png">
+							</button></th>
+						<th style="width: 20%"><span>팀 생성자</span>
+							<button class="btn_sort" type="button" value="userDesc"
+								name="userSort">
+								<img class="userSort" src="../img/button/btn_down.png">
+							</button></th>
+						<th style="width: 10%"><span>팀 상태</span></th>
 					</tr>
 				</thead>
 				<tbody class="tablebodys">
 					<tr class="trbodys" th:each=" vo, status : ${list}">
-						<td>[[${vo.teamNo}]]</td>
-						<td style="color : blue; cursor: pointer;" th:onclick="|location.href='@{teamDetail(teamName=${vo.teamNo})}'|">[[${vo.teamName}]] </td>
+						<td class = "tnodate">[[${vo.teamNo}]]</td>
+						<td style="color: blue; cursor: pointer;"
+							th:onclick="|location.href='@{teamDetail(teamName=${vo.teamNo})}'|">[[${vo.teamName}]]
+						</td>
 						<td>[[${vo.teamGoal}]]</td>
 						<td>[[${vo.teamCount}]]</td>
 						<td>[[${ #temporals.format(vo.teamRegdate,'yyyy-MM-dd')}]]</td>
 						<td>[[${vo.userEmail}]]</td>
-						<td>[[${vo.teamStatus== 'Y' ? '진행중' : '종료된 팀' }]]</td>
+						<td>
+						<select class ="changeStatus">
+						<option>
+						[[${vo.teamStatus== 'Y' ? '진행중' : '종료된팀' }]]
+						</option>
+						<option>
+						[[${vo.teamStatus== 'Y' ? '종료된팀' : '진행팀' }]]
+						</option>
+						
+						</select> </td>
+						<!-- <input type = "hidden" th:value = #{vo.teamNo}> -->
 					</tr>
 				</tbody>
 
 			</table>
 
-			<div class="page">
-				<ul>
-					<!-- <li><a><i class="fa fa-angle-double-left"
-							aria-hidden="true"></i></a></li>
-					<li style="margin-right: 5px;" th:if=${pageVO.prev}><a><i
-							class="fa fa-angle-left" aria-hidden="true"></i></a></li> -->
-
-					<th:block th:each=" page : ${pageVO.pageList}">
-						<li th:class="${page == pageVO.page ? 'on' : ''}"><a
-							th:href="@{teamList(page=${page}, amount=${pageVO.amount},
+			<!-- 페이지네이션 -->
+				<div class="progressPagingWrap">
+					<div class="progressPaging">
+						<div class="pagingBtnWrap">
+						
+							<nav>
+								<ul class="pagination">
+								
+									<li class="page-item">
+										<a class="page-link" th:href="@{teamList(page=1, amount=${pageVO.amount},
 							teamStatus = ${pageVO.cri.teamStatus},
+							teamSort = ${pageVO.cri.teamSort},
 							category = ${pageVO.cri.category},
-							keyword = ${pageVO.cri.keyword})}
-							">[[${page}]]</a></li>
-					</th:block>
-<!-- 
-					<li style="margin-left: 5px;" th:if=${pageVO.next}><a><i
-							class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-					<li><a
-						th:href="@{teamList(page=${pageVO.realEnd}, amount=${pageVO.amount})}"><i
-							class="fa fa-angle-double-right" aria-hidden="true"></i></a></li> -->
-				</ul>
-			</div>
-
+							keyword = ${pageVO.cri.keyword})}"> 
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									 <li class="page-item" th:if="${pageVO.prev}">
+										<a class="page-link" th:href="@{teamList(page=${pageVO.realEnd}, amount=${pageVO.amount},
+							teamStatus = ${pageVO.cri.teamStatus},
+							teamSort = ${pageVO.cri.teamSort},
+							category = ${pageVO.cri.category},
+							keyword = ${pageVO.cri.keyword})}"> 
+											<span aria-hidden="true">&lsaquo;</span>
+										</a>
+									</li> 
+									<li th:each="page : ${pageVO.pageList}"
+														th:class="${page == pageVO.page ? 'page-item active' : 'page-item'}">
+										<a class="page-link" th:href="@{teamList(page=${page}, amount=${pageVO.amount},
+							teamStatus = ${pageVO.cri.teamStatus},
+							teamSort = ${pageVO.cri.teamSort},
+							category = ${pageVO.cri.category},
+							keyword = ${pageVO.cri.keyword})}">
+											[[${page}]]
+										</a>
+									</li>
+									 <li class="page-item" th:if="${pageVO.next}">
+										<a class="page-link" th:href="@{teamList(page=${pageVO.realEnd}, amount=${pageVO.amount},
+							teamStatus = ${pageVO.cri.teamStatus},
+							teamSort = ${pageVO.cri.teamSort},
+							category = ${pageVO.cri.category},
+							keyword = ${pageVO.cri.keyword})}"> 
+											<span aria-hidden="true">&rsaquo;</span>
+										</a>
+									</li> 
+									<li class="page-item">
+										<a class="page-link" th:href="@{teamList(page=${pageVO.realEnd}, amount=${pageVO.amount},
+							teamStatus = ${pageVO.cri.teamStatus},
+							teamSort = ${pageVO.cri.teamSort},
+							category = ${pageVO.cri.category},
+							keyword = ${pageVO.cri.keyword})}"> 
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+									
+								</ul>
+							</nav>
+							
+						</div>
+					</div>
+				</div>
+		
 		</form>
 </th:block>
 
 <script th:inline="javascript">
-	var handleAmount = document.getElementById("handleAmount");
-	handleAmount.onchange = function(e) {
-		// hidden input의 값을 변경
-		var hiddenInput = document.querySelector("input[name=teamStatus]");
-		hiddenInput.value = this.value;
-
-		// form 제출
 		var form = document.querySelector("form[name=actionForm]");
+			var handleAmount = document.getElementById("handleAmount");
+			handleAmount.onchange = function(e) {
+			var hiddenStatus = document.querySelector("input[name=teamStatus]");
+			hiddenStatus.value = e.target.value;
 		form.submit();
+
 	}
 	
 	function detail(e){
 		console.log(e.target.value);
-		location.href = "teamDeatil?page=1&amount="+e.target.value + keyword.val() ;
+		location.href = "teamDeatil?page=1&amount="+e.target.value + keyword.val();
 	}
 	
-
-	  
+	/* $('.trbodys').on('change','.changeStatus',function(e){
+		if(confirm("팀상태를 변경하시겠습니까?")){
+			var teamNo = $(e.target).parent().siblings().eq(0).html();
+			var teamStatus = e.target.value;
+			
+			console.log(teamNo);
+			console.log(teamStatus);
+			
+			if(teamStatus == '종료된 팀'){
+				teamStatus = 'N'
+			} else{
+				teamStatus = 'Y'
+			}
+			
+			 location.href = "/team/statusChange?teamNo=" + teamNo + "&teamStatus=" + teamStatus; 
+		}
+		}); */
 	  $(document).ready(() => {
 	    var saveSearch = getUrlParameter('keyword');
 	    $('input[name="keyword"]').val(saveSearch);
+	     var saveSort = getUrlParameter('teamSort');
+	    
+	    if(saveSort == 'teamNameDesc'){
+	    	$(".teamSort").attr("src", "../img/button/btn_up.png");
+	    	$("button[name='teamSort']").val("teamNameAsc");
+	    }else if(saveSort == 'teamNameAsc'){
+	    	$(".teamSort").attr("src", "../img/button/btn_down.png");
+	 		$("button[name='teamSort']").val("teamNameDesc");
+	    }
+	    
+	    if(saveSort == 'countDesc'){
+	    	$(".countSort").attr("src", "../img/button/btn_up.png");
+	    	$("button[name='countSort']").val("countAsc");
+	    }else if(saveSort == 'countAsc'){
+	    	$(".countSort").attr("src", "../img/button/btn_down.png");
+	 		$("button[name='countSort']").val("countDesc");
+	    }
+	    
+	    if(saveSort == 'dateDesc'){
+	    	$(".dateSort").attr("src", "../img/button/btn_up.png");
+	    	$("button[name='dateSort']").val("dateAsc");
+	    }else if(saveSort == 'dateAsc'){
+	    	$(".teamSort").attr("src", "../img/button/btn_down.png");
+	 		$("button[name='dateSort']").val("dateDesc");
+	    }
+	    
+	    if(saveSort == 'userDesc'){
+	    	$(".userSort").attr("src", "../img/button/btn_up.png");
+	    	$("button[name='userSort']").val("userAsc");
+	    }else if(saveSort == 'userAsc'){
+	    	$(".teamSort").attr("src", "../img/button/btn_down.png");
+	 		$("button[name='userSort']").val("userDesc");
+	    } 
+	    
+	    
+	    
 	  });
 
 	  function getUrlParameter(name) {
 	    const urlParams = new URLSearchParams(window.location.search);
 	    return urlParams.get(name);
 	  }
-	
+	  
+	   $(".btn_sort").click(function(e){
+		  var form = document.querySelector("form[name=actionForm]");
+		  var hiddenSort = document.querySelector("input[name=teamSort]");
+		  hiddenSort.value = e.target.parentElement.value;
+		 var hiddenStatus = document.querySelector("input[name=teamStatus]");
+		 hiddenStatus.value = $("#handleAmount").val();
+		  form.submit(); 
+	  }) 
 </script>
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/TeamList.css">
+<link rel="stylesheet" href="../css/style.css">
