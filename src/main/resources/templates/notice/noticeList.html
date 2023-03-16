@@ -5,20 +5,20 @@
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
-	
+
 		<div class="noticeWrap">
 
 			<div class="noticeTitle">• 공지사항</div>
 
 			<form action="noticeList" name="noticeList" method="get">
-			
+
 				<!-- 검색창 -->
 				<div class="searchBox">
 					<div class="searchArea">
 						<input type="text" name="searchText" required
-							placeholder=" 검색어를 입력해주세요." class="searchInput" /> 
-						<input type="submit" value="검색" class="searchBtn">
-						<a href="noticeRegist" class="noticeRegistBtn">등록</a>	
+							placeholder=" 검색어를 입력해주세요." class="searchInput" /> <input
+							type="submit" value="검색" class="searchBtn"> <a
+							href="noticeRegist" class="noticeRegistBtn">등록</a>
 					</div>
 				</div>
 
@@ -34,11 +34,12 @@
 					</thead>
 					<tbody>
 
-						<tr class="progressRow" th:each="vo, status : ${list}">
+						<tr class="noticeRow" th:each="vo, status : ${list}">
+							<input type="hidden" th:value="${vo.noticeNo}" />
 							<td>[[${status.count}]]</td>
 							<td>[[${vo.noticeTitle}]]</td>
 							<td>[[${vo.userEmail}]]</td>
-							<td>[[${#dates.format(vo.noticeRegdate, 'yyyy-MM-dd HH:mm')}]]</td>
+							<td>[[${#dates.format(vo.noticeRegdate, 'yyyy-MM-dd')}]]</td>
 						</tr>
 
 					</tbody>
@@ -48,55 +49,84 @@
 				<div class="noticePagingWrap">
 					<div class="noticePaging">
 						<div class="pagingBtnWrap">
-						
+
 							<nav>
 								<ul class="pagination">
-								
-									<li class="page-item">
-										<a class="page-link" th:href="@{noticeList(page=1, 
+
+									<li class="page-item"><a class="page-link"
+										th:href="@{noticeList(page=1, 
 																		   		     amount=${pageVO.amount},
 																		   		     searchText=${pageVO.cri.searchText}
 																		   		  )}">
 											<span aria-hidden="true">&laquo;</span>
-										</a>
-									</li>
-									
+									</a></li>
+
 									<li th:each="btn, status : ${pageVO.pageList}"
-														th:class="${btn == pageVO.page ? 'page-item active' : 'page-item'}">
-										<a class="page-link" th:href="@{noticeList(page=${btn}, 
+										th:class="${btn == pageVO.page ? 'page-item active' : 'page-item'}">
+										<a class="page-link"
+										th:href="@{noticeList(page=${btn}, 
 																		   		   amount=${pageVO.amount},
 																		   		   searchText=${pageVO.cri.searchText}
 																		   		  )}">
-											[[${btn}]]
-										</a>
+											[[${btn}]] </a>
 									</li>
-									
-									<li class="page-item">
-										<a class="page-link" th:href="@{noticeList(page=${pageVO.realEnd}, 
+
+									<li class="page-item"><a class="page-link"
+										th:href="@{noticeList(page=${pageVO.realEnd}, 
 																		   		   amount=${pageVO.amount},
 																		   		   searchText=${pageVO.cri.searchText}
-																		   		   )}"> 
+																		   		   )}">
 											<span aria-hidden="true">&raquo;</span>
-										</a>
-									</li>
-									
+									</a></li>
+
 								</ul>
 							</nav>
-							
+
 						</div>
 					</div>
 				</div>
 
 			</form>
 
-			
+
 		</div>
-	
+
+		<div class="noticeModal">
+			<div class="noticeModalBody">
+				<div class='noticeModalTitle'></div>
+
+				<div class="contentWrap">
+
+					<div class="infoBox">
+						<div class="writer"></div>
+						<div class="regdate"></div>
+					</div>
+
+					<div class="imgBox">
+						<!-- 이미지 영역 -->
+					</div>
+
+					<div class="contentBox"></div>
+
+					<div class="btnBox">
+						<div class="btnBox2">
+							<a href="noticeModify" class="mndBtn">수정</a>
+							<button class="mndBtn deleteBtn">삭제</button>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<!-- main-wrapper -->
 	</div>
 
 </th:block>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/noticeList.css">
 <link rel="stylesheet" href="../css/style.min.css">
 
@@ -112,9 +142,74 @@ if(msg != null){
 	alert(msg);
 }
 
+// 디테일 모달 세팅
+$(".noticeRow").click((e) => {
+	
+	var key = $(e.target).closest('tr').find('input').val();
+	
+	$.ajax({
+		url: "../noticeDetail/"+key,
+		type: "get",
+		success: (res) => {
+			
+			console.log(res);
+			var date = new Date(res.noticeRegdate);
+			
+			// 텍스트
+			$('.noticeModalTitle').html("◉ " + res.noticeTitle);
+			$('.writer').html("작성자: " + res.userEmail);
+			$('.regdate').html("등록일시: " + date.getFullYear()+"-"+
+										   (date.getMonth()+1)+"-"+
+										    date.getDate()+" "+
+										    date.getHours()+":"+
+										    date.getMinutes());
+			$('.contentBox').html(res.noticeContent);
+			
+			// 이미지
+			if(res.fileList != undefined){
+				res.fileList.forEach(src => {
+					$('.imgBox').append('<img alt="img" src="'+ src +'">');
+				})
+			}
+			
+			
+			// 버튼
+			$('.mndBtn')[0].href = 'noticeModify/' + res.noticeNo;
+			
+			// 키값 숨기기
+			$('.btnBox2').append('<input type="hidden" value="'+ res.noticeNo +'" />');
+				
+			
+		},
+		error: (err) => {
+			console.log("에러");
+		}
+		
+	})
+	
+	// 데이터 삽입 후 모달 켜기
+	$('.noticeModal').css({'display':'block'});
+	
+});
+
+//디테일 모달 끄기
+$('.noticeModal').click(() => {
+	
+	// 모달에 그려진 데이터 지우기
+	$('.imgBox').html('');
+	$('.noticeModal').css({'display':'none'});
+	
+	// input 태그 지우기
+});
+
+// 공지사항 삭제 요청
+$('.deleteBtn').click((e) => {
+	
+	// ajax post 형식으로 key값 전송
+	var key = $(e.target).closest('.btnBox2').find('input').val();
+	console.log(key);
+	
+	
+})
+
 </script>
-
-
-
-
-

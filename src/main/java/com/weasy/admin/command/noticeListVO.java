@@ -1,6 +1,7 @@
 package com.weasy.admin.command;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +20,9 @@ public class noticeListVO { //공지사항 리스트 VO
 	private Timestamp noticeRegdate;
 	private String noticeLevel;
 	private String userEmail;
+	
+	// 하나의 공지에 여러 사진일 수 있으니 리스트로 처리
+	private ArrayList<String> fileList;
 
 }
 //noticeNo   INT primary key auto_increment,

@@ -6,7 +6,7 @@
 
 	<div class="main-wrapper">
 
-		<div class="summaryChartWrap">
+		<div class="summaryChartWrap" th:if="${dataMap != null}">
 
 			<div class="chartWrap">
 
@@ -110,164 +110,164 @@
 <script th:inline="javascript">
 
 if(JSON.parse('[[${dataMap}]]') != null){
-// 넘어온 데이터 받기
-var dataMap = JSON.parse('[[${dataMap}]]');
-
-// 1. 태스크 수 상위 3팀 차트
-const ctx1 = document.getElementById('barChart1');
-const barChart1 = new Chart(ctx1, {
-    type: 'bar',
-    data: {
-        labels: dataMap.taskCountChart.map(item => item.teamName),
-        datasets: [{
-            data: dataMap.taskCountChart.map(item => item.total),
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-    	responsive: false,
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
-        plugins:{
-            legend: {
-                display: false
-            },
-        }
-    }
-});
-
-// 2. 완료 태스크 수 상위 3팀 차트
-const ctx2 = document.getElementById('barChart2');
-const barChart2 = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-    	labels: dataMap.completeTaskChart.map(item => item.teamName),
-   	    datasets: [{
-    	    data: dataMap.completeTaskChart.map(item => item.complete),
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-    	responsive: false,
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
-        plugins:{
-            legend: {
-                display: false
-            },
-        }
-    }
-});
-
-// 3. 진행중 태스크 수 상위 3팀
-const ctx3 = document.getElementById('barChart3');
-const barChart3 = new Chart(ctx3, {
-    type: 'bar',
-    data: {
-        labels: dataMap.progressingTaskChart.map(item => item.teamName),
-        datasets: [{
-            data: dataMap.progressingTaskChart.map(item => item.progressing),
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-    	responsive: false,
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
-        plugins:{
-            legend: {
-                display: false
-            },
-        }
-    }
-});
-
-// 4. 진행중 프로젝트 전체 현황(도넛차트)
-var doing = 0;
-var todo = 0;
-var done = 0;
-
-dataMap.totalTaskProgress.forEach(n => {
-	if(n == 1) doing++;
-	else if(n == 2) todo++;
-	else done++;
-})
-var total = doing + todo + done;
-
-
-const ctx4 = document.getElementById('doughnutChart');
-const doughnutChart = new Chart(ctx4, {
-	  type: 'doughnut',
+	// 넘어온 데이터 받기
+	var dataMap = JSON.parse('[[${dataMap}]]');
+	
+	// 1. 태스크 수 상위 3팀 차트
+	const ctx1 = document.getElementById('barChart1');
+	const barChart1 = new Chart(ctx1, {
+	    type: 'bar',
 	    data: {
-	      labels: ['완료', '진행예정', '진행중'],
-	      datasets: [{
-	        data: [Math.floor((done/total)*100), Math.floor((todo/total)*100), Math.floor((doing/total)*100)],     
-	        backgroundColor: [
-	        	'rgba(157, 206, 255, 0.8)',
-		        'rgba(206, 226, 197, 0.8)',
-		        'rgba(251, 197, 197, 0.8)',
-	        ],
-	        borderWidth: 1,
-	        scaleBeginAtZero: true,
-	      }
-	    ]
-	  },
-	  options: {
+	        labels: dataMap.taskCountChart.map(item => item.teamName),
+	        datasets: [{
+	            data: dataMap.taskCountChart.map(item => item.total),
+	            backgroundColor: [
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	            ],
+	            borderColor: [
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
 	    	responsive: false,
-	    	plugins:{
-		        legend: {
-		        	display: true,
-		        	align: 'end',
-		        	reverse: true,
-		        	labels: {
-		        		padding: 5,
-		        		boxWidth: 20,
-		        	}
-		        },
-	        }    
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        },
+	        plugins:{
+	            legend: {
+	                display: false
+	            },
+	        }
 	    }
 	});
+	
+	// 2. 완료 태스크 수 상위 3팀 차트
+	const ctx2 = document.getElementById('barChart2');
+	const barChart2 = new Chart(ctx2, {
+	    type: 'bar',
+	    data: {
+	    	labels: dataMap.completeTaskChart.map(item => item.teamName),
+	   	    datasets: [{
+	    	    data: dataMap.completeTaskChart.map(item => item.complete),
+	            backgroundColor: [
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	            ],
+	            borderColor: [
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	    	responsive: false,
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        },
+	        plugins:{
+	            legend: {
+	                display: false
+	            },
+	        }
+	    }
+	});
+	
+	// 3. 진행중 태스크 수 상위 3팀
+	const ctx3 = document.getElementById('barChart3');
+	const barChart3 = new Chart(ctx3, {
+	    type: 'bar',
+	    data: {
+	        labels: dataMap.progressingTaskChart.map(item => item.teamName),
+	        datasets: [{
+	            data: dataMap.progressingTaskChart.map(item => item.progressing),
+	            backgroundColor: [
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	    	responsive: false,
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        },
+	        plugins:{
+	            legend: {
+	                display: false
+	            },
+	        }
+	    }
+	});
+	
+	// 4. 진행중 프로젝트 전체 현황(도넛차트)
+	var doing = 0;
+	var todo = 0;
+	var done = 0;
+	
+	dataMap.totalTaskProgress.forEach(n => {
+		if(n == 1) doing++;
+		else if(n == 2) todo++;
+		else done++;
+	})
+	var total = doing + todo + done;
+	
+	
+	const ctx4 = document.getElementById('doughnutChart');
+	const doughnutChart = new Chart(ctx4, {
+		  type: 'doughnut',
+		    data: {
+		      labels: ['완료', '진행예정', '진행중'],
+		      datasets: [{
+		        data: [Math.floor((done/total)*100), Math.floor((todo/total)*100), Math.floor((doing/total)*100)],     
+		        backgroundColor: [
+		        	'rgba(157, 206, 255, 0.8)',
+			        'rgba(206, 226, 197, 0.8)',
+			        'rgba(251, 197, 197, 0.8)',
+		        ],
+		        borderWidth: 1,
+		        scaleBeginAtZero: true,
+		      }
+		    ]
+		  },
+		  options: {
+		    	responsive: false,
+		    	plugins:{
+			        legend: {
+			        	display: true,
+			        	align: 'end',
+			        	reverse: true,
+			        	labels: {
+			        		padding: 5,
+			        		boxWidth: 20,
+			        	}
+			        },
+		        }    
+		    }
+		});
 
 }
 </script>

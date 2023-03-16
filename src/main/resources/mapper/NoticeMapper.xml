@@ -32,4 +32,45 @@
  		values(#{noticeTitle}, #{noticeContent}, now(), #{noticeLevel}, #{userEmail})
  	</insert>
  	
+ 	<!-- 파일 등록 시 새로 등록될 noticeNo(PK)값 가져오기 -->
+ 	<select id="getNoticeNoMax" resultType="int">
+ 		select max(noticeNo) from noticeList
+ 	</select>
+ 	
+ 	<!-- 공지사항 파일 등록 -->
+ 	<insert id="noticeFileRegist">
+		 insert into noticeUpload(noticeNo, filePath) 
+		 values(#{noticeNo}, #{filePath})	
+ 	</insert>
+ 	
+ 	<!-- 공지사항 디테일 화면 -->
+ 	<select id="getNoticeDetail" resultMap="detailMap">
+ 		select a.noticeNo, noticeTitle, noticeContent, noticeRegdate, noticeLevel, userEmail, filePath 
+ 		from (select * from noticeList where noticeNo = #{noticeNo}) a
+		left outer join (select noticeNo, filePath from noticeUpload) b
+		on a.noticeNo = b.noticeNo;
+ 	</select>
+ 	
+ 	<resultMap type="noticeListVO" id="detailMap">
+ 		<result column="noticeNo" property="noticeNo"/>
+ 		<result column="noticeTitle" property="noticeTitle"/>
+ 		<result column="noticeContent" property="noticeContent"/>
+ 		<result column="noticeRegdate" property="noticeRegdate"/>
+ 		<result column="noticeLevel" property="noticeLevel"/>
+ 		<result column="userEmail" property="userEmail"/>
+ 		<collection property="fileList" resultMap="fileListElement"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="string" id="fileListElement">
+ 		<result column="filePath" property="filePath"/>
+ 	</resultMap>
+ 	
+ 	<!-- 공지사항 업데이트 -->
+ 	<update id="noticeUpdate">
+ 		update noticeList set noticeTitle = #{noticeTitle}, 
+ 							  noticeContent = #{noticeContent}, 
+ 							  noticeLevel = if(#{noticeLevel} = 'on', 'a', 'b') 
+ 						  where noticeNo = #{noticeNo};
+ 	</update>
+ 	
  </mapper>
