@@ -15,7 +15,15 @@ public interface NoticeService {
 	
 	// 공지사항 글 등록
 	public int noticeRegist(noticeListVO vo);
-	// 공지사항 파일 등록
+	// 공지사항 파일(insert용) 등록
 	public int noticeFileRegist(MultipartFile multipartFile);
+	// 공지사항 파일(update용) 등록
+	public int noticeFileRegist(MultipartFile multipartFile, int noticeNo);
+	
+	// 공지사항 디테일 화면
+	public noticeListVO getNoticeDetail(int noticeNo);
+	
+	// 공지사항 수정
+	public int noticeUpdate(noticeListVO vo);
 	
 }

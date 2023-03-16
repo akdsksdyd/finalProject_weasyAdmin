@@ -57,6 +57,7 @@
 	<resultMap type="TaskVO" id="rateMap">
 		<result column="taskNo" property="taskNo" />
 		<result column="title" property="title" />
+		<!-- 속성이 멤버 변수에 있는 리스트명 -->
 		<collection property="progressList" resultMap="progressListElement" />
 	</resultMap>
 	

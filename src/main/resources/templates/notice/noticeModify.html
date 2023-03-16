@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+
 <th:block
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
-	
+
 	<div class="main-wrapper">
 		
 		<div class="noticeRegistWrap">
 			
-				<div class="noticeRegistTitle">• 공지사항 등록</div>
+				<div class="noticeRegistTitle">• 공지사항 수정</div>
 				
 				<div class="formWrap">
-					<form name="noticeForm" action="noticeForm" method="post" enctype="multipart/form-data">
+					<form name="noticeUpdateForm" action="noticeUpdateForm" method="post" enctype="multipart/form-data">
+						
+						<input type="hidden" name="noticeNo" th:value="${vo.noticeNo}">
 						
 						<div class="inputBox">
 							<div class="inputTitle">중요도</div> 
-							<input type="checkbox" name="noticeLevel" value="중요" style="width: 25px; height: 25px; position: relative; top: 6px;"/>
+							<input type="checkbox" name="noticeLevel" style="width: 25px; height: 25px; position: relative; top: 6px;"/>
 							<span style="font-weight: 600; color: #0061f7">중요 공지 설정</span>
 						</div>
 						<br/>
 						<div class="inputBox">
 							<div class="inputTitle">제목</div> 
-							<input type="text" name="noticeTitle" style="width: 80%;"/>
+							<input type="text" name="noticeTitle" style="width: 80%;" th:value="${vo.noticeTitle}"/>
 						</div>
 						</br>
 						<div class="inputBox">
 							<div class="inputTitle">작성자</div> 
-							<input type="text" name="userEmail" value="admin1" readonly style="width: 80%;" />
+							<input type="text" name="userEmail" value="admin1" readonly style="width: 80%;"/>
 						</div>	
 						</br>
 						<div class="inputBox">
 							<div class="inputTitle">내용</div>
-							<textarea class="textBox" name="noticeContent" required></textarea> 
+							<textarea class="textBox" name="noticeContent" required>[[${vo.noticeContent}]]</textarea> 
 						</div>
 						</br>
 						<div class="inputBox">
@@ -40,7 +43,7 @@
 						</div>
 						<div class="inputBox" style="margin-top: 20px;">
 							<div class="inputBtnBox">
-								<input type="submit" value="등록" />
+								<input type="submit" value="수정" />
 								<input type="button" value="취소" />		
 							</div>
 						</div>
@@ -54,5 +57,16 @@
 
 </th:block>
 
-<link rel="stylesheet" href="../css/noticeRegist.css">
+<link rel="stylesheet" href="../css/noticeModify.css">
+
+<script th:inline="javascript">
+
+var vo = JSON.parse('[[${vo}]]');
+
+if(vo.noticeLevel == 'a'){
+	$('input[type="checkbox"]').attr('checked', 'checked');
+}
+
+
+</script>
 

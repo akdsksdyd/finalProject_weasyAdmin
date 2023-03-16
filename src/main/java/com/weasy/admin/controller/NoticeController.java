@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -47,11 +48,57 @@ public class NoticeController {
 							 RedirectAttributes ra,
 							 @RequestPart("fileName") MultipartFile multipartFile) {
 		
+		// 공지사항 글 업로드
 		int result = noticeService.noticeRegist(vo);
-		int file_result = noticeService.noticeFileRegist(multipartFile);
 		
-		if(result == 1) ra.addFlashAttribute("msg", "공지사항이 등록되었습니다.");
+		// 공지사항 글 업로드 후 파일 정보 업로드
+		int file_result = -1;
+		if(!multipartFile.isEmpty()) {
+			file_result = noticeService.noticeFileRegist(multipartFile);
+		}
+		
+		if(result == 1 && (file_result == -1 || file_result == 1)) ra.addFlashAttribute("msg", "공지사항이 등록되었습니다.");
 		else ra.addFlashAttribute("msg", "공지사항 등록에 실패했습니다.");
+		
+		return "redirect:/notice/noticeList";
+	}
+	
+	@GetMapping("/noticeModify")
+	public String noticeModify() {
+		
+		return "notice/noticeModify";
+	}
+	
+	@GetMapping("/noticeModify/{noticeNo}")
+	public String noticeModify(@PathVariable("noticeNo") int noticeNo,
+							   RedirectAttributes ra) {
+
+		ra.addFlashAttribute("vo", noticeService.getNoticeDetail(noticeNo));
+		
+		return "redirect:/notice/noticeModify";
+	}
+			
+	@GetMapping("/noticeDelete/{noticeNo}")
+	public String noticeDelete(@PathVariable("noticeNo") int noticeNo) {
+		
+		System.out.println(noticeNo);
+		
+		return "redirect:/notice/noticeList";
+	}
+	
+	@PostMapping("/noticeUpdateForm")
+	public String noticeUpdateForm(noticeListVO vo,
+								   RedirectAttributes ra,
+								   @RequestPart("fileName") MultipartFile multipartFile) {
+		
+		int result = noticeService.noticeUpdate(vo);
+		int file_result = -1;
+		if(!multipartFile.isEmpty()) {
+			file_result = noticeService.noticeFileRegist(multipartFile, vo.getNoticeNo());
+		}
+		
+		if(result == 1 && (file_result == -1 || file_result == 1)) ra.addFlashAttribute("msg", "공지사항이 수정되었습니다.");
+		else ra.addFlashAttribute("msg", "공지사항 수정에 실패했습니다.");
 		
 		return "redirect:/notice/noticeList";
 	}
