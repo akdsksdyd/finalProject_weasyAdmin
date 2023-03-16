@@ -13,11 +13,14 @@ public interface UserService {
 	//userList
 	public ArrayList<UserVO> userList(Criteria cri);
 	
-	//pwReset
+	//PW Reset
 	public int pwReset(String userEmail, String birth);
 	
-	//permission
+	//가입 승인
 	public int permission(String userEmail);
+
+	//권한 박탈
+	public int authority(String permission);
 	
 	
 	

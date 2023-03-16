@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!-- 부트스트랩 css 사용 -->
-<link rel="stylesheet" href="/css/bootstrap.css">
-
-<script type="text/javascript" src="/js/bootstrap.js"></script>
 
 <th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
@@ -26,7 +22,6 @@
 			<span class="email"> 이메일 : </span> 
 			<input type="text" id="searchEmail"  placeholder="이메일검색" >
 			
-			<button class="search_btn" type="submit" name="search" >검색</button>
 		</div>
 
 		<br>
@@ -65,8 +60,8 @@
 </th:block>
 
 <script>
-/* search1 */
-/*
+/* search */
+
 	$('input').keyup(function(){
 		//keyup 이벤트 발생 시 해당 input의 value 가져오기.
 		var val = $(this).val();
@@ -78,28 +73,15 @@
 		$("thead").show();
 		$(temp).parent().show();
 	});
-*/
-</script>
 
-<script type="text/javascript">
-/* search2 */
-$(".search_btn").click(function(e){
-	
-	var searchname = document.getElementById("searchName").value
-	var searchemail = document.getElementById("searchEmail").value
-	
-	console.log(document.getElementById("searchName").value);
-	console.log(document.getElementById("searchEmail").value);
-	
-	document.getElementById("actionForm").submit();	
-	
-});
 </script>
 
 <script th:inline="javascript">
 /* permission */
 $(".management_modal_btn").click(function(e){
+	
 	window.location.href = "permission/"+$(e.target).next().val();
+	
 	alert("승인완료 메일이 발송되었습니다")
 });
 </script>

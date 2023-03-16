@@ -59,11 +59,11 @@
 	line-height: 45px; 
 	height: 45px;
 }
-
+ 
 .pwreset_modal_btn{
     width:80px;
     height: 25px;
-    background-color: #0080c0;
+    background-color: #28288C;
     border: none;
     border-radius: 15px;
     color:#fff;
@@ -72,4 +72,18 @@
     font-size: 15px;
     cursor: pointer;
 
-};
+}
+
+.authority_btn{
+	width:80px;
+    height: 25px;
+    background-color: #EB0000;
+    border: none;
+    border-radius: 15px;
+    color:#fff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+	
+}

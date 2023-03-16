@@ -33,13 +33,12 @@ public class UserController {
 	@Qualifier("userService")
 	
 	private UserService userService;
-	
 	private MailService mailservice;
-	 
+	
+	//management
 	@GetMapping("/management")
 	public String management(Model model,
-			 				 Criteria cri
-			 				) {
+			 				 Criteria cri) {
 		
 		ArrayList<UserVO> list = userService.managementList(cri);
 		model.addAttribute("list", list);
@@ -48,6 +47,7 @@ public class UserController {
 		return "user/management";
 	}
 	
+	//userList
 	@GetMapping("/userList")
 	public String userList(Model model,
 						   Criteria cri) {
@@ -58,30 +58,48 @@ public class UserController {
 		return "user/userList";
 	}
 	
+	//PW Reset
 	@GetMapping("/pwReset/{userEmail}/{birth}")
 	public String pwReset(@PathVariable("userEmail") String userEmail, 
 						  @PathVariable("birth") String birth) {
 		
-		//pw암호화
+		//PW 암호화
 		String a = UserSha256.encrypt(birth);
 		System.out.println(a);
 		userService.pwReset(userEmail, a);
 		
-		//mail발송
+		//PW Reset mail발송
 		mailservice.pwresetMail(userEmail, a);
 		return "redirect:/user/userList";
 	}
 	
+	//가입 승인
 	@GetMapping("/permission/{userEmail}")
 	public String permission(@PathVariable("userEmail") String userEmail) {
 		
 		//가입 승인
 		userService.permission(userEmail);
 		
-		//mail발송
+		//가입 승인 mail발송
 		mailservice.permissionMail(userEmail);
 				
 		return "redirect:/user/management";
+	}
+	
+	//권한 박탈
+	@GetMapping("/authority/{permission}")
+	public String authority (@PathVariable("permission") String permission) {
+		
+		userService.authority(permission);
+		
+		return "redirect:/user/userList";
+	};
+	
+	@GetMapping("/admin")
+	//admin추가
+	public String admin() {
+		
+		return "user/admin";
 	}
 
 };
