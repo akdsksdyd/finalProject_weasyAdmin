@@ -14,37 +14,34 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
 
+	//management
 	@Override
 	public ArrayList<UserVO>managementList(Criteria cri) {
 		return userMapper.managementList(cri);
 	}
 	
+	//userList
 	@Override
 	public ArrayList<UserVO> userList(Criteria cri) {
 		return userMapper.userList(cri);
 	}
 	
+	//PW Reset
 	@Override
 	public int pwReset(String userEmail, String birth) {
 		return userMapper.pwReset(userEmail, birth);
 	}
 
+	//가입 승인
 	@Override
 	public int permission(String userEmail) {
 		return userMapper.permission(userEmail);
 	}
 
-
-
-	
-	/*
+	//권한 박탈
 	@Override
-	public int permission(UserVO permission) {
-		return userMapper.permission(permission);
+	public int authority(String permission) {
+		return userMapper.authority(permission);
 	}
-	*/
-
-
-	
 
 }

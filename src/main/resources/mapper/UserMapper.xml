@@ -31,14 +31,15 @@
 		update users set userPw=#{birth} where userEmail=#{userEmail};
 	</update>
 	
-<!-- permission -->
+<!-- 가입 승인 -->
 	<update id="permission" >
 		UPDATE USERS set permission="Y" where userEmail=#{userEmail};
 	</update>	
-
 	
-
-
+<!-- 권한 박탈 -->
+	<update id="authority" >
+		UPDATE USERS set permission="N" where userEmail=#{userEmail};
+	</update>	
 
 </mapper>
 

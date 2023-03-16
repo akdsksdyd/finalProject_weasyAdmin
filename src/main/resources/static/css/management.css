@@ -3,6 +3,7 @@
 .main-wrapper{
 	margin : 100px 120px 100px 120px; 
 }
+
 .user_registration {
 	font-size : 38px;
 	font-weight: 550;
@@ -18,16 +19,17 @@
 	font-weight: 550;
 }
 
-.search_btn{
-	float: right;
-	padding: 0 23px; 
-	color: #fff; 
-	display: inline-block; 
-	background-color: #7866c9; 
-	border: 1px solid #7866c9; 
-	height:30px; 
-	line-height:30px;
+.permissionY_btn{
+	background-color: green;
+	color:white;
+	border-radius: 12px;
+	font-weight: bolder; 
+	font-size: 16px;
+	width: 50px;
+	height: 27px;
 }
+
+
 
 .data_amount{
 	float: right;

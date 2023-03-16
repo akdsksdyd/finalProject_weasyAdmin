@@ -2,22 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
-	
 
 		<div class="main-wrapper">
 		
-		<div class="userList">회원 목록</div>
+		<div class="userList">User List</div>
 		
 		<br><br><br><br><br>
 
 		<div>
 			&nbsp;
-			<span class="name"> 이름 : </span> 
-			<input class="search_name" type="text" placeholder="이름검색" >
+			<span class="name"> Name : </span> 
+			<input class="search_name" type="text" placeholder="Search Name" >
 			&nbsp;
-			<span class="email"> 이메일 : </span> 
-			<input class="search_email" type="text" placeholder="이메일검색" >
-
+			<span class="email"> Email : </span> 
+			<input class="search_email" type="text" placeholder="Search Email" >
 		</div>
 
 		<br><br>
@@ -35,6 +33,7 @@
 					<th>NickName</th>
 					<th>LoginLog</th>
 					<th>PW Reset</th>
+					<th>Authority</th>
 				</tr>
 			</thead>
 			
@@ -52,6 +51,10 @@
 						<input type="hidden" th:value="${vo.userEmail}">
 						<input type="hidden" th:value="${vo.birth}">
 					</td>
+					<td>
+						<button class="authority_btn" >DELETE</button>
+						<input type="hidden" th:value="${vo.userEmail}">
+					</td> 
 				</tr>
 			</tbody>
 		</table>
@@ -75,20 +78,39 @@
 	});
 </script>
 
-<!-- pw Rest -->
 <script>
+/* PW Reset */
 $(".pwreset_modal_btn").click(function(e) {
 	
 	if(confirm('비밀번호를 초기화 시키겠습니까?')){
+		
 		alert('초기화완료 메일이 발송되었습니다.');
+
 		window.location.href = "pwReset/"
 								+$(e.target).next().val()+ "/"
 								+$(e.target).next().next().val();
-		
+
 	} else {
+		
 		alert('초기화 취소되었습니다.');
 	}
 });	
+</script>
+
+<script>
+/* 권한 박탈 */
+$(".authority_btn").click(function(e){
+	
+	if(confirm('권한을 박탈시키겠습니까?')){
+		window.location.href = "authority/"
+								+ $(e.target).next().val()
+		
+		alert('권한이 박탈되었습니다');
+		
+	} else {
+		alert('권한 박탈이 취소되었습니다.');
+	}
+});
 </script>
 
 <!-- 
