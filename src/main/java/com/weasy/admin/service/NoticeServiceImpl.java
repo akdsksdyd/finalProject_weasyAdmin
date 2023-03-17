@@ -98,7 +98,6 @@ public class NoticeServiceImpl implements NoticeService{
 			e.printStackTrace();
 		}
 
-
 		return result;
 	}
 
@@ -161,11 +160,26 @@ public class NoticeServiceImpl implements NoticeService{
 
 		return noticeMapper.getNoticeDetail(noticeNo);
 	}
-
+	
+	// 공지사항 수정
 	@Override
 	public int noticeUpdate(noticeListVO vo) {
 
 		return noticeMapper.noticeUpdate(vo);
+	}
+	
+	// 공지사항 글 삭제
+	@Override
+	public int noticeDelete(int noticeNo) {
+		
+		return noticeMapper.noticeDelete(noticeNo);
+	}
+
+	// 공지사항 파일 정보 삭제
+	@Override
+	public int noticeFileDelete(int noticeNo) {
+
+		return noticeMapper.noticeFileDelete(noticeNo);
 	}
 
 }

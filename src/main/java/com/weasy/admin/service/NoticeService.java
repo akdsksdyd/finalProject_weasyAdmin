@@ -26,4 +26,9 @@ public interface NoticeService {
 	// 공지사항 수정
 	public int noticeUpdate(noticeListVO vo);
 	
+	// 공지사항 글 삭제
+	public int noticeDelete(int noticeNo);
+	// 공지사항 파일 정보 삭제
+	public int noticeFileDelete(int noticeNo);
+	
 }
