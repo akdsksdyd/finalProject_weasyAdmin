@@ -40,6 +40,11 @@
 	<update id="authority" >
 		UPDATE USERS set permission="N" where userEmail=#{userEmail};
 	</update>	
+	
+<!-- 관리자추가 -->
+	<select id="admin" resultType="AdminVO">
+		select userName, userEmail, memo, role from admins;
+	</select>
 
 </mapper>
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.weasy.admin.command.AdminVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.util.Criteria;
 
@@ -42,6 +43,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int authority(String permission) {
 		return userMapper.authority(permission);
+	}
+
+	//관리자추가
+	@Override
+	public ArrayList<AdminVO> admin(Criteria cri) {
+		return userMapper.admin(cri);
 	}
 
 }

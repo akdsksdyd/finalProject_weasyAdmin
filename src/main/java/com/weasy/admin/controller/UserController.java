@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.weasy.admin.command.AdminVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.service.MailService;
 import com.weasy.admin.service.UserService;
@@ -28,77 +29,81 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
-	
+
 	@Autowired
 	@Qualifier("userService")
-	
 	private UserService userService;
-	private MailService mailservice;
 	
+	private MailService mailservice;
+
 	//management
 	@GetMapping("/management")
 	public String management(Model model,
-			 				 Criteria cri) {
-		
+							 Criteria cri) {
+
 		ArrayList<UserVO> list = userService.managementList(cri);
 		model.addAttribute("list", list);
-		
-		
+
+
 		return "user/management";
 	}
-	
+
 	//userList
 	@GetMapping("/userList")
 	public String userList(Model model,
 						   Criteria cri) {
-		
+
 		ArrayList<UserVO> list = userService.userList(cri);
 		model.addAttribute("list", list);
-		
+
 		return "user/userList";
 	}
-	
-	//PW Reset
+
+	//pwReset
 	@GetMapping("/pwReset/{userEmail}/{birth}")
 	public String pwReset(@PathVariable("userEmail") String userEmail, 
 						  @PathVariable("birth") String birth) {
-		
-		//PW 암호화
+
+		//pw암호화
 		String a = UserSha256.encrypt(birth);
 		System.out.println(a);
 		userService.pwReset(userEmail, a);
-		
-		//PW Reset mail발송
+
+		//pwReset mail발송
 		mailservice.pwresetMail(userEmail, a);
 		return "redirect:/user/userList";
 	}
-	
-	//가입 승인
+
+	//가입승인
 	@GetMapping("/permission/{userEmail}")
 	public String permission(@PathVariable("userEmail") String userEmail) {
-		
-		//가입 승인
+
+		//가입승인
 		userService.permission(userEmail);
-		
+
 		//가입 승인 mail발송
 		mailservice.permissionMail(userEmail);
-				
+
 		return "redirect:/user/management";
 	}
-	
-	//권한 박탈
+
+	//권한박탈
 	@GetMapping("/authority/{permission}")
 	public String authority (@PathVariable("permission") String permission) {
-		
+
 		userService.authority(permission);
-		
+
 		return "redirect:/user/userList";
 	};
-	
+
+	//관리자추가
 	@GetMapping("/admin")
-	//admin추가
-	public String admin() {
+	public String admin(Model model,
+			 			Criteria cri) {
 		
+		ArrayList<AdminVO> list = userService.admin(cri);
+		model.addAttribute("list", list);
+
 		return "user/admin";
 	}
 
