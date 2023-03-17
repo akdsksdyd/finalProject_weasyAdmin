@@ -2,6 +2,7 @@ package com.weasy.admin.service;
 
 import java.util.ArrayList;
 
+import com.weasy.admin.command.AdminVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.util.Criteria;
 
@@ -13,16 +14,16 @@ public interface UserService {
 	//userList
 	public ArrayList<UserVO> userList(Criteria cri);
 	
-	//PW Reset
+	//pwReset
 	public int pwReset(String userEmail, String birth);
 	
-	//가입 승인
+	//가입승인
 	public int permission(String userEmail);
 
-	//권한 박탈
+	//권한박탈
 	public int authority(String permission);
 	
+	//관리자추가
+	public ArrayList<AdminVO> admin(Criteria cri);
 	
-	
-
 }

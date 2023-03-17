@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.weasy.admin.command.AdminVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.util.Criteria;
 
@@ -17,14 +18,17 @@ public interface UserMapper {
 	//userList
 	public ArrayList<UserVO>userList(@Param("cri") Criteria cri);
 	
-	//PW Reset
+	//pwReset
 	public int pwReset(@Param("userEmail") String userEmail,
 					   @Param("birth") String birth);
 		
-	//가입 승인
+	//가입승인
 	public int permission(String userEmail);
 	
-	//권한 박탈
+	//권한박탈
 	public int authority(String permission);
+	
+	//관리자추가
+	public ArrayList<AdminVO> admin(@Param("cri") Criteria cri);
 
 }

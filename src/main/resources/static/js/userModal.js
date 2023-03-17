@@ -18,18 +18,7 @@ $(".management_modal_btn").click(function(e) {
 
   });
 */
-/*
-$(".pwreset_modal_btn").click(function(e) {
-	
-	if(confirm('비밀번호를 초기화 시키겠습니까?')){
-		alert('초기화 완료되었습니다.');
-		window.location.href = "pwReset/"+$(e.target).next().val();
-		
-	} else {
-		alert('초기화 취소되었습니다.');
-	}
-});
-*/
+
 
 const modal = document.querySelector('.management_modal');
       
