@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -78,10 +79,15 @@ public class NoticeController {
 		return "redirect:/notice/noticeModify";
 	}
 			
-	@GetMapping("/noticeDelete/{noticeNo}")
-	public String noticeDelete(@PathVariable("noticeNo") int noticeNo) {
+	@PostMapping("/deleteForm")
+	public String noticeDelete(@RequestParam("noticeNo") int noticeNo,
+							    RedirectAttributes ra) {
 		
-		System.out.println(noticeNo);
+		int result = noticeService.noticeDelete(noticeNo);
+		int file_result = noticeService.noticeFileDelete(noticeNo);
+		
+		if(result == 1 && file_result == 1) ra.addFlashAttribute("msg", "공지사항이 삭제되었습니다.");
+		else ra.addFlashAttribute("msg", "공지사항 삭제에 실패하였습니다.");
 		
 		return "redirect:/notice/noticeList";
 	}

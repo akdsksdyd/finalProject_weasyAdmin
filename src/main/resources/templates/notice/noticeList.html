@@ -106,13 +106,18 @@
 						<!-- 이미지 영역 -->
 					</div>
 
-					<div class="contentBox"></div>
+					<div class="contentBox">
+						<!-- 내용 영역 -->
+					</div>
 
 					<div class="btnBox">
-						<div class="btnBox2">
-							<a href="noticeModify" class="mndBtn">수정</a>
-							<button class="mndBtn deleteBtn">삭제</button>
-						</div>
+						<form action="deleteForm" method="post">
+							<div class="btnBox2">
+								<input type="button" class="mndBtn modifyBtn" value="수정">
+								<input type="submit" class="mndBtn deleteBtn" value="삭제">
+								<input type="hidden" name="noticeNo" value="" />
+							</div>
+						</form>
 					</div>
 
 				</div>
@@ -156,7 +161,7 @@ $(".noticeRow").click((e) => {
 			var date = new Date(res.noticeRegdate);
 			
 			// 텍스트
-			$('.noticeModalTitle').html("◉ " + res.noticeTitle);
+			$('.noticeModalTitle').html("◉  " + res.noticeTitle);
 			$('.writer').html("작성자: " + res.userEmail);
 			$('.regdate').html("등록일시: " + date.getFullYear()+"-"+
 										   (date.getMonth()+1)+"-"+
@@ -172,19 +177,13 @@ $(".noticeRow").click((e) => {
 				})
 			}
 			
-			
-			// 버튼
-			$('.mndBtn')[0].href = 'noticeModify/' + res.noticeNo;
-			
 			// 키값 숨기기
-			$('.btnBox2').append('<input type="hidden" value="'+ res.noticeNo +'" />');
-				
+			document.querySelector("input[name=noticeNo]").value = res.noticeNo;
 			
 		},
 		error: (err) => {
 			console.log("에러");
 		}
-		
 	})
 	
 	// 데이터 삽입 후 모달 켜기
@@ -199,17 +198,13 @@ $('.noticeModal').click(() => {
 	$('.imgBox').html('');
 	$('.noticeModal').css({'display':'none'});
 	
-	// input 태그 지우기
 });
 
-// 공지사항 삭제 요청
-$('.deleteBtn').click((e) => {
+// 공지사항 수정 요청
+$('.modifyBtn').click((e) => {
 	
-	// ajax post 형식으로 key값 전송
-	var key = $(e.target).closest('.btnBox2').find('input').val();
-	console.log(key);
-	
-	
+	location.href = "noticeModify/" + $(e.target).next().next().val();
 })
+
 
 </script>

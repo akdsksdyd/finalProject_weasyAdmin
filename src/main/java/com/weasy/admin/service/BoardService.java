@@ -14,7 +14,12 @@ public interface BoardService {
 	// taskProgress 화면 게시판 리스트용
 	public ArrayList<TaskProgressVO> getTaskProgressList(BoardCriteria cri);
 	
-	// taskProgress 상세화면 데이터용 
+	// taskProgress 상세화면 데이터용
+	/**
+	 * 역할 정보
+	 * @param teamName ㅇㅇ
+	 * @return ㅇㅇㅇㅇㅇ
+	 */
 	public Map<String, ArrayList<TaskVO>> getTaskProgressDetail(String teamName);
 	
 	// taskCurrent 화면 카드에 뿌릴 데이터

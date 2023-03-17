@@ -2,75 +2,91 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
- <mapper namespace="com.weasy.admin.service.NoticeMapper">
- 	
- 	<!-- 공지사항 리스트용 -->
- 	<select id="getNoticeList" resultType="noticeListVO">
- 		select noticeNo, 
- 			   noticeTitle, 
- 			   noticeContent, 
- 			   noticeRegdate, 
- 			   noticeLevel, 
- 			   userEmail
- 		from noticeList
- 		<if test="searchText != '' and searchText != null">
+
+<mapper namespace="com.weasy.admin.service.NoticeMapper">
+
+	<!-- 공지사항 리스트용 -->
+	<select id="getNoticeList" resultType="noticeListVO">
+		select noticeNo,
+			   noticeTitle,
+			   noticeContent,
+			   noticeRegdate,
+			   noticeLevel,
+		       userEmail
+		from noticeList
+		<if test="searchText != '' and searchText != null">
 			where noticeTitle like concat('%', #{searchText}, '%')
-			or noticeContent like concat('%', #{searchText}, '%')
+			or
+			noticeContent like concat('%', #{searchText}, '%')
 		</if>
- 		limit #{pageStart}, #{amount}   
- 	</select>
- 	
- 	<!-- 페이징용 토탈값 -->
- 	<select id="getNoticeTotal" resultType="int">
- 		select count(*) from noticeList
- 	</select>
- 	
- 	<!-- 공지사항 등록 -->
- 	<insert id="noticeRegist">
- 		insert into noticeList(noticeTitle, noticeContent, noticeRegdate, noticeLevel, userEmail)
- 		values(#{noticeTitle}, #{noticeContent}, now(), #{noticeLevel}, #{userEmail})
- 	</insert>
- 	
- 	<!-- 파일 등록 시 새로 등록될 noticeNo(PK)값 가져오기 -->
- 	<select id="getNoticeNoMax" resultType="int">
- 		select max(noticeNo) from noticeList
- 	</select>
- 	
- 	<!-- 공지사항 파일 등록 -->
- 	<insert id="noticeFileRegist">
-		 insert into noticeUpload(noticeNo, filePath) 
-		 values(#{noticeNo}, #{filePath})	
- 	</insert>
- 	
- 	<!-- 공지사항 디테일 화면 -->
- 	<select id="getNoticeDetail" resultMap="detailMap">
- 		select a.noticeNo, noticeTitle, noticeContent, noticeRegdate, noticeLevel, userEmail, filePath 
- 		from (select * from noticeList where noticeNo = #{noticeNo}) a
-		left outer join (select noticeNo, filePath from noticeUpload) b
-		on a.noticeNo = b.noticeNo;
- 	</select>
- 	
- 	<resultMap type="noticeListVO" id="detailMap">
- 		<result column="noticeNo" property="noticeNo"/>
- 		<result column="noticeTitle" property="noticeTitle"/>
- 		<result column="noticeContent" property="noticeContent"/>
- 		<result column="noticeRegdate" property="noticeRegdate"/>
- 		<result column="noticeLevel" property="noticeLevel"/>
- 		<result column="userEmail" property="userEmail"/>
- 		<collection property="fileList" resultMap="fileListElement"/>
- 	</resultMap>
- 	
- 	<resultMap type="string" id="fileListElement">
- 		<result column="filePath" property="filePath"/>
- 	</resultMap>
- 	
- 	<!-- 공지사항 업데이트 -->
- 	<update id="noticeUpdate">
- 		update noticeList set noticeTitle = #{noticeTitle}, 
- 							  noticeContent = #{noticeContent}, 
- 							  noticeLevel = if(#{noticeLevel} = 'on', 'a', 'b') 
- 						  where noticeNo = #{noticeNo};
- 	</update>
- 	
- </mapper>
+		order by noticeRegdate desc
+		limit #{pageStart}, #{amount}
+	</select>
+
+	<!-- 페이징용 토탈값 -->
+	<select id="getNoticeTotal" resultType="int">
+		select count(*) from noticeList
+	</select>
+
+	<!-- 공지사항 등록 -->
+	<insert id="noticeRegist">
+		insert into noticeList(noticeTitle, noticeContent, noticeRegdate,
+		noticeLevel, userEmail)
+		values(#{noticeTitle}, #{noticeContent}, now(), #{noticeLevel}, #{userEmail})
+	</insert>
+
+	<!-- 파일 등록 시 새로 등록될 noticeNo(PK)값 가져오기 -->
+	<select id="getNoticeNoMax" resultType="int">
+		select max(noticeNo) from noticeList
+	</select>
+
+	<!-- 공지사항 파일 등록 -->
+	<insert id="noticeFileRegist">
+		insert into noticeUpload(noticeNo, filePath)
+		values(#{noticeNo}, #{filePath})
+	</insert>
+
+	<!-- 공지사항 디테일 화면 -->
+	<select id="getNoticeDetail" resultMap="detailMap">
+		select a.noticeNo, noticeTitle, noticeContent, noticeRegdate, noticeLevel,
+		userEmail, filePath
+		from (select * from noticeList where noticeNo = #{noticeNo}) a
+		left outer
+		join (select noticeNo, filePath from noticeUpload) b
+		on a.noticeNo =
+		b.noticeNo;
+	</select>
+
+	<resultMap type="noticeListVO" id="detailMap">
+		<result column="noticeNo" property="noticeNo" />
+		<result column="noticeTitle" property="noticeTitle" />
+		<result column="noticeContent" property="noticeContent" />
+		<result column="noticeRegdate" property="noticeRegdate" />
+		<result column="noticeLevel" property="noticeLevel" />
+		<result column="userEmail" property="userEmail" />
+		<collection property="fileList" resultMap="fileListElement" />
+	</resultMap>
+
+	<resultMap type="string" id="fileListElement">
+		<result column="filePath" property="filePath" />
+	</resultMap>
+
+	<!-- 공지사항 업데이트 -->
+	<update id="noticeUpdate">
+		update noticeList set noticeTitle = #{noticeTitle},
+		noticeContent = #{noticeContent},
+		noticeLevel = if(#{noticeLevel} = 'on', 'a', 'b')
+		where noticeNo = #{noticeNo};
+	</update>
+	
+	<!-- 공지사항 삭제 -->
+	<delete id="noticeDelete">
+		delete from noticeList where noticeNo = #{noticeNo}
+	</delete>
+	
+	<!-- 공지사항 파일 정보 삭제 -->
+	<delete id="noticeFileDelete">
+		delete from noticeUpload where noticeNo = #{noticeNo}
+	</delete>
+	
+</mapper>
