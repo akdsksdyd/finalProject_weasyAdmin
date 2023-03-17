@@ -20,7 +20,7 @@ public interface TeamService {
 	public Integer insertTeam(String userEmail, int teamNo ,int role);
 	public int updateRole(int role,String userEmail,int teamNo);
 	public ArrayList<TaskCurrentCardVO> teamCurrentList(String TeamName);
-	public int statusChange(int teamNo,String teamStatus);
+	public int statusChange(String teamStatus,int teamNo);
 	
 
 }

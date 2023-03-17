@@ -56,20 +56,19 @@ public class TeamServiceImpl implements TeamService{
 
 	@Override
 	public ArrayList<TaskCurrentCardVO> teamCurrentList(String TeamName) {
-		System.out.println( teamMapper.teamCurrentList(TeamName));
 		return teamMapper.teamCurrentList(TeamName);
 	}
 
 	@Override
-	public int statusChange(int teamNo,String teamStatus) {
-		return teamMapper.statusChange(teamNo,teamStatus);
+	public int statusChange(String teamStatus, int teamNo) {
+		return teamMapper.statusChange(teamStatus, teamNo);
 	}
+
 	
 	
 	
 	
-	
-	
+		
 
 	
 

@@ -21,47 +21,29 @@ import com.weasy.admin.util.PageVO;
 @Controller
 @RequestMapping("/team")
 public class TeamController {
-	
-	@Autowired
-	private TeamService teamService;
-	
-	@GetMapping("/teamList")
-	public String teamList(Model model,Criteria cri) {
-
-		ArrayList<TeamVO>list = teamService.getList(cri);
-		
-		model.addAttribute("list",list);
-		
-		int total = teamService.getTotal(cri);
-		
-		System.out.println("토탈" + total);
-		
-		PageVO pageVO = new PageVO(cri, total);
-		
-		System.out.println(pageVO.toString());
-		model.addAttribute("pageVO", pageVO);
-		
-		return "team/teamList";
-	}
-	
-	@GetMapping("/teamDetail")
-	public String teamDetail(@RequestParam("teamName")String teamName,Model model) {
-		ArrayList<TaskCurrentCardVO> lists = teamService.teamCurrentList(teamName);
-		ArrayList<UserVO>list = teamService.getTeamList(teamName);
-		model.addAttribute("lists",lists);
-		model.addAttribute("list",list);
-		
-		return "team/teamDetail";
-	}
-	
-	@GetMapping("/statusChange")
-	public String statusChange(@RequestParam("teamNo")int teamNo,@RequestParam("teamStatus")String teamStatus) {
-		
-		int result = teamService.statusChange(teamNo,teamStatus);
-		
-		System.out.println("업뎃결과" + result);
-		
-		return "team/teamList";
-	}
-
+    @Autowired private TeamService teamService;
+    @GetMapping("/teamList")
+    public String teamList(Model model, Criteria cri) {
+        ArrayList < TeamVO > list = teamService.getList(cri);
+        model.addAttribute("list", list);
+        int total = teamService.getTotal(cri);
+        System.out.println("토탈" + total);
+        PageVO pageVO = new PageVO(cri, total);
+        System.out.println(pageVO.toString());
+        model.addAttribute("pageVO", pageVO);
+        return "team/teamList";
+    }
+    @GetMapping("/teamDetail")
+    public String teamDetail(@RequestParam("teamName")String teamName, Model model) {
+        ArrayList < TaskCurrentCardVO > lists = teamService.teamCurrentList(teamName);
+        ArrayList < UserVO > list = teamService.getTeamList(teamName);
+        model.addAttribute("lists", lists);
+        model.addAttribute("list", list);
+        return "team/teamDetail";
+    }
+    @GetMapping("/statusChange")
+    public String statusChange(@RequestParam("teamStatus")String teamStatus, @RequestParam("teamNo")int teamNo) {
+        int result = teamService.statusChange(teamStatus, teamNo);
+        return "redirect:/team/teamList";
+    }
 }
