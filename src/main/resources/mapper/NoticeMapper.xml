@@ -19,7 +19,7 @@
 			or
 			noticeContent like concat('%', #{searchText}, '%')
 		</if>
-		order by noticeRegdate desc
+		order by noticeLevel, noticeRegdate desc
 		limit #{pageStart}, #{amount}
 	</select>
 
@@ -75,7 +75,7 @@
 	<update id="noticeUpdate">
 		update noticeList set noticeTitle = #{noticeTitle},
 		noticeContent = #{noticeContent},
-		noticeLevel = if(#{noticeLevel} = 'on', 'a', 'b')
+		noticeLevel = if(#{noticeLevel} = 'a', 'a', 'b')
 		where noticeNo = #{noticeNo};
 	</update>
 	
@@ -84,9 +84,20 @@
 		delete from noticeList where noticeNo = #{noticeNo}
 	</delete>
 	
-	<!-- 공지사항 파일 정보 삭제 -->
-	<delete id="noticeFileDelete">
+	<!-- 공지사항 파일 정보 삭제(noticeNo를 통한 삭제) -->
+	<delete id="noticeFileDelete" parameterType="int">
 		delete from noticeUpload where noticeNo = #{noticeNo}
 	</delete>
+
+	<!-- 공지사항 파일 정보 삭제(filePath를 통한 삭제) -->
+	<delete id="noticeFileDelete2" parameterType="string">
+		delete from noticeUpload where filePath = #{filePath} 
+	</delete>
+	
+	<!-- filePath 가져오기 -->
+	<select id="getFilePath" resultType="string">
+		select filePath from noticeUpload where noticeNo = #{noticeNo}
+	</select>
+	
 	
 </mapper>

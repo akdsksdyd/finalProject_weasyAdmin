@@ -80,6 +80,7 @@
 	   from team a
 	   where a.teamStatus = 1
 	</select>
+	<!-- (SELECT COUNT(a.teamNo) FROM authority a LEFT OUTER JOIN users u ON a.userEmail = u.userEmail WHERE t.teamNo = a.teamNo AND u.permission = 'Y') AS teamCount -->
 	
 	<!-- BoardSummary 화면 차트 데이터  -->
 	<select id="getTaskCountChart" resultType="TaskCountChartVO">
@@ -127,6 +128,11 @@
 		on a.teamNo = b.teamNo;
 	</select>
 	
+	<select id="getBoardNoticeList" resultType="noticeListVO">
+		select noticeNo, noticeTitle, noticeContent, noticeRegdate, noticeLevel, userEmail from noticeList
+		order by noticeLevel, noticeRegdate desc
+		limit 5;
+	</select>
 	
 	<!-- 로그인 인터셉트용 -->
 	<select id="loginCheck" resultType="int">

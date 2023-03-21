@@ -34,5 +34,8 @@ public interface NoticeMapper {
 	public int noticeDelete(int noticeNo);
 	// 공지사항 파일 정보 삭제
 	public int noticeFileDelete(int noticeNo);
+	public int noticeFileDelete2(String filePath);
+	// s3 파일 삭제를 위한 filePath 가져오기
+	public String[] getFilePath(int noticeNo);
 
 }

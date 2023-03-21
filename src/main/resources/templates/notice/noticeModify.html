@@ -18,7 +18,7 @@
 						
 						<div class="inputBox">
 							<div class="inputTitle">중요도</div> 
-							<input type="checkbox" name="noticeLevel" style="width: 25px; height: 25px; position: relative; top: 6px;"/>
+							<input type="checkbox" name="noticeLevel" value="a" style="width: 25px; height: 25px; position: relative; top: 6px;"/>
 							<span style="font-weight: 600; color: #0061f7">중요 공지 설정</span>
 						</div>
 						<br/>
@@ -39,12 +39,29 @@
 						</br>
 						<div class="inputBox">
 							<div class="inputTitle">파일첨부</div> 
-							<input type="file" name="fileName" style="padding-top: 6px;"/>
+							<div class="fileBox">
+								<!-- 등록되어 있는 파일 보여주기 -->
+								<th:block th:each="src : ${vo.fileList}">
+									<div class="upload-file" style="margin-bottom: 5px;">
+										<img th:src="${src}" style="width: 50px; height: 50px; vertical-align: middle;">
+										<input class="upload-name" th:value="${#strings.listSplit(src, '/')[3]}" >
+										<button class="deleteBtn" type="button" th:value="${src}">삭제</button>
+									</div>
+								</th:block>
+								
+								<th:block th:if="${vo.fileList.size} < 5">							
+									<input type="file" name="fileName" style="padding-top: 6px; margin-bottom: 5px;"/>
+									<span class="fileBtn">
+										<button type="button" class="addFile">+</button>
+										<button type="button" class="removeFile">-</button>
+									</span>
+								</th:block>	
+							</div>	
 						</div>
 						<div class="inputBox" style="margin-top: 20px;">
 							<div class="inputBtnBox">
 								<input type="submit" value="수정" />
-								<input type="button" value="취소" />		
+								<input type="button" class="cancleBtn" value="취소" />		
 							</div>
 						</div>
 					
@@ -62,11 +79,72 @@
 <script th:inline="javascript">
 
 var vo = JSON.parse('[[${vo}]]');
+console.log(vo.fileList);
 
 if(vo.noticeLevel == 'a'){
 	$('input[type="checkbox"]').attr('checked', 'checked');
 }
 
+//파일 첨부란 추가
+$('.fileBox').on('click', '.addFile', (e) => {
+	
+	// 기존에 업로드되어있는 파일
+	var uploadFile = $('.upload-file');
+	// 추가될 파일
+	var files = $('.fileBox span');
+	if(files.length+uploadFile.length < 5) $('.fileBtn').before('<span><br/><input type="file" name="fileName" style="padding-top: 6px; margin-bottom: 5px;"/></span>');
+	else alert('파일 첨부는 5개까지 가능합니다.');
+})
+
+// 파일 첨부란 빼기
+$('.fileBox').on('click', '.removeFile',(e) => {
+	
+	var files = $('.fileBox span');
+	if(files.length > 1) files[files.length-2].remove();
+})
+
+// 파일 삭제 버튼
+$('.deleteBtn').click((e) => {
+	
+	var key = {
+		filePath : e.target.value,
+		noticeNo : vo.noticeNo
+	}
+	
+	$.ajax({
+		url: "../notice_file_delete",
+		type: "post",
+		data : JSON.stringify(key), 
+		contentType : "application/json",
+		success: (res) => {
+			alert(res);
+			$(e.target).parent().remove();
+			
+		if($('.upload-file').length == 4){
+			var input = '<input type="file" name="fileName"/>';
+			var span = '<span class="fileBtn"></span>';
+			var btn1 = '<button type="button" class="addFile">+</button>';
+			var btn2 = '<button type="button" class="removeFile">-</button>';
+			$('.fileBox').append(input);
+			$('.fileBox input').css({paddingTop: '6px', marginBottom: '5px'});
+			$('.fileBox').append(span);
+			$('.fileBtn').append(btn1);
+			$('.fileBtn').append(btn2);
+			$('.fileBtn button').css({padding: '5px', fontSize: '18px', fontWeight: '600', width: '28px'});
+		};
+			
+		},
+		error: (err) => {
+			alert("파일 삭제에 실패하였습니다.");
+		}
+	})
+	
+})
+
+// 취소 버튼
+$('.cancleBtn').click(() => {
+	location.href="noticeList";
+})
 
 </script>
 

@@ -3,7 +3,9 @@ package com.weasy.admin.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,6 +35,9 @@ public class NoticeServiceImpl implements NoticeService{
 	// 버킷명
 	private String bucket = "weasy230314";
 
+	// 파일 저장 디렉토리명
+	private String dirName = "upload";
+
 	@Override
 	public ArrayList<noticeListVO> getNoticeList(NoticeCriteria cri) {
 
@@ -47,7 +52,11 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public int noticeRegist(noticeListVO vo) {
-
+		
+		if(vo.getNoticeLevel() == null) {
+			vo.setNoticeLevel("b");
+		}
+		
 		return noticeMapper.noticeRegist(vo);
 	}
 
@@ -58,16 +67,19 @@ public class NoticeServiceImpl implements NoticeService{
 		int result = -1;
 		// 업로드 작업
 		try {
-
 			// 1. 멀티파트파일 -> 파일 타입 변환
 			File file = convertMultipartFileToFile(multipartFile)
 					.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File convert fail"));
-
+			
 			// 2. 버킷에 업로드 - 두번쨰 매개변수가 버킷 내 저장할 디렉토리명
-			AwsS3 aws_result = upload(file, "upload");
+			AwsS3 aws_result = upload(file, dirName);
+			
+			// 3. 파일 타입 변환 시 파일명 내 특수문자가 인코딩되어 다시 디코딩 작업을 해줘야 함
+			// 해당 값을 DB에 등록
+			String path = URLDecoder.decode(aws_result.getPath(),"UTF-8");
 
-			// 3. 공지사항 파일 정보 테이블에 업로드
-			result = noticeMapper.noticeFileRegist(aws_result.getPath(), noticeMapper.getNoticeNoMax());
+			// 4. 공지사항 파일 정보 테이블에 업로드
+			result = noticeMapper.noticeFileRegist(path, noticeMapper.getNoticeNoMax());
 
 		} catch (IllegalArgumentException | IOException e) {
 			e.printStackTrace();
@@ -89,10 +101,14 @@ public class NoticeServiceImpl implements NoticeService{
 					.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File convert fail"));
 
 			// 2. 버킷에 업로드 - 두번쨰 매개변수가 버킷 내 저장할 디렉토리명
-			AwsS3 aws_result = upload(file, "upload");
+			AwsS3 aws_result = upload(file, dirName);
 
-			// 3. 공지사항 파일 정보 테이블에 업로드
-			result = noticeMapper.noticeFileRegist(aws_result.getPath(), noticeNo);
+			// 3. 파일 타입 변환 시 파일명 내 특수문자가 인코딩되어 다시 디코딩 작업을 해줘야 함
+			// 해당 값을 DB에 등록
+			String path = URLDecoder.decode(aws_result.getPath(),"UTF-8");
+
+			// 4. 공지사항 파일 정보 테이블에 업로드
+			result = noticeMapper.noticeFileRegist(path, noticeNo);
 
 		} catch (IllegalArgumentException | IOException e) {
 			e.printStackTrace();
@@ -126,7 +142,6 @@ public class NoticeServiceImpl implements NoticeService{
 				.key(key)
 				.path(path)
 				.build();
-
 	}
 
 	// 실제 s3 업로드 작업
@@ -147,6 +162,7 @@ public class NoticeServiceImpl implements NoticeService{
 		file.delete();
 	}
 
+	// s3 삭제 형식 (예시 코드꺼임, 실사용X)
 	public void remove(AwsS3 awsS3) {
 		if (!amazonS3.doesObjectExist(bucket, awsS3.getKey())) {
 			throw new AmazonS3Exception("Object " +awsS3.getKey()+ " does not exist!");
@@ -160,18 +176,23 @@ public class NoticeServiceImpl implements NoticeService{
 
 		return noticeMapper.getNoticeDetail(noticeNo);
 	}
-	
+
 	// 공지사항 수정
 	@Override
 	public int noticeUpdate(noticeListVO vo) {
-
+		
+		System.out.println(vo.getNoticeLevel());
+		if(vo.getNoticeLevel() == null) {
+			vo.setNoticeLevel("b");
+		}
+		
 		return noticeMapper.noticeUpdate(vo);
 	}
-	
+
 	// 공지사항 글 삭제
 	@Override
 	public int noticeDelete(int noticeNo) {
-		
+
 		return noticeMapper.noticeDelete(noticeNo);
 	}
 
@@ -179,7 +200,37 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public int noticeFileDelete(int noticeNo) {
 
-		return noticeMapper.noticeFileDelete(noticeNo);
+		// 파일이 존재한다면 테이블 및 s3에서 삭제 메서드 호출
+		String[] pathArr = noticeMapper.getFilePath(noticeNo);
+		int result = 0;
+
+		// s3 스토리지에서 파일 삭제
+		if(pathArr.length > 0) {
+			result = noticeMapper.noticeFileDelete(noticeNo);
+			for(String path : pathArr) {
+				// s3 파일의 키값 추출
+				String key = path.split("amazonaws.com/")[1];
+				
+				// s3 삭제 메서드 호출
+				amazonS3.deleteObject(bucket, key);
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public int noticeFileDelete2(String filePath) {
+		
+		return noticeMapper.noticeFileDelete2(filePath);
+	}
+	
+	// 파일 수정 시 s3에서 개별 파일 삭제
+	@Override
+	public void noticeS3FileDelete(String filePath) {
+		
+		// s3 삭제 메서드 호출
+		amazonS3.deleteObject(bucket, filePath);
 	}
 
 }

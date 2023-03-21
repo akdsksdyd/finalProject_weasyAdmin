@@ -15,7 +15,7 @@
 						
 						<div class="inputBox">
 							<div class="inputTitle">중요도</div> 
-							<input type="checkbox" name="noticeLevel" value="중요" style="width: 25px; height: 25px; position: relative; top: 6px;"/>
+							<input type="checkbox" name="noticeLevel" value="a" style="width: 25px; height: 25px; position: relative; top: 6px;"/>
 							<span style="font-weight: 600; color: #0061f7">중요 공지 설정</span>
 						</div>
 						<br/>
@@ -36,7 +36,14 @@
 						</br>
 						<div class="inputBox">
 							<div class="inputTitle">파일첨부</div> 
-							<input type="file" name="fileName" style="padding-top: 6px;"/>
+							<div class="fileBox">
+								<input type="file" name="fileName" style="padding-top: 6px; margin-bottom: 5px;"/>
+								<!-- <br/><input type="file" name="fileName" style="padding-top: 6px; margin-bottom: 5px;"/> -->
+								<span class="fileBtn">
+									<button type="button" class="addFile">+</button>
+									<button type="button" class="removeFile">-</button>
+								</span>
+							</div>
 						</div>
 						<div class="inputBox" style="margin-top: 20px;">
 							<div class="inputBtnBox">
@@ -55,4 +62,23 @@
 </th:block>
 
 <link rel="stylesheet" href="../css/noticeRegist.css">
+
+<script th:inline="javascript">
+
+// 파일 첨부란 추가
+$('.addFile').click((e) => {
+	
+	var files = $('.fileBox span');
+	if(files.length < 5) $('.fileBtn').before('<span><br/><input type="file" name="fileName" style="padding-top: 6px; margin-bottom: 5px;"/></span>');
+	else alert('파일 첨부는 5개까지 가능합니다.');
+})
+
+// 파일 첨부란 빼기
+$('.removeFile').click((e) => {
+	
+	var files = $('.fileBox span');
+	if(files.length > 1) files[files.length-2].remove();
+})
+
+</script>
 

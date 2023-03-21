@@ -15,6 +15,7 @@ import com.weasy.admin.command.TaskCurrentCardVO;
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskProgressVO;
 import com.weasy.admin.command.TaskVO;
+import com.weasy.admin.command.noticeListVO;
 import com.weasy.admin.util.BoardCriteria;
 
 @Service("boardService")
@@ -60,11 +61,15 @@ public class BoardServiceImpl implements BoardService {
 		// 단일 데이터
 		int teamTotal = boardMapper.getTeamTotal();
 		
+		// 중요 공지 등 5개
+		ArrayList<noticeListVO> noticeList = boardMapper.getBoardNoticeList();
+		
 		map.put("taskCountChart", taskCountChart);
 		map.put("completeTaskChart", completeTaskChart);
 		map.put("progressingTaskChart", progressingTaskChart);
 		map.put("teamTotal", teamTotal);
 		map.put("totalTaskProgress", totalTaskProgress);
+		map.put("noticeList", noticeList);
 		
 		return map;
 	}

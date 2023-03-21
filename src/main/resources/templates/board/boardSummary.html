@@ -11,7 +11,7 @@
 			<div class="chartWrap">
 
 				<div class="barWrap">
-					<a href="#" class="teamTotal">» 진행중인 프로젝트: [[${dataMap.teamTotal}]]팀</a>
+					<a href="/board/taskCurrent" class="teamTotal">» 진행중인 프로젝트: [[${dataMap.teamTotal}]]팀</a>
 					<div class="barList">
 						<div class="barTitle">• 총 태스크 수 상위 3팀</div>
 						<canvas id="barChart1" style="height: 30vh; width: 10vw"></canvas>
@@ -40,65 +40,59 @@
 		
 			<div class="noticeWrap">
 			
-				<a href="#" class="noticeTitle">
+				<a href="../notice/noticeList" class="noticeTitle">
 					⚹ 공지사항 관리
 				</a>
 				
 				<table>
 					<thead>
 						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>등록일시</th>
-							<th>조회수</th>
-	
+							<th style="width: 8%;">번호</th>
+							<th style="width: 8%;"></th>
+							<th style="width: 34%;">제목</th>
+							<th style="width: 20%;">작성자</th>
+							<th style="width: 30%;">등록일시</th>
 						</tr>
 					</thead>
 					<tbody>
-					
-						<tr class="noticeRow">
-							<td>1</td>
-							<td>테스트 공지</td>
-							<td>admin</td>
-							<td>2023-03-01</td>
-							<td>1</td>
+						<tr class="noticeRow" th:each="vo, status : ${dataMap.noticeList}">
+							<input type="hidden" th:value="${vo.noticeNo}" />
+							<td>[[${status.count}]]</td>
+							<td><span th:if="${vo.noticeLevel == 'a'}">📢</span></td>
+							<td style="text-align: left;">[[${vo.noticeTitle}]]</td>
+							<td>[[${vo.userEmail}]]</td>
+							<td>[[${#dates.format(vo.noticeRegdate, 'yyyy-MM-dd')}]]</td>
 						</tr>
-						<tr class="noticeRow">
-							<td>1</td>
-							<td>테스트 공지</td>
-							<td>admin</td>
-							<td>2023-03-01</td>
-							<td>1</td>
-						</tr>
-						<tr class="noticeRow">
-							<td>1</td>
-							<td>테스트 공지</td>
-							<td>admin</td>
-							<td>2023-03-01</td>
-							<td>1</td>
-						</tr>
-						<tr class="noticeRow">
-							<td>1</td>
-							<td>테스트 공지</td>
-							<td>admin</td>
-							<td>2023-03-01</td>
-							<td>1</td>
-						</tr>
-						<tr class="noticeRow"> 
-							<td>1</td>
-							<td>테스트 공지</td>
-							<td>admin</td>
-							<td>2023-03-01</td>
-							<td>1</td>
-						</tr>
-						
-						
 					</tbody>
 				</table>
 				
 			</div>
 			
+		</div>
+		
+		<!-- 공지사항 디테일 모달 -->
+		<div class="noticeModal">
+			<div class="noticeModalBody">
+				<div class='noticeModalTitle'></div>
+
+				<div class="contentWrap">
+
+					<div class="infoBox">
+						<div class="writer"></div>
+						<div class="regdate"></div>
+					</div>
+
+					<div class="imgBox">
+						<!-- 이미지 영역 -->
+					</div>
+
+					<div class="contentBox">
+						<!-- 내용 영역 -->
+					</div>
+
+				</div>
+
+			</div>
 		</div>
 
 	</div>
@@ -270,4 +264,59 @@ if(JSON.parse('[[${dataMap}]]') != null){
 		});
 
 }
+
+// 공지사항 모달
+// 디테일 모달 세팅
+$(".noticeRow").click((e) => {
+	
+	var key = $(e.target).closest('tr').find('input').val();
+	
+	$.ajax({
+		url: "../noticeDetail/"+key,
+		type: "get",
+		success: (res) => {
+			
+			console.log(res);
+			var date = new Date(res.noticeRegdate);
+			
+			// 텍스트
+			$('.noticeModalTitle').html("◉ " + res.noticeTitle);
+			$('.writer').html("작성자: " + res.userEmail);
+			$('.regdate').html("등록일시: " + date.getFullYear()+"-"+
+										   (date.getMonth()+1)+"-"+
+										    date.getDate()+" "+
+										    date.getHours()+":"+
+										   (date.getMinutes().length == 1 ? "0"+date.getMinutes() : date.getMinutes()));
+			$('.contentBox').html(res.noticeContent);
+			
+			// 이미지
+			if(res.fileList != undefined){
+				res.fileList.forEach(src => {
+					$('.imgBox').append('<img alt="img" src="'+ src +'" style="margin-bottom: 7px;">');
+				})
+			}
+			
+			// 키값 숨기기
+			document.querySelector("input[name=noticeNo]").value = res.noticeNo;
+			
+		},
+		error: (err) => {
+			console.log("에러");
+		}
+	})
+	
+	// 데이터 삽입 후 모달 켜기
+	$('.noticeModal').css({'display':'block'});
+	
+});
+
+//디테일 모달 끄기
+$('.noticeModal').click(() => {
+	
+	// 모달에 그려진 데이터 지우기
+	$('.imgBox').html('');
+	$('.noticeModal').css({'display':'none'});
+	
+});
+
 </script>

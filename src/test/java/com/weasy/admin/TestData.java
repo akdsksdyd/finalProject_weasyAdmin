@@ -2,6 +2,7 @@ package com.weasy.admin;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,18 @@ import com.weasy.admin.command.AuthorityVO;
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskVO;
 import com.weasy.admin.service.BoardMapper;
+import com.weasy.admin.service.NoticeMapper;
 
 @SpringBootTest
 public class TestData {
 
 	@Autowired
 	BoardMapper boardMapper;
-
+	
+	@Autowired
+	NoticeMapper noticeMapper;
+	
+	// 샘플데이터용
 	@Test
 	public void test01() {
 
@@ -68,8 +74,18 @@ public class TestData {
 //			}
 //		}
 		
-		
 	}
 
-
+	// notice 테스트
+	@Test
+	public void test02() {
+		
+		String[] arr = noticeMapper.getFilePath(40);
+		
+		for(String path : arr) {
+			System.out.println(path.split("amazonaws.com/")[1]);
+		}
+		
+	}
+	
 }

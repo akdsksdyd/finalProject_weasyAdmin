@@ -28,7 +28,12 @@ public interface NoticeService {
 	
 	// 공지사항 글 삭제
 	public int noticeDelete(int noticeNo);
+	
 	// 공지사항 파일 정보 삭제
 	public int noticeFileDelete(int noticeNo);
+	public int noticeFileDelete2(String filePath);
+	
+	// 파일 수정 시 s3에서 개별 파일 삭제
+	public void noticeS3FileDelete(String filePath);
 	
 }

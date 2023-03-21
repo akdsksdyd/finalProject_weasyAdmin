@@ -26,8 +26,9 @@
 				<table>
 					<thead>
 						<tr>
-							<th style="width: 10%;">번호</th>
-							<th style="width: 40%;">제목</th>
+							<th style="width: 8%;">번호</th>
+							<th style="width: 8%;"></th>
+							<th style="width: 34%;">제목</th>
 							<th style="width: 20%;">작성자</th>
 							<th style="width: 30%;">등록일시</th>
 						</tr>
@@ -37,7 +38,8 @@
 						<tr class="noticeRow" th:each="vo, status : ${list}">
 							<input type="hidden" th:value="${vo.noticeNo}" />
 							<td>[[${status.count}]]</td>
-							<td>[[${vo.noticeTitle}]]</td>
+							<td><span th:if="${vo.noticeLevel == 'a'}">📢</span></td>
+							<td style="text-align: left;">[[${vo.noticeTitle}]]</td>
 							<td>[[${vo.userEmail}]]</td>
 							<td>[[${#dates.format(vo.noticeRegdate, 'yyyy-MM-dd')}]]</td>
 						</tr>
@@ -55,9 +57,9 @@
 
 									<li class="page-item"><a class="page-link"
 										th:href="@{noticeList(page=1, 
-																		   		     amount=${pageVO.amount},
-																		   		     searchText=${pageVO.cri.searchText}
-																		   		  )}">
+															  amount=${pageVO.amount},
+															  searchText=${pageVO.cri.searchText}
+															  )}">
 											<span aria-hidden="true">&laquo;</span>
 									</a></li>
 
@@ -65,17 +67,17 @@
 										th:class="${btn == pageVO.page ? 'page-item active' : 'page-item'}">
 										<a class="page-link"
 										th:href="@{noticeList(page=${btn}, 
-																		   		   amount=${pageVO.amount},
-																		   		   searchText=${pageVO.cri.searchText}
-																		   		  )}">
+															  amount=${pageVO.amount},
+															  searchText=${pageVO.cri.searchText}
+													 		  )}">
 											[[${btn}]] </a>
 									</li>
 
 									<li class="page-item"><a class="page-link"
 										th:href="@{noticeList(page=${pageVO.realEnd}, 
-																		   		   amount=${pageVO.amount},
-																		   		   searchText=${pageVO.cri.searchText}
-																		   		   )}">
+															  amount=${pageVO.amount},
+															  searchText=${pageVO.cri.searchText}
+															  )}">
 											<span aria-hidden="true">&raquo;</span>
 									</a></li>
 
@@ -167,13 +169,13 @@ $(".noticeRow").click((e) => {
 										   (date.getMonth()+1)+"-"+
 										    date.getDate()+" "+
 										    date.getHours()+":"+
-										    date.getMinutes());
+										   ((""+date.getMinutes()).length === 1 ? "0"+date.getMinutes() : date.getMinutes()));
 			$('.contentBox').html(res.noticeContent);
 			
 			// 이미지
 			if(res.fileList != undefined){
 				res.fileList.forEach(src => {
-					$('.imgBox').append('<img alt="img" src="'+ src +'">');
+					$('.imgBox').append('<img alt="img" src="'+ src +'" style="margin-bottom: 7px;">');
 				})
 			}
 			
