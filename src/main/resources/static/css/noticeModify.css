@@ -11,6 +11,8 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
 	margin-top: 60px;
 	background-color: #DCE4F0;
+	overflow: scroll;
+	overflow-x: hidden;
 }
 
 .noticeRegistTitle {
@@ -69,7 +71,25 @@
 	font-weight: 600;
 }
 
+.fileBox {
+	float: left;
+}
 
+.fileBtn button{
+	padding: 5px;
+	font-size: 18px;
+	font-weight: 600;
+	width: 28px;
+}
+
+.deleteBtn {
+	padding: 5px;
+	margin-left: 5px;
+	color: #F89292;
+	font-size: 13px;
+	font-weight: 600;
+	background-color: #E9D9D9;
+}
 
 
 

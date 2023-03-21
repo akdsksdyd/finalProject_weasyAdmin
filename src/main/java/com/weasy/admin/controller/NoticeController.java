@@ -1,5 +1,8 @@
 package com.weasy.admin.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -44,21 +47,26 @@ public class NoticeController {
 		return "notice/noticeRegist";
 	}
 	
+	// 공지사항 등록
 	@PostMapping("/noticeForm")
 	public String noticeForm(noticeListVO vo,
 							 RedirectAttributes ra,
-							 @RequestPart("fileName") MultipartFile multipartFile) {
+							 @RequestPart("fileName") List<MultipartFile> list) {
 		
 		// 공지사항 글 업로드
 		int result = noticeService.noticeRegist(vo);
 		
 		// 공지사항 글 업로드 후 파일 정보 업로드
-		int file_result = -1;
-		if(!multipartFile.isEmpty()) {
-			file_result = noticeService.noticeFileRegist(multipartFile);
+		// 빈 값 제거
+		list = list.stream()
+				   .filter(x -> x.isEmpty() == false)
+				   .collect(Collectors.toList());
+		// 다중 파일 처리
+		for(MultipartFile file : list) {
+			noticeService.noticeFileRegist(file);
 		}
 		
-		if(result == 1 && (file_result == -1 || file_result == 1)) ra.addFlashAttribute("msg", "공지사항이 등록되었습니다.");
+		if(result == 1) ra.addFlashAttribute("msg", "공지사항이 등록되었습니다.");
 		else ra.addFlashAttribute("msg", "공지사항 등록에 실패했습니다.");
 		
 		return "redirect:/notice/noticeList";
@@ -70,6 +78,7 @@ public class NoticeController {
 		return "notice/noticeModify";
 	}
 	
+	// 공지사항 수정화면으로 이동
 	@GetMapping("/noticeModify/{noticeNo}")
 	public String noticeModify(@PathVariable("noticeNo") int noticeNo,
 							   RedirectAttributes ra) {
@@ -78,35 +87,43 @@ public class NoticeController {
 		
 		return "redirect:/notice/noticeModify";
 	}
-			
+	
+	// 공지사항 삭제
 	@PostMapping("/deleteForm")
 	public String noticeDelete(@RequestParam("noticeNo") int noticeNo,
 							    RedirectAttributes ra) {
 		
 		int result = noticeService.noticeDelete(noticeNo);
-		int file_result = noticeService.noticeFileDelete(noticeNo);
+		noticeService.noticeFileDelete(noticeNo);
 		
-		if(result == 1 && file_result == 1) ra.addFlashAttribute("msg", "공지사항이 삭제되었습니다.");
+		if(result == 1) ra.addFlashAttribute("msg", "공지사항이 삭제되었습니다.");
 		else ra.addFlashAttribute("msg", "공지사항 삭제에 실패하였습니다.");
 		
 		return "redirect:/notice/noticeList";
 	}
 	
+	// 공지사항 수정	
 	@PostMapping("/noticeUpdateForm")
 	public String noticeUpdateForm(noticeListVO vo,
 								   RedirectAttributes ra,
-								   @RequestPart("fileName") MultipartFile multipartFile) {
+								   @RequestPart("fileName") List<MultipartFile> list) {
 		
 		int result = noticeService.noticeUpdate(vo);
-		int file_result = -1;
-		if(!multipartFile.isEmpty()) {
-			file_result = noticeService.noticeFileRegist(multipartFile, vo.getNoticeNo());
+		
+		// 빈 값 제거
+		list = list.stream()
+				   .filter(x -> x.isEmpty() == false)
+				   .collect(Collectors.toList());
+		
+		for(MultipartFile file : list) {
+			noticeService.noticeFileRegist(file, vo.getNoticeNo());
 		}
 		
-		if(result == 1 && (file_result == -1 || file_result == 1)) ra.addFlashAttribute("msg", "공지사항이 수정되었습니다.");
+		if(result == 1) ra.addFlashAttribute("msg", "공지사항이 수정되었습니다.");
 		else ra.addFlashAttribute("msg", "공지사항 수정에 실패했습니다.");
 		
 		return "redirect:/notice/noticeList";
 	}
+	
 	
 }
