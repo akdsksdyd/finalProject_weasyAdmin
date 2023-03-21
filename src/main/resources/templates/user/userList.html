@@ -38,7 +38,7 @@
 			</thead>
 			
 			<tbody>
-				<tr th:each="vo : ${list}">
+				<tr th:each="vo : ${list}"  th:if="${vo.permission != 'N'}">
 					<td>[[${vo.userName}]]</td>
 					<td>[[${vo.userEmail}]]</td>
 					<td>[[${vo.phoneNum}]]</td>

@@ -26,4 +26,10 @@ public interface UserService {
 	//관리자추가
 	public ArrayList<AdminVO> admin(Criteria cri);
 	
+	//관리자회원가입
+	public int adminJoin(AdminVO vo);
+
+	//이메일중복검사
+	public int idCheck(String id);
+	
 }

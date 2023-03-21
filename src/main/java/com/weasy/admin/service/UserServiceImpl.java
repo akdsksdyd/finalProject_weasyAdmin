@@ -33,13 +33,13 @@ public class UserServiceImpl implements UserService {
 		return userMapper.pwReset(userEmail, birth);
 	}
 
-	//가입 승인
+	//가입승인
 	@Override
 	public int permission(String userEmail) {
 		return userMapper.permission(userEmail);
 	}
 
-	//권한 박탈
+	//권한박탈
 	@Override
 	public int authority(String permission) {
 		return userMapper.authority(permission);
@@ -50,5 +50,24 @@ public class UserServiceImpl implements UserService {
 	public ArrayList<AdminVO> admin(Criteria cri) {
 		return userMapper.admin(cri);
 	}
+
+	//관리자회원가입
+	@Override
+	public int adminJoin(AdminVO vo) {
+		System.out.println(vo);
+		return userMapper.adminJoin(vo);
+	}
+
+	//이메일중복검사
+	@Override
+	public int idCheck(String id) {
+
+		int cnt = userMapper.idCheck(id);
+		System.out.println("cnt: " + cnt);
+		
+		return cnt;
+	}
+	
+	
 
 }

@@ -1,15 +1,19 @@
-  
-  const modal = document.querySelector('.adminModal');
-      
-	const btnOpenPopup = document.querySelector('.adminAdd_btn');
+//modal 켜기
+$(".adminAdd_btn").click(function(e) {
 
-    btnOpenPopup.addEventListener('click', () => {
-    	modal.style.display = 'block';
-    });
-    
-    btnOpenPopup.addEventListener('click', (e) => {
-    	if(e.target.classList.contains('.adminModal')) {
-      	document.style.overflow = "visible";
-      	modal.style.display = "none";
-    	}
-    });
+	e.preventDefault();
+
+ 	$(".adminModal").show();
+});
+
+//modal 이외 부분 누르면 닫히기
+$(document).mouseup(function (e){
+
+  var modalClose = $(".adminModal");
+
+  if( modalClose.has(e.target).length === 0){
+
+    modalClose.css('display','none');
+  }
+  
+});

@@ -13,17 +13,10 @@
 
 <!-- userList -->
 	<select id="userList" resultType="UserVO">
-		select a.userEmail
-		,a.userName
-	    ,a.phoneNum
-	    ,a.birth
-	    ,a.gender
-	    ,a.nickname
-	    ,b.loginDate
-	    ,a.userPw
-		from users as a
-		inner join loginlog as b
-		on a.userEmail=b.userEmail
+		select a.*,
+		(select loginDate from loginlog b where b.userEmail = a.userEmail order by loginDate desc limit 1) 
+		최신기록
+		from users a;
 	</select>
 	
 <!-- Pw Reset -->
@@ -45,7 +38,19 @@
 	<select id="admin" resultType="AdminVO">
 		select userName, userEmail, memo, role from admins;
 	</select>
-
+	
+<!-- 관리자회원가입 모당 -->
+	
+	<insert id="adminJoin" >
+		insert into admins 
+		(userEmail, userPw, userName, phoneNum, memo, role)
+		values (#{userEmail}, #{userPw}, #{userName}, #{phoneNum},#{memo}, #{role});
+	</insert>
+	
+	<!-- 이메일중복검사 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT COUNT(userEmail) FROM admins WHERE userEmail= #{id}
+	</select>
 </mapper>
 
 

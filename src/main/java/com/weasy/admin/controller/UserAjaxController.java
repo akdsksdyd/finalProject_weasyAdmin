@@ -1,28 +1,28 @@
 package com.weasy.admin.controller;
 
-import java.util.Map;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.weasy.admin.service.UserService;
+
+@Controller
 public class UserAjaxController {
 	
-	public void permmission() {
-		
-	}
+	@Autowired
+	private UserService userService;
 	
-	
-	
-	/*
-	@RequestMapping(value="/getPw", method = {RequestMethod.POST})
-	public String getPw(@RequestParam("resetOk") String resetOk) {		
-		
-		
-		System.out.println(resetOk);
-		return "getPw";
-	}
-	*/
+		//이메일 중복검사
+		@ResponseBody
+		@PostMapping("/idCheck")
+		public int idCheck(@RequestParam("id") String id) {
+			
+			int cnt = userService.idCheck(id);
+			
+			return cnt;
+			
+		}
 
 }

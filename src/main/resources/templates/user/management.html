@@ -17,10 +17,15 @@
 		
 		<div>
 			<span class="name"> 이름 : </span> 
-			<input type="text" id="searchName" placeholder="이름검색"  > &nbsp; 
+			<input type="text" id="searchName" name="searchName" placeholder="이름검색"  > &nbsp; 
 			
 			<span class="email"> 이메일 : </span> 
-			<input type="text" id="searchEmail"  placeholder="이메일검색" >
+			<input type="text" id="searchEmail" name="searchEmail" placeholder="이메일검색" >
+			
+			<input type="hidden" name="page" th:value="1">
+			<input type="hidden" name="amount" th:value="${pageVO.amount}">
+					
+			<input type="submit" id="search" value="검색">
 			
 		</div>
 
@@ -55,13 +60,13 @@
 			</tbody>
 			<!-- console.log(e.target.parentElement.parentElement.children[1].innerHTML); -->
 		</table>
-		
+		</div>
 	</form>
 </th:block>
 
 <script>
 /* search */
-
+/*
 	$('input').keyup(function(){
 		//keyup 이벤트 발생 시 해당 input의 value 가져오기.
 		var val = $(this).val();
@@ -73,7 +78,7 @@
 		$("thead").show();
 		$(temp).parent().show();
 	});
-
+*/
 </script>
 
 <script th:inline="javascript">
