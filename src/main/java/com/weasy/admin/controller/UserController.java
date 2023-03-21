@@ -40,7 +40,7 @@ public class UserController {
 	//management
 	@GetMapping("/management")
 	public String management(Model model,
-							 @GetMapping Criteria cri) {
+							  Criteria cri) {
 
 		ArrayList<UserVO> list = userService.managementList(cri);
 		model.addAttribute("list", list);
