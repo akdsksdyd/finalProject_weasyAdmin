@@ -17,8 +17,8 @@ public interface TeamMapper {
 	
 	public ArrayList<TeamVO> getList(@Param("cri")Criteria cri);
 	public int getTotal(@Param("cri")Criteria cri);
-	public ArrayList<UserVO> getTeamList(String teamName);
-	public int deleteTeam(String userEmail);
+	public ArrayList<UserVO> getTeamList(String teamNo);
+	public int deleteTeam(@Param("userEmail") String userEmail,@Param("teamNo")int teamNo);
 	public ArrayList<UserVO> searchId(@Param("searchId")String searchId,@Param("teamNo")int teamNo);
 	public Integer insertTeam(@Param("userEmail") String userEmail,@Param("teamNo") int teamNo ,@Param("role")int role);
     public int updateRole(@Param("role") int role,@Param("userEmail")String userEmail,@Param("teamNo") int teamNo);

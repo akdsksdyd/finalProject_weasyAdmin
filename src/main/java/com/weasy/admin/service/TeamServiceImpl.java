@@ -29,14 +29,14 @@ public class TeamServiceImpl implements TeamService{
 	}
 
 	@Override
-	public ArrayList<UserVO> getTeamList(String teamName) {
-		return teamMapper.getTeamList(teamName);
+	public ArrayList<UserVO> getTeamList(String teamNo) {
+		return teamMapper.getTeamList(teamNo);
 	}
 
 	@Override
-	public int deleteTeam(String userEmail) {
+	public int deleteTeam(String userEmail,int teamNo) {
 		
-		return teamMapper.deleteTeam(userEmail);
+		return teamMapper.deleteTeam(userEmail,teamNo);
 	}
 
 	@Override

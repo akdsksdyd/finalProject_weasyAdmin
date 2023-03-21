@@ -4,61 +4,60 @@
     namespace="com.weasy.admin.service.TeamMapper">
     <!-- 팀리스트출력 -->
     <select id="getList" resultType="TeamVO">
-        select
-        		t.teamNO,t.teamRegdate,t.teamName,t.teamGoal,t.teamGoal,t.userEmail,t.teamStatus,
-        		COUNT(a.teamNo) as teamCount
-        		from team t
-        		LEFT OUTER JOIN authority a ON
-        		t.teamNo = a.teamNo
-        <if test=" cri.category == 'teamName'">
-            WHERE teamName like concat('%', #{cri.keyword},'%')
-        </if>
-        <if test=" cri.category == 'teamGoal'">
-            WHERE teamGoal like concat('%', #{cri.keyword},'%')
-        </if>
-        <if test=" cri.category == 'userEmail'">
-            WHERE t.userEmail like concat('%', #{cri.keyword},'%')
-        </if>
-        <if test="cri.category == 'defaultsearch' and cri.keyword != null">
-            WHERE (teamName like concat('%', #{cri.keyword},'%')
-            			OR
-            			teamGoal like concat('%', #{cri.keyword},'%')
-            			OR t.userEmail like
-            			concat('%', #{cri.keyword},'%'))
-        </if>
-        <if test="cri.category != 'defaultsearch' and cri.teamStatus != ''">
-            AND teamStatus = #{cri.teamStatus}
-        </if>
-        <if test="cri.category == 'defaultsearch' and cri.teamStatus != ''">
-            AND teamStatus = #{cri.teamStatus}
-        </if>
-        GROUP BY t.teamNO
-        <if test="cri.teamSort == 'teamNameDesc'">
-            order by teamName desc
-        </if>
-        <if test="cri.teamSort == 'teamNameAsc'">
-            order by teamName asc
-        </if>
-        <if test="cri.teamSort == 'countAsc'">
-            order by teamCount asc
-        </if>
-        <if test="cri.teamSort == 'countDesc'">
-            order by teamCount Desc
-        </if>
-        <if test="cri.teamSort == 'dateAsc'">
-            order by teamRegdate asc
-        </if>
-        <if test="cri.teamSort == 'dateDesc'">
-            order by teamRegdate Desc
-        </if>
-        <if test="cri.teamSort == 'userAsc'">
-            order by userEmail asc
-        </if>
-        <if test="cri.teamSort == 'userDesc'">
-            order by userEmail Desc
-        </if>
-        limit #{cri.pageStart}, #{cri.amount}
-    </select>
+    SELECT
+        t.teamNO, t.teamRegdate, t.teamName, t.teamGoal, t.teamGoal, t.userEmail, t.teamStatus,
+        (SELECT COUNT(a.teamNo) FROM authority a LEFT OUTER JOIN users u ON a.userEmail = u.userEmail WHERE t.teamNo = a.teamNo AND u.permission = 'Y') AS teamCount
+    FROM team t
+    LEFT OUTER JOIN users u ON t.userEmail = u.userEmail
+    <if test=" cri.category == 'teamName'">
+        WHERE teamName LIKE CONCAT('%', #{cri.keyword}, '%')
+    </if>
+    <if test=" cri.category == 'teamGoal'">
+        WHERE teamGoal LIKE CONCAT('%', #{cri.keyword}, '%')
+    </if>
+    <if test=" cri.category == 'userEmail'">
+        WHERE t.userEmail LIKE CONCAT('%', #{cri.keyword}, '%')
+    </if>
+    <if test="cri.category == 'defaultsearch' and cri.keyword != null">
+        WHERE (teamName LIKE CONCAT('%', #{cri.keyword}, '%')
+            OR teamGoal LIKE CONCAT('%', #{cri.keyword}, '%')
+            OR t.userEmail LIKE CONCAT('%', #{cri.keyword}, '%'))
+    </if>
+    <if test="cri.category != 'defaultsearch' and cri.teamStatus != ''">
+        AND teamStatus = #{cri.teamStatus}
+    </if>
+    <if test="cri.category == 'defaultsearch' and cri.teamStatus != ''">
+        AND teamStatus = #{cri.teamStatus}
+    </if>
+    GROUP BY t.teamNO
+    <if test="cri.teamSort == 'teamNameDesc'">
+        ORDER BY teamName DESC
+    </if>
+    <if test="cri.teamSort == 'teamNameAsc'">
+        ORDER BY teamName ASC
+    </if>
+    <if test="cri.teamSort == 'countAsc'">
+        ORDER BY teamCount ASC
+    </if>
+    <if test="cri.teamSort == 'countDesc'">
+        ORDER BY teamCount DESC
+    </if>
+    <if test="cri.teamSort == 'dateAsc'">
+        ORDER BY teamRegdate ASC
+    </if>
+    <if test="cri.teamSort == 'dateDesc'">
+        ORDER BY teamRegdate DESC
+    </if>
+    <if test="cri.teamSort == 'userAsc'">
+        ORDER BY userEmail ASC
+    </if>
+    <if test="cri.teamSort == 'userDesc'">
+        ORDER BY userEmail DESC
+    </if>
+    LIMIT #{cri.pageStart}, #{cri.amount}
+</select>
+
+
     <!-- 페이지네이션용 게시글수 구하기 -->
     <select id="getTotal" resultType="int">
         select count(*) as total from team
@@ -101,7 +100,7 @@
         		u ON a.userEmail = u.userEmail
         		JOIN team t ON a.teamNO = t.teamNo
         		WHERE
-        		a.teamNo = #{teamName}
+        		a.teamNo = #{teamNo}
         		and u.permission = 'Y'
         		order by is_same desc
         		,a.role
@@ -110,6 +109,7 @@
     <delete id="deleteTeam">
         delete from authority
         		where userEmail = #{userEmail}
+        		and teamNO = #{teamNo}
     </delete>
     <!-- 모달창에서 팀원ID검색 -->
     <select id="searchId" resultType="userVO">
@@ -125,7 +125,7 @@
         		) u
         		LEFT OUTER JOIN authority a ON u.userEmail = a.userEmail
         		WHERE a.teamNo
-        		!= 2 OR teamNO IS NULL
+        		!= #{teamNo} OR teamNO IS NULL
         		GROUP BY u.userEmail;
     </select>
     <!-- 모달창에서 팀원추가 -->

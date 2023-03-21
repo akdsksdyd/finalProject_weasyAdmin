@@ -21,9 +21,9 @@ com.weasy.admin.service.TeamService;
 	@Autowired TeamService teamService;
 
 	@PostMapping("/deleteTeam")
-	public String deleteTeam(@RequestParam("userEmail") String userEmail) {
+	public String deleteTeam(@RequestParam("userEmail") String userEmail,@RequestParam("teamNo") int teamNo) {
 
-		int result = teamService.deleteTeam(userEmail);
+		int result = teamService.deleteTeam(userEmail,teamNo);
 
 		if(result != 0) {
 			return "삭제성공";

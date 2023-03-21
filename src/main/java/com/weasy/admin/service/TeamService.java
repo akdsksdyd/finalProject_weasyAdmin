@@ -14,8 +14,8 @@ public interface TeamService {
 	
 	public ArrayList<TeamVO> getList(Criteria cri);
 	public int getTotal(Criteria cri);
-	public ArrayList<UserVO> getTeamList(String teamName);
-	public int deleteTeam(String userEmail);
+	public ArrayList<UserVO> getTeamList(String teamNo);
+	public int deleteTeam(String userEmail,int teamNo);
 	public ArrayList<UserVO> searchId(String searchId,int teamNo);
 	public Integer insertTeam(String userEmail, int teamNo ,int role);
 	public int updateRole(int role,String userEmail,int teamNo);
