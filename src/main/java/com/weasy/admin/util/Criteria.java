@@ -28,13 +28,6 @@ public class Criteria {
 		return (page - 1) * amount;
 	}
 	
-	// 검색 키워드
-	private String searchName; 
-	private String searchContent; 
-	private String searchPrice; 
-	private String startDate; 
-	private String endDate; 
-	private String searchEmail;
 	
 
 }
