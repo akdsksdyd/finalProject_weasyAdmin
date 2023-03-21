@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,16 +35,17 @@ public class UserController {
 	@Qualifier("userService")
 	private UserService userService;
 	
-	private MailService mailservice;
+	//private MailService mailservice;
 
 	//management
 	@GetMapping("/management")
 	public String management(Model model,
-							 Criteria cri) {
+							 @GetMapping Criteria cri) {
 
 		ArrayList<UserVO> list = userService.managementList(cri);
 		model.addAttribute("list", list);
-
+		
+		System.out.println();
 
 		return "user/management";
 	}
@@ -70,7 +72,7 @@ public class UserController {
 		userService.pwReset(userEmail, a);
 
 		//pwReset mail발송
-		mailservice.pwresetMail(userEmail, a);
+		//mailservice.pwresetMail(userEmail, a);
 		return "redirect:/user/userList";
 	}
 
@@ -81,8 +83,8 @@ public class UserController {
 		//가입승인
 		userService.permission(userEmail);
 
-		//가입 승인 mail발송
-		mailservice.permissionMail(userEmail);
+		//가입승인 mail발송
+		//mailservice.permissionMail(userEmail);
 
 		return "redirect:/user/management";
 	}
@@ -103,8 +105,18 @@ public class UserController {
 		
 		ArrayList<AdminVO> list = userService.admin(cri);
 		model.addAttribute("list", list);
-
+		
 		return "user/admin";
+	}
+	
+	//관리자회원가입
+	@PostMapping("/admin")
+	public String adminJoin(AdminVO vo) {
+		
+		System.out.println(vo);
+		userService.adminJoin(vo);
+		
+		return "redirect:/user/admin";
 	}
 
 };
