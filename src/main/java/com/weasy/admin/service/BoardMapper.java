@@ -13,6 +13,7 @@ import com.weasy.admin.command.TaskCurrentCardVO;
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskProgressVO;
 import com.weasy.admin.command.TaskVO;
+import com.weasy.admin.command.UserVO;
 import com.weasy.admin.command.noticeListVO;
 import com.weasy.admin.util.BoardCriteria;
 
@@ -49,6 +50,6 @@ public interface BoardMapper {
 	public ArrayList<noticeListVO> getBoardNoticeList();
 	
 	// 로그인 인터셉트용
-	public int loginCheck(@Param("id") String id, @Param("pw") String pw);
+	public UserVO loginCheck(@Param("id") String id, @Param("pw") String pw);
 	
 }

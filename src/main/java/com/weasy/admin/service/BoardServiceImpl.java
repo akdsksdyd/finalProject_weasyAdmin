@@ -15,6 +15,7 @@ import com.weasy.admin.command.TaskCurrentCardVO;
 import com.weasy.admin.command.TaskDetailVO;
 import com.weasy.admin.command.TaskProgressVO;
 import com.weasy.admin.command.TaskVO;
+import com.weasy.admin.command.UserVO;
 import com.weasy.admin.command.noticeListVO;
 import com.weasy.admin.util.BoardCriteria;
 
@@ -81,7 +82,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int loginCheck(String id, String pw) {
+	public UserVO loginCheck(String id, String pw) {
 		
 		return boardMapper.loginCheck(id, pw);
 	}

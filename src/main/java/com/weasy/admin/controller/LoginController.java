@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.weasy.admin.command.UserVO;
 import com.weasy.admin.service.BoardService;
 
 
@@ -26,10 +27,11 @@ public class LoginController {
 							 HttpServletRequest request,
 							 RedirectAttributes ra) {
 		
-		int check = boardService.loginCheck(id, pw);
+		UserVO vo = boardService.loginCheck(id, pw);
 		
-		if(check != 0) {
-			request.getSession().setAttribute("user_id", id);
+		if(vo != null) {
+			request.getSession().setAttribute("user_id", vo.getUserEmail());
+			request.getSession().setAttribute("role", vo.getRole());
 			return "redirect:/board/boardSummary";
 		}else {
 			ra.addFlashAttribute("msg", "아이디 또는 비밀번호를 확인해주세요.");
