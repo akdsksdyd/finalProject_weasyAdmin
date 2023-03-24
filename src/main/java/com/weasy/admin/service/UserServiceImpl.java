@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.weasy.admin.command.AdminVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.util.Criteria;
+import com.weasy.admin.util.UserCriteria;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -17,14 +18,26 @@ public class UserServiceImpl implements UserService {
 
 	//management
 	@Override
-	public ArrayList<UserVO>managementList(Criteria cri) {
+	public ArrayList<UserVO>managementList(UserCriteria cri) {
 		return userMapper.managementList(cri);
+	}
+	
+	//management페이지네이션
+	@Override
+	public int getTotal(UserCriteria cri) {
+		return userMapper.getTotal(cri);
 	}
 	
 	//userList
 	@Override
-	public ArrayList<UserVO> userList(Criteria cri) {
+	public ArrayList<UserVO> userList(UserCriteria cri) {
 		return userMapper.userList(cri);
+	}
+	
+	//userList페이지네이션
+	@Override
+	public int getTotal2(UserCriteria cri) {
+		return userMapper.getTotal2(cri);
 	}
 	
 	//PW Reset
@@ -47,8 +60,14 @@ public class UserServiceImpl implements UserService {
 
 	//관리자추가
 	@Override
-	public ArrayList<AdminVO> admin(Criteria cri) {
+	public ArrayList<AdminVO> admin(UserCriteria cri) {
 		return userMapper.admin(cri);
+	}
+	
+	//관리자추가 페이지네이션
+	@Override
+	public int getTotal3(UserCriteria cri) {
+		return userMapper.getTotal3(cri);
 	}
 
 	//관리자회원가입
@@ -67,7 +86,7 @@ public class UserServiceImpl implements UserService {
 		
 		return cnt;
 	}
-	
+
 	
 
 }

@@ -1,110 +1,158 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+<!-- 페이지 버튼 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.min.css">
 
-	<form id="actionForm" action="management" method="get" >
-	
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+
 	<div class="main-wrapper">
-	
-		<div class="user_registration">신규 회원 등록 (승인)</div>
 
-		<br>
-		<br>
-		<br>
-		<br>
-		<br> 
-		
-		<div>
-			<span class="name"> 이름 : </span> 
-			<input type="text" id="searchName" name="searchName" placeholder="이름검색"  > &nbsp; 
-			
-			<span class="email"> 이메일 : </span> 
-			<input type="text" id="searchEmail" name="searchEmail" placeholder="이메일검색" >
-			
-			<input type="hidden" name="page" th:value="1">
-			<input type="hidden" name="amount" th:value="${pageVO.amount}">
+		<div class="managementWrap">
+
+			<div class="registration">
+				<a href="http://localhost:8686/user/management">• 신규 회원 승인</a>
+			</div>
+
+			<form class="management" action="management" method="get">
+
+				<br> <br> <br>
+
+				<div class="search">
 					
-			<input type="submit" id="search" value="검색">
-			
-		</div>
+					<input class="searchInput" type="text" name="searchName" th:value="${pageVO.cri.searchName}" 
+						placeholder="searchName"> &nbsp; &nbsp; &nbsp; &nbsp; <input
+						class="searchInput" type="text" name="searchEmail" th:value="${pageVO.cri.searchEmail}"
+						placeholder="searchEmail"> <input type="submit"
+						class="search-btn" value="검색">
+				</div>
 
-		<br>
-		<br>
+				<br> <br>
 
-		<table class="user_management" id="usertable" >
-		
-			<thead>
-			<tr>
-				<th>Name</th>
-				<th>Email</th>
-				<th>PhoneNum</th>
-				<th>Birth</th>
-				<th>Gender</th>
-				<th>Check</th>
-			</tr>
-			</thead>
-			
-			<tbody>
-				<tr th:each="vo : ${list}" th:if="${vo.permission == 'N'}" >
-					<td>[[${vo.userName}]]</td>
-					<td>[[${vo.userEmail}]]</td>
-					<td>[[${vo.phoneNum}]]</td>
-					<td>[[${vo.birth}]]</td>
-					<td>[[${vo.gender}]]</td>
-					<td>
-						<button class="management_modal_btn" type="submit" name="permission" value="hidden" >[[${vo.permission}]]</button>
-						<input type="hidden" th:value="${vo.userEmail}">
-					</td>
-				</tr>
-			</tbody>
-			<!-- console.log(e.target.parentElement.parentElement.children[1].innerHTML); -->
-		</table>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+							<th>PhoneNum</th>
+							<th>Birth</th>
+							<th>Gender</th>
+							<th>Check</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr class="management-table" th:each="vo : ${list}">
+							<td>[[${vo.userName}]]</td>
+							<td>[[${vo.userEmail}]]</td>
+							<td>[[${vo.phoneNum}]]</td>
+							<td>[[${vo.birth}]]</td>
+							<td>[[${vo.gender}]]</td>
+							<td>
+								<button class="check-btn" type="submit" name="permission"
+									value="hidden">[[${vo.permission}]]</button> <input
+								type="hidden" th:value="${vo.userEmail}">
+							</td>
+						</tr>
+					</tbody>
+					<!-- console.log(e.target.parentElement.parentElement.children[1].innerHTML); -->
+				</table>
+
+				<!-- 페이지네이션 -->
+				<div class="managementPagingWrap">
+					<div class="managementPaging">
+						<div class="pagingBtnWrap">
+							<nav>
+								<ul class="pagination">
+									<li class="page-item"><a class="page-link"
+										th:href="@{management(page=1, 
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}"><span
+											aria-hidden="true">&laquo;</span></a></li>
+
+									<li class="page-item" th:if="${pageVO.prev}"><a
+										class="page-link"
+										th:href="@{management(page=${pageVO.start - 1},
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}">
+											<span aria-hidden="true">&lsaquo;</span>
+									</a></li>
+
+									<li th:each="page : ${pageVO.pageList}"
+										th:class="${page == pageVO.page ? 'page-item active' : 'page-item'}">
+										<a class="page-link"
+										th:href="@{management(page=${page},
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}">[[${page}]]</a>
+									</li>
+
+									<li class="page-item" th:if="${pageVO.next}"><a
+										class="page-link"
+										th:href="@{management(page=${pageVO.end + 1},
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}"><span
+											aria-hidden="true">&rsaquo;</span></a></li>
+
+									<li class="page-item"><a class="page-link"
+										th:href="@{management(page=${pageVO.realEnd},
+										 	  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail} )}"><span
+											aria-hidden="true">&raquo;</span></a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
-	</form>
+	</div>
 </th:block>
 
+<!-- css -->
+<link rel="stylesheet" href="../css/management.css">
+
 <script>
-/* search */
-/*
-	$('input').keyup(function(){
-		//keyup 이벤트 발생 시 해당 input의 value 가져오기.
-		var val = $(this).val();
-		//실시간 검색이 필요한 table의 모든 행(tr) 숨김 처리
-		$("#usertable > tbody > tr").hide();
-		//해당 table에서 input에 입력한 데이터가 있는 td Element 찾기.
-		var temp = $("#usertable > tbody > tr > td:contains('"+ val +"')");
-		//입력한 데이터가 있는 Elemnet의 부모 Elemnet(td)만 표시.
-		$("thead").show();
-		$(temp).parent().show();
-	});
-*/
+	/* search */
+	/*
+	 $('input').keyup(function(){
+	 //keyup 이벤트 발생 시 해당 input의 value 가져오기.
+	 var val = $(this).val();
+	 //실시간 검색이 필요한 table의 모든 행(tr) 숨김 처리
+	 $("#usertable > tbody > tr").hide();
+	 //해당 table에서 input에 입력한 데이터가 있는 td Element 찾기.
+	 var temp = $("#usertable > tbody > tr > td:contains('"+ val +"')");
+	 //입력한 데이터가 있는 Elemnet의 부모 Elemnet(td)만 표시.
+	 $("thead").show();
+	 $(temp).parent().show();
+	 });
+	 */
 </script>
 
 <script th:inline="javascript">
-/* permission */
-$(".management_modal_btn").click(function(e){
-	
-	window.location.href = "permission/"+$(e.target).next().val();
-	
-	alert("승인완료 메일이 발송되었습니다")
-});
+	$(".search-btn").click(function(e) {
+
+		$(".management").submit();
+	});
 </script>
 
-<!-- 모달창 -->
-<!-- 
-<div id="basicModal" class="management_modal">
-	<div class="management_modal_body">
-		<div class="management_request">회원가입 승인요청</div>
-		<br><br>
-		<div class="management_question">회원가입을 승인하시겠습니까?</div>
-		<br>
-			<button class="management_modal_btn_approve">승인</button>
-			<button class="management_modal_btn_refuse">거절</button>
-	</div>
-</div>
- -->
- 
-<script src="/js/userModal.js"></script>
-<link th:href="@{/css/userModal.css}" rel="stylesheet" />
-<link th:href="@{/css/management.css}" rel="stylesheet" />
+<script th:inline="javascript">
+	/* permission */
+	$(".management_modal_btn").click(function(e) {
+
+		window.location.href = "permission/" + $(e.target).next().val();
+
+		alert("승인완료 메일이 발송되었습니다")
+	});
+</script>

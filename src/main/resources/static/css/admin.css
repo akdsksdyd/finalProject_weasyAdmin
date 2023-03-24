@@ -1,39 +1,165 @@
-.id_ok {
-	color: #006400;
+@charset "UTF-8";
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+}
+
+.adminWrap {
+	width: 80%;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	margin-top: 60px;
+	margin-bottom: 60px;
+	color: #595757;
+	position: relative;
+	background-color: white;
+}
+
+.adminAdd {
+	width: 90%;
+	height: 30px;
+	margin: 0 auto;
+	margin-top: 30px;
+	font-size: 22px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+/* 관리자 추가 */
+.add {
+	width: 90%;
+	height: 30px;
+	margin: 0 auto;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.adminAdd_btn{
+	float: right;
+	border: 1px solid #15599b;
+	border-radius: 7px;
+	background-color: #15599b;
+	padding: 10px 10px;
+	font-weight: 600;
+	color: white;
+	cursor: pointer;
+}
+
+/* 페이지네이션*/
+.adminPagingWrap {
+	width: 90%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.adminPaging {
+	width: 30%;
+	height: 80px;
+	padding: 25px 0 15px 0;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.pagingBtnWrap {
+	margin: 0 auto;
+	width: 50%;
+}
+
+/* 테이블 */
+.adminTable {
+	cursor: pointer;
+}
+
+.adminTable:hover td {
+	background-color: rgba(54, 162, 235, 0.1);
+}
+
+table {
+	border: 1px #00228c solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	font-size: .9em;
+	width: 90%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 0 auto;
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+thead {
+	font-weight: bold;
+	color: #fff;
+	background: #00228c;
+}
+
+td, th {
+	padding: 1em .5em;
+	vertical-align: middle;
+}
+
+td {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	background: #fff;
+}
+
+a {
+	color: #73685d;
+}
+
+@media all and (max-width: 768px) {
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+	th {
+		text-align: right;
+	}
+	table {
+		position: relative;
+		padding-bottom: 0;
+		border: none;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	}
+	thead {
+		float: left;
+		white-space: nowrap;
+	}
+	tbody {
+		overflow-x: auto;
+		overflow-y: hidden;
+		position: relative;
+		white-space: nowrap;
+	}
+	tr {
+		display: inline-block;
+		vertical-align: top;
+	}
+	th {
+		border-bottom: 1px solid #a39485;
+	}
+	td {
+		border-bottom: 1px solid #e5e5e5;
+	}
+}
+
+/* 유효성검사 메세지 */
+.id_ok, .pw_ok{
+	color: #1E821E;
 	display: none;
 }
 
-.id_already {
-	color: #CD0000;
-	display: none;
-}
-
-.id_form {
-	color: #CD0000;
-	display: none;
-}
-
-.pw_ok {
-	color: #008000;
-	display: none;
-}
-
-.pw_no {
-	color: #CD0000;
-	display: none;
-}
-
-.pw_form {
-	color: #CD0000;
-	display: none;
-}
-
-.name_form{
-	color: #CD0000;
-	display: none;
-}
-
-.num_form{
-	color: #CD0000;
+.id_already, .id_form, .pw_no, .pw_form, .pw_form, .name_form, .num_form{
+	color: #CD5050;
 	display: none;
 }

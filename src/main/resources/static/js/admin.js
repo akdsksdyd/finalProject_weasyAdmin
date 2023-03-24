@@ -1,3 +1,9 @@
+//submit 버튼 클릭시
+$("#submit").click(function(){
+	
+	$(".admin").submit();
+
+});
 
 //이메일 중복검사
 function checkId(){
@@ -12,6 +18,8 @@ function checkId(){
 		    success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
 		    
 		        if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+		        	var emailCheck = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+		        	
 		        	if(!emailCheck.test(id)){
 						$('.id_form').css("display","inline-block"); 
 			            $('.id_ok').css("display", "none");
@@ -40,6 +48,8 @@ function checkId(){
 
 //비밀번호 중복확인
 function passConfirm() {
+	
+	var passwdCheck = RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{8,16}$/);
 	
 	var password = $('#password').val();
 	var passwordConfirm = $('#passwordConfirm').val();
@@ -100,6 +110,7 @@ function checkNum(){
 
 
 function Check(){
+	
 	var userEmail = $("#id").val();
 	var userPw = $("#password").val();
 	var userPwconfirm = $("#passwordConfirm").val();
@@ -115,15 +126,14 @@ function Check(){
 	//이메일공백
 	console.log(userEmail);
 	if(userEmail == ""){
-		alert("이메일을 입력해주세요");
+		alert("이메일을 입력해주세요.");
 	    $("#id").focus();
 	    return false;
 	}
 	 
 	 //이메일 유효성검사
-	 
       if(!emailCheck.test($("#id").val())){
-		  alert("b 입력해주세요");
+		  alert("이메일 형식에 맞게 입력해주세요.");
         $("#id").val("");
         $("#id").focus();
         return false;
@@ -131,14 +141,14 @@ function Check(){
 	 
 	 //비밀번호공백
 	 if(userPw == ""){
-		 alert("3 입력해주세요");
+		alert("비밀번호를 입력해주세요.");
 	    $("#id").focus();
 	    return false;
 	 }
 	 
 	 //비밀번호 유효성검사
-	 /*
 	 if(!passwdCheck.test($("#password").val())){
+		alert("비밀번호는 8~16자의 영문 대소문자, 숫자,특수문자만 가능합니다.");
         $("#password").val("");
         $("#password").focus();
         return false;
@@ -146,21 +156,22 @@ function Check(){
 	 
 	 //비밀번호확인 공백
 	 if(userPwconfirm == ""){
+		alert("비밀번호 확인창을 입력해주세요.");
 	    $("#id").focus();
 	    return false;
 	 }
 	 
 	 //비밀번호확인 유효성검사
-	 
 	 if(!passwdCheck.test($("#passwordConfirm").val())){
+		alert("비밀번호는 8~16자의 영문 대소문자, 숫자,특수문자만 가능합니다.");
         $("#passwordConfirm").val("");
         $("#passwordConfirm").focus();
         return false;
       }
-      */
+
       //비밀번호 중복확인
       if($("#password").val() != ($("#passwordConfirm").val())){ 
-		  alert("4 입력해주세요");
+		  alert("비밀번호가 불일치합니다.");
 	      $("#password").val("");
 	      $("#passwordConfirm").val("");
 	      $("#password").focus();
@@ -169,14 +180,14 @@ function Check(){
 	 
 	 //이름공백
 	 if(userName == ""){
-		 alert("5 입력해주세요");
+		alert("이름을 입력해주세요.");
 	    $("#id").focus();
 	    return false;
 	 }
 	 
 	 //이름 유효성검사
 	 if(!nameCheck.test($("#name").val())){
-		 alert("6 입력해주세요");
+		 alert("이름형식에 맞게 입력해주세요.");
         $("#name").val("");
         $("#name").focus();
         return false;
@@ -184,14 +195,14 @@ function Check(){
 	 
 	 //핸드폰번호공백
 	 if(phoneNum == ""){
-		 alert("7 입력해주세요");
+		 alert("핸드폰번호를 입력해주세요.");
 	    $("#id").focus();
 	    return false;
 	 }
 	 
 	 //핸드폰번호 유효성검사
 	 if(!phonNumberCheck.test($("#phoneNum").val())){
-		 alert("8 입력해주세요");
+		 alert("핸드폰 번호형식에 맞게 입력해주세요.");
         $("#phoneNum").val("");
         $("#phoneNum").focus();
         return false;
@@ -199,15 +210,9 @@ function Check(){
       
       //권한체크박스
 	  if (!role.attr("checked")){
-		  alert("9 입력해주세요");
+		  alert("관리자권한 체크박스를 선택해주세요.");
 		return false;
 	  }
       
 };	 
 	 
-//submit 버튼 클릭시
-$("#submit").click(function(e){
-	
-	$(".form").submit();
-
-});
