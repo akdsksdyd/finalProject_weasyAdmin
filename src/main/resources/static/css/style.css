@@ -907,6 +907,7 @@ body {
 .main-wrapper {
   position: relative;
   width: 100%;
+  background-color: #E1F6FA	;
 }
 
 .footer {
@@ -1993,7 +1994,7 @@ label {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  background-color: #0061f7 !important;
+  background-color: #00228c !important;
   width: 253px;
   padding: 20px 15px 37px 20px;
   -webkit-transition: 0.5s all;

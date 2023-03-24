@@ -8,16 +8,46 @@
 
 <!-- management -->
 	<select id="managementList" resultType="UserVO">
-		select userName, userEmail, phoneNum, birth, gender, permission from users;
+		select userName, userEmail, phoneNum, birth, gender, permission 
+		from users
+		where permission = 'N'
+		<if test="cri.searchName != null and cri.searchName != '' ">
+		and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+		and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  
+		limit #{cri.pageStart}, #{cri.amount};
 	</select>
 
+<!-- management 페이지네이션 -->
+	<select id="getTotal" resultType="int">
+		select count(*) as total from users
+		where permission = 'N';
+	</select>
+	
 <!-- userList -->
 	<select id="userList" resultType="UserVO">
 		select a.*,
 		(select loginDate from loginlog b where b.userEmail = a.userEmail order by loginDate desc limit 1) 
-		최신기록
-		from users a;
+		logindate
+		from users a 
+		where permission = 'Y'
+		<if test="cri.searchName != null and cri.searchName != '' ">
+		and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+		and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  
+		limit #{cri.pageStart}, #{cri.amount};
 	</select>
+	
+<!-- userList 페이지네이션 -->
+	<select id="getTotal2" resultType="int">
+		select count(*) as total from users
+		where permission = 'Y';
+	</select>
+	
 	
 <!-- Pw Reset -->
 	<update id="pwReset">
@@ -36,11 +66,15 @@
 	
 <!-- 관리자추가 -->
 	<select id="admin" resultType="AdminVO">
-		select userName, userEmail, memo, role from admins;
+		select userName, userEmail, memo, role from admins
+		limit #{cri.pageStart}, #{cri.amount};
+	</select>
+<!-- userList 페이지네이션 -->
+	<select id="getTotal3" resultType="int">
+		select count(*) as total from admins;
 	</select>
 	
-<!-- 관리자회원가입 모당 -->
-	
+<!-- 관리자회원가입 모달 -->
 	<insert id="adminJoin" >
 		insert into admins 
 		(userEmail, userPw, userName, phoneNum, memo, role)

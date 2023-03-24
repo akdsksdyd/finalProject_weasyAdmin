@@ -1,76 +1,136 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<!-- 페이지 버튼 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.min.css">
+
 <th:block
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
 	<div class="main-wrapper">
-		<form name="actionForm" class="form" action="admin" method="post" onsubmit="return Check()">
-			<div class="container">
 
-				<h1>관리자 등록</h1>
+		<div class="adminWrap">
 
-				<button class="adminAdd_btn">관리자 추가</button>
-
-				<table class="admin">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Memo</th>
-							<th>Role</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr th:each="vo : ${list}">
-							<td>[[${vo.userName}]]</td>
-							<td>[[${vo.userEmail}]]</td>
-							<td>[[${vo.memo}]]</td>
-							<td>[[${vo.role}]]</td>
-						</tr>
-					</tbody>
-				</table>
-
+			<div class="adminAdd">
+				<a href="http://localhost:8686/user/admin">• 관리자 등록</a>
 			</div>
 
-			<!-- 관리지 추가 모달창 -->
+			<br> <br> <br>
+
+			<div class="add">
+				<button class="adminAdd_btn">+ 관리자 추가</button>
+			</div>
+
+			<br> <br>
+
+			<table class="admin">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Memo</th>
+						<th>Role</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr class="adminTable" th:each="vo : ${list}">
+						<td>[[${vo.userName}]]</td>
+						<td>[[${vo.userEmail}]]</td>
+						<td>[[${vo.memo}]]</td>
+						<td>[[${vo.role}]]</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- 페이지네이션 -->
+			<div class="adminPagingWrap">
+				<div class="adminPaging">
+					<div class="pagingBtnWrap">
+						<nav>
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link"
+									th:href="@{admin(page=1, 
+											  amount=${pageVO.amount}
+											  )}"><span
+										aria-hidden="true">&laquo;</span></a></li>
+
+								<li class="page-item" th:if="${pageVO.prev}"><a
+									class="page-link"
+									th:href="@{admin(page=${pageVO.start - 1},
+											  amount=${pageVO.amount}
+											  )}">
+										<span aria-hidden="true">&lsaquo;</span>
+								</a></li>
+
+								<li th:each="page : ${pageVO.pageList}"
+									th:class="${page == pageVO.page ? 'page-item active' : 'page-item'}">
+									<a class="page-link"
+									th:href="@{admin(page=${page},
+											  amount=${pageVO.amount}
+											  )}">[[${page}]]</a>
+								</li>
+
+								<li class="page-item" th:if="${pageVO.next}"><a
+									class="page-link"
+									th:href="@{admin(page=${pageVO.end + 1},
+											  amount=${pageVO.amount}
+											  )}"><span
+										aria-hidden="true">&rsaquo;</span></a></li>
+
+								<li class="page-item"><a class="page-link"
+									th:href="@{admin(page=${pageVO.realEnd},
+										 	  amount=${pageVO.amount} )}"><span
+										aria-hidden="true">&raquo;</span></a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 관리지 추가 모달창 -->
+		<form class="admin" action="admin" method="post"
+			onsubmit="return Check()">
 			<div class="adminModal">
 				<div class="adminModal_body">
 					<div class="join-card">
-						<h1>WEASY Admin</h1>
-						<br>
-						<br> 
+						<h1>WEASY ADMIN</h1>
+						<br> <br>
 						<!-- 이메일 -->
-						<input type="text" id="id" name="userEmail" placeholder="userEmail" oninput = "checkId()" required>
-						 
-						 <!-- email ajax 중복검사 -->
-						<span class="id_ok">사용 가능한 이메일입니다.</span>
-						<span class="id_already">사용 중인 이메일입니다.</span>
-						<span class="id_form">이메일 형식에 맞게 입력해주세요.</span>
-						
+						<input type="text" id="id" name="userEmail"
+							placeholder="userEmail" oninput="checkId()" required>
+
+						<!-- email ajax 중복검사 -->
+						<span class="id_ok">사용 가능한 이메일입니다.</span> <span class="id_already">사용
+							중인 이메일입니다.</span> <span class="id_form">이메일 형식에 맞게 입력해주세요.</span>
+
 						<!-- 비밀번호 -->
-						<input type="password" id="password" name="userPw" placeholder="Password" required> 
-						<input type="password" id="passwordConfirm" name="userPw" placeholder="passwordConfirm" oninput = "passConfirm()" required>
-						
+						<input type="password" id="password" name="userPw"
+							placeholder="password" required> <input type="password"
+							id="passwordConfirm" name="userPw" placeholder="password Confirm"
+							oninput="passConfirm()" required>
+
 						<!-- 비밀번호 확인 -->
-						<span class="pw_ok">비밀번호가 일치합니다.</span>
-						<span class="pw_no">비밀번호가 불일치합니다.</span>
-						<span class="pw_form">비밀번호는 8~16자의 영문 대소문자, 숫자, 특수문자만 가능합니다.</span>
-						
+						<span class="pw_ok">비밀번호가 일치합니다.</span> <span class="pw_no">비밀번호가
+							불일치합니다.</span> <span class="pw_form">비밀번호는 8~16자의 영문 대소문자, 숫자,
+							특수문자만 가능합니다.</span>
+
 						<!-- 이름 -->
-						<input type="text" id="name" name="userName" placeholder="userName" oninput = "checkName()" required> 
-						<span class="name_form">이름형식에 맞게 입력해주세요.</span>
+						<input type="text" id="name" name="userName"
+							placeholder="userName" oninput="checkName()" required> <span
+							class="name_form">이름형식에 맞게 입력해주세요.</span>
 
 						<!-- 핸드폰번호 -->
-						<input type="text" id="phoneNum" name="phoneNum" placeholder="phoneNum" oninput = "checkNum()" required> 
-						<span class="num_form">핸드폰번호형식에 맞게 입력해주세요.</span>
-						
-						
-						<input type="text" name="memo" placeholder="memo"> <br>
-						<input type="checkbox" id="role" name="role" value="1" required> 관리자 권한을 부여하시겠습니까?
-						
-						<input type="submit"  id="submit" name="join" class="join join-submit" value="J O I N">
+						<input type="text" id="phoneNum" name="phoneNum"
+							placeholder="phoneNum" oninput="checkNum()" required> <span
+							class="num_form">핸드폰 번호형식에 맞게 입력해주세요.</span> <input type="text"
+							name="memo" placeholder="memo"> <br> <br> <input
+							type="checkbox" id="role" name="role" value="1" required>
+						관리자 권한을 부여하시겠습니까? <br> <br> <input type="submit"
+							id="submit" name="join" class="join join-submit" value="J O I N">
 					</div>
 				</div>
 			</div>
@@ -78,9 +138,12 @@
 	</div>
 </th:block>
 
+<!-- js 및 css -->
 <script src="/js/admin.js"></script>
 <link th:href="@{/css/admin.css}" rel="stylesheet" />
 
-<!-- 관리자회원가입 모달창 -->
+
+
+<!-- 관리자가입 모달창 -->
 <script src="/js/adminModal.js"></script>
 <link th:href="@{/css/adminModal.css}" rel="stylesheet" />

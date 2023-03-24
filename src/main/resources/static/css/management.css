@@ -1,62 +1,183 @@
 @charset "UTF-8";
 
-.main-wrapper{
-	margin : 100px 120px 100px 120px; 
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
 }
 
-.user_registration {
-	font-size : 38px;
-	font-weight: 550;
+a {
+	text-decoration: none;
 }
 
-.name {
-	font-size: 17px;
-	font-weight: 550;
+.managementWrap {
+	width: 80%;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	margin-top: 60px;
+	margin-bottom: 60px;
+	color: #595757;
+	position: relative;
+	background-color: white;
+	
 }
 
-.email {
-	font-size: 17px;
-	font-weight: 550;
+.registration {
+	width: 90%;
+	height: 30px;
+	margin: 0 auto;
+	margin-top: 30px;
+	font-size: 22px;
+	font-weight: 600;
+	cursor: pointer;
 }
 
-.permissionY_btn{
-	background-color: green;
-	color:white;
-	border-radius: 12px;
-	font-weight: bolder; 
+/* search */
+.search {
+	width: 90%;
+	height: 30px;
+	margin: 0 auto;
 	font-size: 16px;
-	width: 50px;
-	height: 27px;
+	font-weight: 600;
 }
 
+.searchInput {
+	background-image:
+		url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-256.png);
+	background-position: 13px center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+	padding: 5px 5px;
+	text-indent: 50px;
+	width: 250px;
+}
 
+.searchInput::placeholder {
+	font-weight: bold;
+}
 
-.data_amount{
+.search-btn {
 	float: right;
+	border: 1px solid #15599b;
+	border-radius: 7px;
+	background-color: #15599b;
+	padding: 10px 10px;
+	font-weight: 600;
+	color: white;
+	cursor: pointer;
 }
 
-.user_management{
-	width:100%; 
-	border-left:1px solid #ededed;  
-	border-top:1px solid #4588fd;
-	overflow: scroll;
+/*
+.check-btn {
+	border: 1px solid #e7c23a;
+	border-radius: 7px;
+	background-color: #e7c23a;
+	padding: 7px 10px;
+	font-weight: 600;
+	color: white;
+	cursor: pointer;
 }
-.user_management tr th{
-	text-align:center; 
-	background-color: #edf0f5; 
-	text-align: center; 
-	border-bottom: 1px solid #fff; 
-	border-right: 1px solid #ededed; 
-	height: 50px; 
-	line-height: 45px; 
-	min-width:10%; 
-	width:10%;
+*/
+
+/* 페이지네이션*/
+.managementPagingWrap {
+	width: 90%;
+	margin: 0 auto;
+	overflow: hidden;
 }
 
-.user_management tr td{
-	text-align:center; 
-	border-bottom: 1px solid #ededed; 
-	text-align: center; 
-	line-height: 45px; 
-	height: 45px;
+.managementPaging {
+	width: 30%;
+	height: 80px;
+	padding: 25px 0 15px 0;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.pagingBtnWrap {
+	margin: 0 auto;
+	width: 50%;
+}
+
+/* 테이블 */
+.management-table {
+	cursor: pointer;
+}
+
+.management-table:hover td {
+	background-color: rgba(54, 162, 235, 0.1);
+}
+
+table {
+	border: 1px #00228c solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	font-size: .9em;
+	width: 90%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 0 auto;
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+thead {
+	font-weight: bold;
+	color: #fff;
+	background: #00228c;
+}
+
+td, th {
+	padding: 1em .5em;
+	vertical-align: middle;
+}
+
+td {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	background: #fff;
+}
+
+a {
+	color: #73685d;
+}
+
+@media all and (max-width: 768px) {
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+	th {
+		text-align: right;
+	}
+	table {
+		position: relative;
+		padding-bottom: 0;
+		border: none;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	}
+	thead {
+		float: left;
+		white-space: nowrap;
+	}
+	tbody {
+		overflow-x: auto;
+		overflow-y: hidden;
+		position: relative;
+		white-space: nowrap;
+	}
+	tr {
+		display: inline-block;
+		vertical-align: top;
+	}
+	th {
+		border-bottom: 1px solid #a39485;
+	}
+	td {
+		border-bottom: 1px solid #e5e5e5;
+	}
 }

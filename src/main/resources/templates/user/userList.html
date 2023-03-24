@@ -1,134 +1,188 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+<!-- 페이지 버튼 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.min.css">
 
-		<div class="main-wrapper">
-		
-		<div class="userList">User List</div>
-		
-		<br><br><br><br><br>
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
-		<div>
-			&nbsp;
-			<span class="name"> Name : </span> 
-			<input class="search_name" type="text" placeholder="Search Name" >
-			&nbsp;
-			<span class="email"> Email : </span> 
-			<input class="search_email" type="text" placeholder="Search Email" >
-		</div>
+	<div class="main-wrapper">
 
-		<br><br>
+		<form class="userList" action="userList" method="get">
 
-		<br><br>
+			<div class="userListWrap">
 
-		<table class="userList_table" id="usertable">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>PhoneNum</th>
-					<th>Birth</th>
-					<th>Gender</th>
-					<th>NickName</th>
-					<th>LoginLog</th>
-					<th>PW Reset</th>
-					<th>Authority</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				<tr th:each="vo : ${list}"  th:if="${vo.permission != 'N'}">
-					<td>[[${vo.userName}]]</td>
-					<td>[[${vo.userEmail}]]</td>
-					<td>[[${vo.phoneNum}]]</td>
-					<td>[[${vo.birth}]]</td>
-					<td>[[${vo.gender}]]</td>
-					<td>[[${vo.nickName}]]</td>
-					<td>[[${vo.loginDate}]]</td> 
-					<td>
-						<button class="pwreset_modal_btn">RESET</button>
-						<input type="hidden" th:value="${vo.userEmail}">
-						<input type="hidden" th:value="${vo.birth}">
-					</td>
-					<td>
-						<button class="authority_btn" >DELETE</button>
-						<input type="hidden" th:value="${vo.userEmail}">
-					</td> 
-				</tr>
-			</tbody>
-		</table>
+				<div class="userList-title">
+					<a href="http://localhost:8686/user/userList"> • User List</a>
+				</div>
 
+				<br> <br> <br>
+
+				<div class="search">
+					<input class="searchInput" type="text" name="searchName" th:value="${pageVO.cri.searchName}"
+						placeholder="searchName"> &nbsp; &nbsp; &nbsp; &nbsp; <input
+						class="searchInput" type="text" name="searchEmail" th:value="${pageVO.cri.searchEmail}"
+						placeholder="searchEmail"> <input type="submit"
+						class="search-btn" value="검색">
+				</div>
+
+				<br> <br>
+
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+							<th>PhoneNum</th>
+							<th>Birth</th>
+							<th>Gender</th>
+							<th>NickName</th>
+							<th>LoginLog</th>
+							<th>PassWord</th>
+							<th>DropOut</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr  class="userList_table" th:each="vo : ${list}">
+							<td>[[${vo.userName}]]</td>
+							<td>[[${vo.userEmail}]]</td>
+							<td>[[${vo.phoneNum}]]</td>
+							<td>[[${vo.birth}]]</td>
+							<td>[[${vo.gender}]]</td>
+							<td>[[${vo.nickName}]]</td>
+							<td>[[${vo.loginDate}]]</td>
+							<td>
+								<button class="pwreset_modal_btn">reset</button> <input
+								type="hidden" th:value="${vo.userEmail}"> <input
+								type="hidden" th:value="${vo.birth}">
+							</td>
+							<td>
+								<button class="authority_btn">o</button> <input
+								type="hidden" th:value="${vo.userEmail}">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<!-- 페이지네이션 -->
+				<div class="userlistPagingWrap">
+					<div class="userlistPaging">
+						<div class="pagingBtnWrap">
+							<nav>
+								<ul class="pagination">
+									<li class="page-item"><a class="page-link"
+										th:href="@{userList(page=1, 
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}"><span
+											aria-hidden="true">&laquo;</span></a></li>
+
+									<li class="page-item" th:if="${pageVO.prev}"><a
+										class="page-link"
+										th:href="@{userList(page=${pageVO.start - 1},
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}">
+											<span aria-hidden="true">&lsaquo;</span>
+									</a></li>
+
+									<li th:each="page : ${pageVO.pageList}"
+										th:class="${page == pageVO.page ? 'page-item active' : 'page-item'}">
+										<a class="page-link"
+										th:href="@{userList(page=${page},
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}">[[${page}]]</a>
+									</li>
+
+									<li class="page-item" th:if="${pageVO.next}"><a
+										class="page-link"
+										th:href="@{userList(page=${pageVO.end + 1},
+											  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail}
+											  )}"><span
+											aria-hidden="true">&rsaquo;</span></a></li>
+
+									<li class="page-item"><a class="page-link"
+										th:href="@{userList(page=${pageVO.realEnd},
+										 	  amount=${pageVO.amount},
+											  searchName=${pageVO.cri.searchName},
+											  searchEmail=${pageVO.cri.searchEmail} )}"><span
+											aria-hidden="true">&raquo;</span></a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
-
 </th:block>
+<!-- css -->
+<link rel="stylesheet" href="../css/userList.css">
 
 <script>
-/* search */
-	$('input').keyup(function(){
-		//keyup 이벤트 발생 시 해당 input의 value 가져오기.
-		var val = $(this).val();
-		//실시간 검색이 필요한 table의 모든 행(tr) 숨김 처리
-		$("#usertable > tbody > tr").hide();
-		//해당 table에서 input에 입력한 데이터가 있는 td Element 찾기.
-		var temp = $("#usertable > tbody > tr > td:contains('"+ val +"')");
-		//입력한 데이터가 있는 Elemnet의 부모 Elemnet(td)만 표시.
-		$("thead").show();
-		$(temp).parent().show();
+	/* search 
+	 $('input').keyup(function(){
+	 //keyup 이벤트 발생 시 해당 input의 value 가져오기.
+	 var val = $(this).val();
+	 //실시간 검색이 필요한 table의 모든 행(tr) 숨김 처리
+	 $("#usertable > tbody > tr").hide();
+	 //해당 table에서 input에 입력한 데이터가 있는 td Element 찾기.
+	 var temp = $("#usertable > tbody > tr > td:contains('"+ val +"')");
+	 //입력한 데이터가 있는 Elemnet의 부모 Elemnet(td)만 표시.
+	 $("thead").show();
+	 $(temp).parent().show();
+	 });
+	 */
+</script>
+
+<script th:inline="javascript">
+	$(".search-btn").click(function(e) {
+
+		$(".userList").submit();
 	});
 </script>
 
-<script>
-/* PW Reset */
-$(".pwreset_modal_btn").click(function(e) {
-	
-	if(confirm('비밀번호를 초기화 시키겠습니까?')){
-		
-		alert('초기화완료 메일이 발송되었습니다.');
+<script th:inline="javascript">
+	/* PW Reset */
+	$(".pwreset_modal_btn").click(
+			function(e) {
 
-		window.location.href = "pwReset/"
-								+$(e.target).next().val()+ "/"
-								+$(e.target).next().next().val();
+				if (confirm('비밀번호를 초기화 시키겠습니까?')) {
 
-	} else {
-		
-		alert('초기화 취소되었습니다.');
-	}
-});	
+					alert('초기화완료 메일이 발송되었습니다.');
+
+					window.location.href = "pwReset/"
+							+ $(e.target).next().val() + "/"
+							+ $(e.target).next().next().val();
+
+				} else {
+
+					alert('초기화가 취소되었습니다.');
+				}
+			});
 </script>
 
-<script>
-/* 권한 박탈 */
-$(".authority_btn").click(function(e){
-	
-	if(confirm('권한을 박탈시키겠습니까?')){
-		window.location.href = "authority/"
-								+ $(e.target).next().val()
-		
-		alert('권한이 박탈되었습니다');
-		
-	} else {
-		alert('권한 박탈이 취소되었습니다.');
-	}
-});
+<script th:inline="javascript">
+	/* 권한 박탈 */
+	$(".authority_btn").click(function(e) {
+
+		if (confirm('회원을 탈퇴시키겠습니까?')) {
+			window.location.href = "authority/" + $(e.target).next().val()
+
+			alert('탈퇴되었습니다');
+
+		} else {
+			alert('탈퇴가 취소되었습니다.');
+		}
+	});
 </script>
-
-<!-- 
-	<div class="userList_modal">
-	
-		<div class="userList_modal_body">
-			<div class="userList_request">PW RESET</div>
-			<br><br>
-			<div class="userList_question">비밀번호를 초기화 하시겠습니까?</div>
-			<br>
-				<input type="hidden" name="userPw" value="">
-				<input class="userList_modal_btn_YES" type="submit">
-				<button class="userList_modal_btn_NO" type="button">NO</button>
-		</div>
-	</div>
-
-<script src="/js/userList_modal.js"></script>
-
-<link th:href="@{/css/userList_modal.css}" rel="stylesheet" />
- -->
-<link th:href="@{/css/userList.css}" rel="stylesheet" />

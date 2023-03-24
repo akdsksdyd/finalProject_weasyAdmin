@@ -2,27 +2,22 @@ package com.weasy.admin.controller;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.weasy.admin.command.AdminVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.service.MailService;
 import com.weasy.admin.service.UserService;
 import com.weasy.admin.service.UserSha256;
 import com.weasy.admin.util.Criteria;
-import com.weasy.admin.util.PageVO;
+import com.weasy.admin.util.UserCriteria;
+import com.weasy.admin.util.UserPageVO;
 
 import lombok.AllArgsConstructor;
 
@@ -40,23 +35,39 @@ public class UserController {
 	//management
 	@GetMapping("/management")
 	public String management(Model model,
-							  Criteria cri) {
+							 UserCriteria cri) {
 
 		ArrayList<UserVO> list = userService.managementList(cri);
 		model.addAttribute("list", list);
-		
-		System.out.println();
 
+		//System.out.println(list.size());
+
+		//페이지네이션
+		int total = userService.getTotal(cri);
+		UserPageVO pageVO = new UserPageVO(cri,total);
+		
+		System.out.println(pageVO.toString());
+		
+		model.addAttribute("pageVO", pageVO);
+		
 		return "user/management";
 	}
 
 	//userList
 	@GetMapping("/userList")
 	public String userList(Model model,
-						   Criteria cri) {
+						   UserCriteria cri) {
 
 		ArrayList<UserVO> list = userService.userList(cri);
 		model.addAttribute("list", list);
+		
+		//System.out.println(cri.toString());
+		
+		//페이지네이션
+		int total2 = userService.getTotal2(cri);
+		UserPageVO pageVO2 = new UserPageVO(cri,total2);
+		
+		model.addAttribute("pageVO", pageVO2);
 
 		return "user/userList";
 	}
@@ -101,10 +112,16 @@ public class UserController {
 	//관리자추가
 	@GetMapping("/admin")
 	public String admin(Model model,
-			 			Criteria cri) {
+						UserCriteria cri) {
 		
 		ArrayList<AdminVO> list = userService.admin(cri);
 		model.addAttribute("list", list);
+		
+		//페이지네이션
+		int total3 = userService.getTotal3(cri);
+		UserPageVO pageVO3 = new UserPageVO(cri,total3);
+		
+		model.addAttribute("pageVO", pageVO3);
 		
 		return "user/admin";
 	}
