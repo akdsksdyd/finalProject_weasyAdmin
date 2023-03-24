@@ -144,7 +144,7 @@ p > .btn-option:first-child{border-radius: 5px 0px 0px 5px;}
 p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
 
 #handleAmount {
- position: fixed;
+ position: absolute;
   top: 3%;
   right: 5%;
   width: 120px;
@@ -185,7 +185,7 @@ p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
   position: relative;
 }
 
-.categorysel{
+.categoryselect{
   width: 120px;
   height: 40px;
   border: 1px solid #ccc;

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block
+	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
+	<div class="main-wrapper">
+	  <meta charset='utf-8' />
+	  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+	  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+	  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>
+	  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	  <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+	  <script>
+	
+	    $(document).ready(function() {
+	      $('#calendar').fullCalendar({
+	        defaultView: 'month', // 기본 달력 뷰는 월간 뷰입니다.
+	        header: {
+	          left: 'prev,next today',
+	          center: 'title',
+	          right: 'month,agendaWeek,agendaDay'
+	        },
+	        events: [
+	          {
+	            title: '이성호프로젝트',
+	            start: '2023-03-08',
+	            end: '2023-03-19',
+	            color: 'red' // 이벤트의 색상을 빨간색으로 지정합니다.
+	          },
+	          {
+	            title: '정태경 프로젝트',
+	            start: '2023-03-12',
+	            end: '2023-03-28',
+	            color: 'green' // 이벤트의 색상을 초록색으로 지정합니다.
+	          },
+	          {
+	            title: 'weazy프로젝트',
+	            start: '2023-03-04',
+	            end: '2023-03-24',
+	            color: 'blue' // 이벤트의 색상을 파란색으로 지정합니다.
+	          },
+	          {
+	            title: 'FullCalendar 프로젝트',
+	            start: '2023-03-12',
+	            end: '2023-03-16',
+	            color: 'orange' // 이벤트의 색상을 주황색으로 지정합니다.
+	          }
+	        ],
+	        eventRender: function(event, element) {
+	          // 이벤트의 td 요소에 border-radius 스타일을 추가합니다.
+	          element.find('td').css('border-radius', '15px');
+	        }
+	      });
+	    });
+	
+	  </script>
+	</head>
+	<body>
+	
+	  <div id='calendar'></div>
+	</div>
+	</body>
+	</html>

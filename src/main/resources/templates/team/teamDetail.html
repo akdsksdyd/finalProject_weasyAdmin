@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="cardTextDetail">
                                     <p style="font-size: 13px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">프로젝트 종료까지 남은 기간</p>
-                                    <p style="font-size: 12px; padding-top: 5px;">[[${voo.remain}]]일</p>
+                                    <p style="font-size: 12px; padding-top: 5px;">[[${voo.remain < 0 ? '만료됨' : voo.remain+'일'}]]</p>
                                 </div>
                                 <div class="cardTextDetail">
                                     <p style="font-size: 14px; font-weight: 600; padding-bottom: 3px; border-bottom: 1px #a39485 solid;">팀 인원</p>
