@@ -3,7 +3,7 @@
 <th:block
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 	<div class="main-wrapper">
-		<form name="actionForm" action="team-list" method="get">
+		<form name="actionForm" action="teamList" method="get">
 			<input type="hidden" name="teamStatus" value=""> <input
 				type="hidden" name="teamSort" value="">
 			<div class="search-container">
@@ -68,7 +68,7 @@
 				<!-- 반복문을 통해서 컨트롤러에서 ${list}에 담긴값을 그려줌 -->
 				<tr class="trbodys" th:each=" vo, status : ${list}">
 					<td class="tnodate">[[${vo.teamNo}]]</td> <!-- 팀번호 pk여서 맨마지막에 없앨에정 -->
-					<td style="color: blue; cursor: pointer;" class="team-name"
+					<td style="color: blue; cursor: pointer;" class="teamName"
 						th:data-team-count="${vo.teamCount}"
 						th:data-team-no="${vo.teamNo}">[[${vo.teamName}]]</td> <!-- 객체값을 자바변수에 넣어주기위해서 th:data사용 아래쪽 인원체크에서 사용 -->
 					<td>[[${vo.teamGoal}]]</td> <!-- 팀목표 -->
@@ -177,13 +177,13 @@
             
             /* 화면 시작시 실행되는 이벤트,팀인원은 무조건 1명 존재해야하나,만약의 경우를 대비해서 인원이 없을시 못들어가게 구현 */
                 $(document).ready(function() {
-                    $('.team-name').on('click', function(e) {
+                    $('.teamName').on('click', function(e) {
                         const target = $(e.target);
-                        const teamCount = target.data('team-count');
-                        const teamNo = target.data('team-no');
+                        const teamCount = target.data('teamCount');
+                        const teamNo = target.data('teamNo');
                         
                         if (teamCount > 0) {
-                            location.href = `team-detail?teamNo=${teamNo}`;
+                            location.href = `teamDetail?teamNo=${teamNo}`;
                         } else {
                             alert('팀 인원이 없습니다.');
                         }

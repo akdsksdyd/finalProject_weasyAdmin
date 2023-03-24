@@ -22,7 +22,7 @@ import com.weasy.admin.util.PageVO;
 @RequestMapping("/team")
 public class TeamController {
     @Autowired private TeamService teamService;
-    @GetMapping("/team-list")
+    @GetMapping("/teamList")
     public String teamList(Model model, Criteria cri) {
         ArrayList < TeamVO > list = teamService.getList(cri);
         model.addAttribute("list", list);
@@ -33,8 +33,8 @@ public class TeamController {
         model.addAttribute("pageVO", pageVO);
         return "team/teamList";
     }
-    @GetMapping("/team-detail")
-    public String teamDetail(@RequestParam("team-No")String teamNo, Model model) {
+    @GetMapping("/teamDetail")
+    public String teamDetail(@RequestParam("teamNo")String teamNo, Model model) {
         ArrayList < TaskCurrentCardVO > lists = teamService.teamCurrentList(teamNo);
         ArrayList < UserVO > list = teamService.getTeamList(teamNo);
         System.out.println(list.toString());
@@ -42,9 +42,15 @@ public class TeamController {
         model.addAttribute("list", list);
         return "team/teamDetail";
     }
-    @GetMapping("/status-change")
+    @GetMapping("/statusChange")
     public String statusChange(@RequestParam("teamStatus")String teamStatus, @RequestParam("teamNo")int teamNo) {
         int result = teamService.statusChange(teamStatus, teamNo);
         return "redirect:/team/teamList";
+    }
+    
+    @GetMapping("index")
+    public String indexs() {
+    	
+    	return "team/index";
     }
 }
