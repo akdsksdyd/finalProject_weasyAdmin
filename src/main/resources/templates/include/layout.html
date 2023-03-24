@@ -33,7 +33,7 @@
 			<aside class="sidebar">
 				<div class="sidebar-start">
 					<div class="sidebar-head">
-						<a href="/" class="logo-wrapper" title="Home"> <span
+						<a href="../board/boardSummary" class="logo-wrapper" title="Home"> <span
 							class="sr-only">Home</span> <span class="icon logo"
 							aria-hidden="true"></span>
 							<div class="logo-text">
@@ -59,7 +59,7 @@
 								</span>
 							</a>
 								<ul class="cat-sub-menu">
-									<li><a href="../board/boardSummary">대시보드 요약</a></li>
+									<li><a href="../board/boardSummary">대시보드</a></li>
 									<li><a href="../board/taskCurrent">팀별 태스크 현황</a></li>
 									<li><a href="../board/taskProgress">팀별 태스크 진척률</a></li>
 								</ul></li>
@@ -89,7 +89,7 @@
 								</span>
 							</a>
 								<ul class="cat-sub-menu">
-									<li><a href="../team/team-list">팀 목록</a></li>
+									<li><a href="../team/teamList">팀 목록</a></li>
 									<!-- <li><a href="teamDetail">팀원 관리</a></li> -->
 								</ul></li>
 							<li><a class="show-cat-btn" href="##"> <span
@@ -104,8 +104,8 @@
 									<li><a href="../user/userList">회원 목록</a></li>
 									<li><a href="../user/admin">관리자 등록</a></li>
 								</ul></li>
-							<li><a href="##"><span class="icon setting"
-									aria-hidden="true"></span>Settings</a></li>
+							<li><a href="../logout"><span class="icon setting"
+									aria-hidden="true"></span>로그아웃</a></li>
 						</ul>
 					</div>
 				</div>
@@ -118,7 +118,7 @@
 								alt="User name"></picture>
 					</span>
 						<div class="sidebar-user-info">
-							<span class="sidebar-user__title">관리자님</span> <span
+							<span class="sidebar-user__title">[[${#strings.setSplit(session.user_id, '@')[0]}]]님</span> <span
 								class="sidebar-user__subtitle">Support manager</span>
 						</div>
 					</a>
