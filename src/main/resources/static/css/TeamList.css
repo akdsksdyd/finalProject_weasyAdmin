@@ -66,7 +66,6 @@ p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
 	margin-top: 30px;
 	font-size: 22px;
 	font-weight: 600;
-	cursor: pointer;
 }
 
 .search {
@@ -129,12 +128,12 @@ p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
     bottom: 13px;
 }
 .btn_sort{
-	 background-color:  #9DCEFF;
+	 background: #00228c;
 }
 
 /* 현재상태 선택창*/
 .changeStatus{
-  width: 90px;
+  width: 100px;
   height: 33px;
   border: 2px solid #ccc;
   border-radius: 5px;
