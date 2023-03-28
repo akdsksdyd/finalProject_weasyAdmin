@@ -29,7 +29,7 @@
 						</br>
 						<div class="inputBox">
 							<div class="inputTitle">작성자</div> 
-							<input type="text" name="userEmail" value="admin1" readonly style="width: 80%;"/>
+							<input type="text" name="userEmail" th:value="${session.user_id}" readonly style="width: 80%;"/>
 						</div>	
 						</br>
 						<div class="inputBox">

@@ -46,7 +46,7 @@ public interface BoardMapper {
 	public ArrayList<TaskCountChartVO> getTaskCountChart();
 	public ArrayList<CompleteTaskChartVO> getCompleteTaskChart();
 	public ArrayList<ProgressingTaskChartVO> getProgressingTaskChart();
-	public int[] getTotalTaskProgress();
+	public Integer[] getTotalTaskProgress();
 	public ArrayList<noticeListVO> getBoardNoticeList();
 	
 	// 로그인 인터셉트용

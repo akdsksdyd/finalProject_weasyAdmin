@@ -223,9 +223,9 @@ if(JSON.parse('[[${dataMap}]]') != null){
 	var done = 0;
 	
 	dataMap.totalTaskProgress.forEach(n => {
-		if(n == 1) doing++;
-		else if(n == 2) todo++;
-		else done++;
+		if(n == 0) doing++;
+		else if(n == 1) todo++;
+		else if(n == 2) done++;
 	})
 	var total = doing + todo + done;
 	
