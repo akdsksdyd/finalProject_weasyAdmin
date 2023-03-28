@@ -41,6 +41,7 @@
 					<button class="btn-search" type="submit">검색</button>
 				</div>
 				</div>
+
 				
 				<table>
 
@@ -180,7 +181,6 @@
             
             /* 팀상태 변경 - 현재 팀상태를 진행중,종료됨으로 변경가능, db에서 테이블을 N이랑 Y로 변경가능 */
             function detail(e) {
-                console.log(e.target.value);
                 location.href = "teamDeatil?page=1&amount=" + e.target.value + keyword.val();
             }
             $('.trbodys').on('change', '.changeStatus', function (e) {

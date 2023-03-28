@@ -2,7 +2,6 @@
 package com.weasy.admin.controller;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired; import
 org.springframework.ui.Model; import
@@ -19,7 +18,7 @@ com.weasy.admin.service.TeamService;
 @RestController public class TeamAjaxController {
 
 	@Autowired TeamService teamService;
-
+	//팀원삭제
 	@PostMapping("/deleteTeam")
 	public String deleteTeam(@RequestParam("userEmail") String userEmail,@RequestParam("teamNo") int teamNo) {
 
@@ -33,7 +32,7 @@ com.weasy.admin.service.TeamService;
 
 	}
 
-
+	//팀원목록을 다시 그려주는기능
 	@PostMapping("/teamListUpdate")
 	public ArrayList<UserVO>teamListUpdate(@RequestParam("teamNo") String teamNo){
 
@@ -42,17 +41,17 @@ com.weasy.admin.service.TeamService;
 		return list;
 	}
 	
-	
+	//아이디 및 닉네임검색기능
 	@PostMapping("/searchId")
 	public ArrayList<UserVO> searchId(@RequestParam("searchId") String searchId,@RequestParam("teamNo") int teamNo){
 		ArrayList<UserVO> list = teamService.searchId(searchId, teamNo);
 		return list;
 	}
+	//팀원추가기능
 	@PostMapping("/insertTeam")
 	public ArrayList<UserVO> insertTeam(@RequestParam("userEmail")String userEmail,@RequestParam("teamNo") int teamNo, @RequestParam("role") int role,@RequestParam("searchId") String searchId) {
 		
 		Integer result = teamService.insertTeam(userEmail, teamNo,role);
-		System.out.println("성공여부" + result);
 		ArrayList<UserVO> list = teamService.searchId(searchId, teamNo);
 		
 		
@@ -63,7 +62,7 @@ com.weasy.admin.service.TeamService;
 		}
 		
 	}
-	
+	//팀원의 권한을 변경
 	@PostMapping("/updateRole")
 	public String updateRole(@RequestParam("role")int role,@RequestParam("userEmail")String userEmail,@RequestParam("teamNo")int teamNo) {
 		

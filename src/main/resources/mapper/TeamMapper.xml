@@ -92,6 +92,7 @@
         		u.nickName,
         		a.teamNo,
         		a.role,
+        		t.teamName,
         		CASE WHEN a.userEmail =
         		t.userEmail THEN 'T' ELSE 'F' END AS is_same
         		FROM
