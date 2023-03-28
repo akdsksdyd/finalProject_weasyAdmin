@@ -158,8 +158,7 @@ $(".noticeRow").click((e) => {
 		url: "../noticeDetail/"+key,
 		type: "get",
 		success: (res) => {
-			
-			console.log(res);
+		
 			var date = new Date(res.noticeRegdate);
 			
 			// 텍스트
@@ -175,7 +174,9 @@ $(".noticeRow").click((e) => {
 			// 이미지
 			if(res.fileList != undefined){
 				res.fileList.forEach(src => {
-					$('.imgBox').append('<img alt="img" src="'+ src +'" style="margin-bottom: 7px;">');
+					if(src.split('.')[5] != 'txt'){
+						$('.imgBox').append('<img alt="img" src="'+ src + '" style="margin-bottom: 7px;">');
+					}
 				})
 			}
 			
