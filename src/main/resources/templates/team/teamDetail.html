@@ -9,7 +9,9 @@
 				<!-- 컨트롤러에서 ${list}에 담긴 첫번째값에서 팀번호값만 불러옴(팀번호는 모두다동일) -->
 				<div class="currentTitle">
 					<!-- 컨트롤러에서 ${list}에 담긴 첫번째값에서 팀번호값만 불러옴(팀번호는 모두다동일) -->
-					• [[${list[0].teamNo}]]팀 관리창
+
+					• [[${list[0].teamName}]]팀 관리창
+
 				</div>
 
 			<div class="currentList">
@@ -267,9 +269,9 @@
             /* 모달창에서 검색된 값에 추가버튼이 뜨는데 이 때 추가버튼을 클릭시 db에 입력기능을 구현  */
             $('.modalbodys').on('click', 'button', function (e) {
                 var userEmail = e.target.value;
-                console.log(userEmail);
                 var teamNo = $(".tnodate").val();
-                var role = $(".role").val();
+                var role = $(e.target).parent().siblings(".role").children().val();
+                console.log(role);
                 var searchId = $(".modalSearch").val();
                 $.ajax({
                     url: "/insertTeam",
@@ -281,8 +283,8 @@
                         searchId: searchId
                     },
                     success: function (result) {
-                        alert("추가성공");
                         regetList(result);
+                        alert("추가성공");
                     },
                     error: function (err) {
                         console.log("추가에러");
@@ -331,7 +333,7 @@
                     str += '<td class ="userEmail">' + result[i].userEmail + '</td>';
                     str += '<td>' + result[i].userName + '</td>';
                     str += '<td>' + result[i].nickName + '</td>';
-                    str += '<td><select class ="role" style="width: 80px; height: 27px; border-radius: 5px; "><option value = 0>팀원</option><option value = 1>옵저버</option></select></td>';
+                    str += '<td class ="role"><select class ="role" style="width: 80px; height: 27px; border-radius: 5px; "><option value = 0>팀원</option><option value = 1>옵저버</option></select></td>';
                     str += '<td><button type ="button" class ="btn-success" style="background-color: #15599b; color: white; border-radius: 7px; padding: 5px 12px; font-weight: 600; cursor: pointer; " value =' + result[i].userEmail + '>추가</button></td>';
                     str += ' <input class ="tnodate" type = "hidden" value = ' + result[i].userEmail + '>'
                     str += "</tr>";

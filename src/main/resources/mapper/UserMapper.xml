@@ -23,7 +23,13 @@
 <!-- management 페이지네이션 -->
 	<select id="getTotal" resultType="int">
 		select count(*) as total from users
-		where permission = 'N';
+		where permission = 'N'
+		<if test="cri.searchName != null and cri.searchName != '' ">
+		and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+		and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  
 	</select>
 	
 <!-- userList -->
@@ -45,7 +51,13 @@
 <!-- userList 페이지네이션 -->
 	<select id="getTotal2" resultType="int">
 		select count(*) as total from users
-		where permission = 'Y';
+		where permission = 'Y'
+		<if test="cri.searchName != null and cri.searchName != '' ">
+		and userName like concat('%', #{cri.searchName}, '%')
+		</if>
+		<if test="cri.searchEmail != null and cri.searchEmail != '' ">
+		and userEmail like concat('%', #{cri.searchEmail}, '%')
+		</if>  
 	</select>
 	
 	
