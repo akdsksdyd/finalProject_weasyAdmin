@@ -35,7 +35,7 @@ public class UserController {
 	@Qualifier("userService")
 	private UserService userService;
 	
-	//private MailService mailservice;
+	private MailService mailservice;
 
 	//management
 	@GetMapping("/management")
@@ -88,7 +88,7 @@ public class UserController {
 		userService.pwReset(userEmail, a);
 
 		//pwReset mail발송
-		//mailservice.pwresetMail(userEmail, a);
+		mailservice.pwresetMail(userEmail, a);
 		return "redirect:/user/userList";
 	}
 
@@ -100,7 +100,7 @@ public class UserController {
 		userService.permission(userEmail);
 
 		//가입승인 mail발송
-		//mailservice.permissionMail(userEmail);
+		mailservice.permissionMail(userEmail);
 
 		return "redirect:/user/management";
 	}
@@ -151,9 +151,7 @@ public class UserController {
 		//System.out.println(vo);
 		
 		vo.setUserPw(userPw);
-		
 		userService.adminJoin(vo);
-		
 		
 		return "redirect:/user/admin";
 	}
