@@ -5,14 +5,14 @@
         
         	<!-- 컨트롤러에서 ${list}에 담긴 첫번째값에서 팀번호값만 불러옴(팀번호는 모두다동일) -->
             <h2 style="margin-top: 20px; margin-bottom: 20px;">
-                [[${list[0].teamNo}]]팀 관리창</h2>
+                [[${list[0].teamName}]]팀 관리창</h2>
             <hr/>
             
             <div class="currentWrap">
                 <div class="currentList">
                 <!-- 컨트롤러에서 ${list}에 담긴 첫번째값에서 팀번호값만 불러옴(팀번호는 모두다동일) -->
                     <div class="currentTitle">
-                        • [[${list[0].teamNo}]]팀 태스크 현황
+                        • [[${list[0].teamName}]]팀 태스크 현황
                     </div>
                     
                     <!-- db에서 데이터를 불러와서 차트로 구현 여기서 차트에 쓸데이터는 ${lists}에 가져오고 아래서 voo변수로 반복물을 돌려줌 -->

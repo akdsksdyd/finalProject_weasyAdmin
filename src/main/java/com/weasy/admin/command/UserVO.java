@@ -25,6 +25,7 @@ public class UserVO { //유저 VO
 	private int teamNo;
 	private int role;
 	private String is_same;
+	private String teamName;
 
 }
 //userEmail   VARCHAR(30) primary key NOT NULL,

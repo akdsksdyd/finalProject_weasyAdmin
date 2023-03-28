@@ -67,7 +67,7 @@
 				</thead>
 				<!-- 반복문을 통해서 컨트롤러에서 ${list}에 담긴값을 그려줌 -->
 				<tr class="trbodys" th:each=" vo, status : ${list}">
-					<td class="tnodate">[[${vo.teamNo}]]</td> <!-- 팀번호 pk여서 맨마지막에 없앨에정 -->
+					<td class="tnodate">[[${vo.teamNo}]]</td> <!-- 게시글번호및팀번호 -->
 					<td style="color: blue; cursor: pointer;" class="teamName"
 						th:data-team-count="${vo.teamCount}"
 						th:data-team-no="${vo.teamNo}">[[${vo.teamName}]]</td> <!-- 객체값을 자바변수에 넣어주기위해서 th:data사용 아래쪽 인원체크에서 사용 -->
@@ -155,7 +155,6 @@
             
             /* 팀상태 변경 - 현재 팀상태를 진행중,종료됨으로 변경가능, db에서 테이블을 N이랑 Y로 변경가능 */
             function detail(e) {
-                console.log(e.target.value);
                 location.href = "teamDeatil?page=1&amount=" + e.target.value + keyword.val();
             }
             $('.trbodys').on('change', '.changeStatus', function (e) {
