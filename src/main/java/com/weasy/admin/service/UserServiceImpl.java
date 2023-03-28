@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 	public int idCheck(String id) {
 
 		int cnt = userMapper.idCheck(id);
-		System.out.println("cnt: " + cnt);
+		//System.out.println("cnt: " + cnt);
 		
 		return cnt;
 	}
