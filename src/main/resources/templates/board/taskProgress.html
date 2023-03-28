@@ -34,7 +34,6 @@
 							<th style="width: 10%;">미진행</th>
 							<th style="width: 10%;">완료</th>
 							<th style="width: 35%;">진척률</th>
-
 						</tr>
 					</thead>
 					<tbody>
@@ -273,6 +272,11 @@
 	$(".progressTitle").click(() => {
 		window.location.href = "taskProgress";
 	})
+	
+	var msg = JSON.parse('[[${msg}]]');
+	if(msg != null){
+		alert(msg);
+	}
 
 </script>
 

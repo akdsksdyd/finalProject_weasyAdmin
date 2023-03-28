@@ -2,6 +2,9 @@ package com.weasy.admin.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.weasy.admin.command.AdminVO;
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.service.MailService;
@@ -112,10 +117,17 @@ public class UserController {
 	//관리자추가
 	@GetMapping("/admin")
 	public String admin(Model model,
-						UserCriteria cri) {
+						UserCriteria cri,
+						HttpServletRequest request,
+						RedirectAttributes ra) {
 		
 		ArrayList<AdminVO> list = userService.admin(cri);
 		model.addAttribute("list", list);
+		
+		if((int)request.getSession().getAttribute("role") == 1) {
+			ra.addFlashAttribute("msg", "권한이 필요합니다.");
+			return "redirect:"+request.getHeader("Referer");
+		}
 		
 		//페이지네이션
 		int total3 = userService.getTotal3(cri);
@@ -135,6 +147,7 @@ public class UserController {
 		
 		return "redirect:/user/admin";
 	}
+	
 
 };
 
