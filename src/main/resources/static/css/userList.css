@@ -71,23 +71,13 @@ a {
 
 /* pw 초기화 버튼*/
 .pwreset_modal_btn{
-	border: 1px solid #e7c23a;
-	border-radius: 7px;
-	background-color: #e7c23a;
-	padding: 10px 10px;
-	font-weight: 600;
-	color: white;
+	width:40px;
 	cursor: pointer;
 }
 
 /* 탈퇴 버튼 */
 .authority_btn{
-	border: 1px solid #6DD66D;
-	border-radius: 7px;
-	background-color: #6DD66D;
-	padding: 10px 10px;
-	font-weight: 600;
-	color: white;
+	width:40px;
 	cursor: pointer;
 }
 

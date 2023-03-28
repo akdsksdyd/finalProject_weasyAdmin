@@ -10,7 +10,7 @@
 	border: 1px #a39485 solid;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
 	margin-top: 60px;
-	background-color: #DCE4F0;
+	background-color: white;
 	overflow: scroll;
 	overflow-x: hidden;
 }
@@ -45,7 +45,7 @@
 	text-align: center;
 	margin-right: 8px;
 	color: white;
-	background-color: #7FA7E7;
+	background-color: #15599bcf;
 }
 
 .fileBox {
@@ -77,7 +77,7 @@
 
 .inputBtnBox input {
 	padding: 5px 15px;
-	background-color: #0061f7;
+	background-color: #15599b;
 	color: white;
 	font-weight: 600;
 }

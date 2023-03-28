@@ -907,7 +907,9 @@ body {
 .main-wrapper {
   position: relative;
   width: 100%;
-  background-color: #E1F6FA;
+
+  background-color:#FFF0F5;
+
 }
 
 .footer {
@@ -1028,9 +1030,9 @@ body {
 }
 
 .logo {
-  background-image: url(../img/svg/Logo.svg);
-  width: 49px;
-  height: 49px;
+  background-image: url(../img/svg/logo2.png);
+  width: 70px;
+  height: 70px;
 }
 
 .menu-toggle {

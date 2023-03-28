@@ -73,7 +73,7 @@ a {text-decoration: none;}
 
 .searchBtn {
 	cursor: pointer;
-	background-color: #9DCEFF;
+	background-color: #15599b;
 	color: white;
 	font-weight: 600;
 	padding: 0 10px;
@@ -178,7 +178,7 @@ a {text-decoration: none;}
 }
 
 table {
-	border: 1px #9DCEFF solid;
+	border: 1px #00228c solid;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
 	font-size: .9em;
 	width: 90%;
@@ -196,7 +196,7 @@ th {
 thead {
 	font-weight: bold;
 	color: #fff;
-	background: #9DCEFF;
+	background: #00228c;
 }
 
 td, th {
