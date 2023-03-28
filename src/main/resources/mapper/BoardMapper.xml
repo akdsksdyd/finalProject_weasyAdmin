@@ -12,8 +12,8 @@
 	</insert>
 
 	<insert id="taskDetailInsert">
-		insert into TASKDETAIL(boardNo, taskDetail, status) 
-		values(#{boardNo}, #{taskDetail}, #{status})
+		insert into TASKDETAIL(taskNo, taskDetail, status) 
+		values(#{taskNo}, #{taskDetail}, #{status})
 	</insert>	
 	
 	<update id="updateStatus">
@@ -30,11 +30,11 @@
 	<select id="getTaskProgressList" resultType="TaskProgressVO">
 		select teamName,
 			   teamNo,
-			   (select count(*) from task a where a.teamNo = b.teamNo and a.status = 1) progress,
-		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 2) unprogress,
-		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 3) complete
+			   (select count(*) from task a where a.teamNo = b.teamNo and a.status = 0) progress,
+		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 1) unprogress,
+		       (select count(*) from task a where a.teamNo = b.teamNo and a.status = 2) complete
 		from team b
-		where b.teamStatus = 1
+		where b.teamStatus = 'Y'
 		<if test="searchTeamName != '' and searchTeamName != null">
 			and b.teamName like concat('%', #{searchTeamName}, '%')
 		</if>
@@ -44,14 +44,19 @@
 	<!-- taskProgress 디테일 화면에 미진행, 완료만 -->
 	<select id="getTaskProgressDetail" resultType="TaskVO" >
 		select title, status  from task a 
-		where a.teamNo = (select teamNo from team where teamName = #{teamName}) 
-					      and status in (2, 3)
+		where a.teamNo = (select teamNo from team where teamName = #{teamName} limit 1) 
+					      and status in (1, 2)
+		
 	</select>
 	
 	<select id="getTaskProgressRate" resultMap="rateMap">
-		select taskDetailNo, boardNo, taskDetail, status, taskNo, title from TASKDETAIL a
-		inner join (select taskNo, title from TASK a where a.teamNo = (select teamNo from TEAM where teamName = #{teamName} and a.status = 1 )) b
-		on a.boardNo = b.taskNo
+		select taskDetailNo, a.taskNo, taskDetail, status, title from TASKDETAIL a
+		inner join (select taskNo, title 
+				    from TASK a 
+				    where a.teamNo = (select teamNo 
+				    				  from TEAM 
+				    				  where teamName = #{teamName} and a.status = 1 limit 1)) b
+		on a.taskNo = b.taskNo
 	</select>
 	
 	<resultMap type="TaskVO" id="rateMap">
@@ -73,12 +78,12 @@
 			   teamName, 
 		       timestampdiff(day, now(), endDate) remain, 
 		       (select count(*) from task b where b.teamNo = a.teamNo) taskCount,
-		       (select count(*) from task b where b.teamNo = a.teamNo and status = 1) progress,
-		       (select count(*) from task b where b.teamNo = a.teamNo and status = 2) unprogress,
-		       (select count(*) from task b where b.teamNo = a.teamNo and status = 3) complete,
+		       (select count(*) from task b where b.teamNo = a.teamNo and status = 0) progress,
+		       (select count(*) from task b where b.teamNo = a.teamNo and status = 1) unprogress,
+		       (select count(*) from task b where b.teamNo = a.teamNo and status = 2) complete,
 		       (select count(*) from authority b where b.teamNo = a.teamNo) teamCount
 	   from team a
-	   where a.teamStatus = 1
+	   where a.teamStatus = 'Y'
 	</select>
 	<!-- (SELECT COUNT(a.teamNo) FROM authority a LEFT OUTER JOIN users u ON a.userEmail = u.userEmail WHERE t.teamNo = a.teamNo AND u.permission = 'Y') AS teamCount -->
 	
@@ -97,7 +102,7 @@
 		select a.teamNo teamNo, a.teamName teamName,b.complete complete 
 		from team a
 		inner join(select teamNo, count(*) complete from task
-				   where status = 3
+				   where status = 2
 				   group by teamNo
 				   order by complete desc
 				   limit 3) b
@@ -105,7 +110,7 @@
 	</select>
 	
 	<select id="getTeamTotal" resultType="int">
-		select count(*) from team where teamStatus = 1
+		select count(*) from team where teamStatus = 'Y'
 		<if test="searchTeamName != '' and searchTeamName != null">
 			and teamName like concat('%', #{searchTeamName}, '%')
 		</if>
@@ -115,16 +120,16 @@
 		select a.teamNo teamNo, a.teamName teamName,b.progressing progressing 
 		from team a
 		inner join(select teamNo, count(*) progressing from task
-				   where status = 1
+				   where status = 2
 				   group by teamNo
 				   order by progressing desc
 				   limit 4) b
 	   on a.teamNo = b.teamNo;
 	</select>
 	
-	<select id="getTotalTaskProgress" resultType="int">
+	<select id="getTotalTaskProgress" resultType="Integer">
 		select status from task a
-		left outer join (select teamNo from team where teamStatus = 1) b
+		inner join (select teamNo from team where teamStatus = 'Y') b
 		on a.teamNo = b.teamNo;
 	</select>
 	

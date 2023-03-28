@@ -57,7 +57,7 @@ public class BoardServiceImpl implements BoardService {
 		ArrayList<TaskCountChartVO> taskCountChart = boardMapper.getTaskCountChart();
 		ArrayList<CompleteTaskChartVO> completeTaskChart = boardMapper.getCompleteTaskChart();
 		ArrayList<ProgressingTaskChartVO> progressingTaskChart = boardMapper.getProgressingTaskChart();
-		int[] totalTaskProgress = boardMapper.getTotalTaskProgress();
+		Integer[] totalTaskProgress = boardMapper.getTotalTaskProgress();
 		
 		// 단일 데이터
 		int teamTotal = boardMapper.getTeamTotal();

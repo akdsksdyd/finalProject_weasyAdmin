@@ -170,7 +170,7 @@
 				var titleArr = [];
 				var bgColor = [];
 				var bdColor = [];
-				
+				console.log(res.rateList);
 				res.rateList.forEach(task => {
 					
 					// bar별 수치 적용할 배열 초기화
@@ -232,9 +232,9 @@
 				
 				// 미진행, 완료 업무 목록
 				res.statusList.forEach(status => {
-					if(status.status == 3) {
+					if(status.status == 2) {
 						$('.completeList').append('<div style="font-size: 14px; padding: 10px 0 0 5px">• '+ status.title +'</div>');
-					}else {
+					}else if(status.status == 1) {
 						$('.UnprogressList').append('<div style="font-size: 14px; padding: 10px 0 0 5px">• '+ status.title +'</div>');
 					}
 				});
