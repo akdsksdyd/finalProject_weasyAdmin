@@ -46,7 +46,7 @@ public class UserController {
 		int total = userService.getTotal(cri);
 		UserPageVO pageVO = new UserPageVO(cri,total);
 		
-		System.out.println(pageVO.toString());
+		//System.out.println(pageVO.toString());
 		
 		model.addAttribute("pageVO", pageVO);
 		
@@ -79,7 +79,7 @@ public class UserController {
 
 		//pw암호화
 		String a = UserSha256.encrypt(birth);
-		System.out.println(a);
+		//System.out.println(a);
 		userService.pwReset(userEmail, a);
 
 		//pwReset mail발송
@@ -117,6 +117,8 @@ public class UserController {
 		ArrayList<AdminVO> list = userService.admin(cri);
 		model.addAttribute("list", list);
 		
+		System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+		
 		//페이지네이션
 		int total3 = userService.getTotal3(cri);
 		UserPageVO pageVO3 = new UserPageVO(cri,total3);
@@ -130,8 +132,16 @@ public class UserController {
 	@PostMapping("/admin")
 	public String adminJoin(AdminVO vo) {
 		
-		System.out.println(vo);
+		//pw암호화
+		String userPw = UserSha256.encrypt(vo.getUserPw());
+		
+		//System.out.println(userPw);
+		//System.out.println(vo);
+		
+		vo.setUserPw(userPw);
+		
 		userService.adminJoin(vo);
+		
 		
 		return "redirect:/user/admin";
 	}

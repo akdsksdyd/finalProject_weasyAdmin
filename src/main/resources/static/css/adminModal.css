@@ -16,6 +16,7 @@
 }
 
 .adminModal_body {
+  z-index: 100; /* 모달 z축 띄우기 */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -94,7 +95,7 @@
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
-  background-color: #4d90fe;
+  background-color: #15599bc2;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
 }
 
@@ -102,7 +103,7 @@
   /* border: 1px solid #2f5bb7; */
   border: 0px;
   text-shadow: 0 1px rgba(0,0,0,0.3);
-  background-color: #357ae8;
+  background-color: #15599b;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
 }
 

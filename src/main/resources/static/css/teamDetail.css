@@ -1,5 +1,5 @@
 table {
-  border: 1px #9DCEFF solid;
+  border: 1px #00228c solid;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
   font-size: .9em;
   width: 90%;
@@ -8,6 +8,7 @@ table {
   overflow: hidden;
   margin: 0 auto;
   transition: background-color 0.3s;
+  margin-bottom: 40px;
 }
 
 h2 {
@@ -15,20 +16,21 @@ h2 {
 }
 
 th {
-  text-align: left;
+  
   position: relative;
 }
 
 thead {
   font-weight: bold;
   color: #fff;
-  background: #9DCEFF;
+  background: #00228c;
 }
 
 td,
 th {
   padding: 1em .5em;
   vertical-align: middle;
+  text-align: center;
 }
 
 td {
@@ -145,7 +147,7 @@ tbody tr:hover td {
 }
 /* 팀원추가 버튼 */
 .btn-open-popup {
-  background-color: #9DCEFF;
+  background-color: #15599bad;
   border: none;
   color: white;
   padding: 0.5em 1em;
@@ -160,7 +162,7 @@ tbody tr:hover td {
 }
 
 .btn-open-popup:hover {
-  background-color: #82b8e3;
+  background-color: #15599b;
 }
 
 /* 삭제 버튼 */
@@ -200,4 +202,16 @@ tbody tr:hover td {
 
 .btn-sucess {
   background-color: #e32c2c;
+}
+
+.selrole{
+	width: 90px;
+    height: 33px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-bottom: 10px;
 }

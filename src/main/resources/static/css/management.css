@@ -82,6 +82,11 @@ a {
 }
 */
 
+.check-btn{
+		width:40px;
+	cursor: pointer;
+}
+
 /* 페이지네이션*/
 .managementPagingWrap {
 	width: 90%;

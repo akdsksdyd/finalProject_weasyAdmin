@@ -16,6 +16,7 @@ a {text-decoration: none;}
 	margin-top: 60px;
 	color: #595757;
 	position: relative;
+	background-color: white;
 }
 
 .noticeTitle {
@@ -29,9 +30,9 @@ a {text-decoration: none;}
 }
 
 .noticeRegistBtn {
-	border: 1px solid #9DCEFF;
+	border: 1px solid #15599b;
 	border-radius: 7px;
-	background-color: #9DCEFF;
+	background-color: #15599b;
 	padding: 10px 10px;
 	font-weight: 600;
 	color: white;
@@ -81,7 +82,7 @@ a {text-decoration: none;}
 
 .searchBtn {
 	cursor: pointer;
-	background-color: #9DCEFF;
+	background-color: #15599b;
 	color: white;
 	font-weight: 600;
 	padding: 0 10px;
@@ -174,7 +175,8 @@ a {text-decoration: none;}
 }
 
 .mndBtn {
-	background-color: #9DCEFF;
+	background-color: #15599b;
+	color: white;
 	border-radius: 5px;
 	font-size: 15px;
 	font-weight: 600;
@@ -194,7 +196,7 @@ a {text-decoration: none;}
 }
 
 table {
-	border: 1px #9DCEFF solid;
+	border: 1px #00228c solid;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
 	font-size: .9em;
 	width: 90%;
@@ -212,7 +214,7 @@ th {
 thead {
 	font-weight: bold;
 	color: #fff;
-	background: #9DCEFF;
+	background: #00228c;
 }
 
 td, th {

@@ -30,7 +30,6 @@ function checkId(){
 			            $('.id_already').css("display", "none");
 						
 					}
-		        	
 		            
 		        } else { //cnt가 1일 경우 -> 이미 존재하는 아이디
 		            $('.id_already').css("display","inline-block");

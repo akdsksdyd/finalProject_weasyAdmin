@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 	//관리자회원가입
 	@Override
 	public int adminJoin(AdminVO vo) {
-		System.out.println(vo);
+		//System.out.println(vo);
 		return userMapper.adminJoin(vo);
 	}
 
