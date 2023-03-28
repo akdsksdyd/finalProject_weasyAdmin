@@ -160,8 +160,7 @@
         		(select count(*) from authority b where b.teamNo = a.teamNo)
         		teamCount
         		from team a
-        		where a.teamStatus = 'Y' and a.teamNo =
-        		#{teamName}
+        		where a.teamNo = #{teamName}
     </select>
     <!-- 팀상태변경 -->
     <update id="statusChange">
