@@ -35,12 +35,12 @@
 				<table>
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Email</th>
-							<th>PhoneNum</th>
-							<th>Birth</th>
-							<th>Gender</th>
-							<th>Check</th>
+							<th style="width: 10%">이름</th>
+							<th style="width: 15%">이메일</th>
+							<th style="width: 15%">핸드폰번호</th>
+							<th style="width: 10%">생년월일</th>
+							<th style="width: 10%">성별</th>
+							<th style="width: 10%">승인</th>
 						</tr>
 					</thead>
 
@@ -52,8 +52,8 @@
 							<td>[[${vo.birth}]]</td>
 							<td>[[${vo.gender}]]</td>
 							<td>
-								<button class="check-btn" type="submit" name="permission"
-									value="hidden">[[${vo.permission}]]</button> <input
+								<input class="check-btn" type="image" name="permission"
+									value="hidden" src="../img/button/adduser.png"> <input
 								type="hidden" th:value="${vo.userEmail}">
 							</td>
 						</tr>
@@ -140,6 +140,7 @@
 	 */
 </script>
 
+
 <script th:inline="javascript">
 	$(".search-btn").click(function(e) {
 
@@ -147,11 +148,13 @@
 	});
 </script>
 
+
 <script th:inline="javascript">
 	/* permission */
-	$(".management_modal_btn").click(function(e) {
+	$(".check-btn").click(function(e) {
 
 		window.location.href = "permission/" + $(e.target).next().val();
+		console.log($(e.target).parent().next().val());
 
 		alert("승인완료 메일이 발송되었습니다")
 	});

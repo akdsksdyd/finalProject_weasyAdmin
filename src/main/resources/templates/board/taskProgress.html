@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<!-- 페이지 버튼 부트스트랩 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/taskProgress.css">
+<link rel="stylesheet" href="../css/style.min.css">
+
 <th:block
 	th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
 
@@ -34,7 +39,6 @@
 							<th style="width: 10%;">미진행</th>
 							<th style="width: 10%;">완료</th>
 							<th style="width: 35%;">진척률</th>
-
 						</tr>
 					</thead>
 					<tbody>
@@ -273,10 +277,10 @@
 	$(".progressTitle").click(() => {
 		window.location.href = "taskProgress";
 	})
+	
+	var msg = JSON.parse('[[${msg}]]');
+	if(msg != null){
+		alert(msg);
+	}
 
 </script>
-
-<!-- 페이지 버튼 부트스트랩 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/taskProgress.css">
-<link rel="stylesheet" href="../css/style.min.css">

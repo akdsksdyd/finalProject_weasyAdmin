@@ -1,34 +1,48 @@
 @charset "UTF-8";
 
 .currentWrap {
-	width: 100%;
+	width: 80%;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 1px #a39485 solid;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	margin-top: 60px;
+	margin-bottom: 60px;
+	color: #595757;
+	position: relative;
+	background-color: white;
+}
+
+.currentTitle {
+	width: 90%;
+	height: 30px;
+	margin: 0 auto;
+	margin-top: 30px;
+	font-size: 22px;
+	font-weight: 600;
+	cursor: pointer;
 }
 
 .currentList {
   	width: 80%; 
-  	height: 400px;
+  	height: 330px;
 	margin: 0 auto;
 	color: #595757;
 	border-radius: 10px;
 	border: 1px #a39485 solid;
   	box-shadow: 0 2px 5px rgba(0,0,0,.25);
-  	margin-top: 40px;
+  	margin-top: 23px;
+  	margin-bottom: 20px;
   	overflow: hidden;
 }
 
-.currentTitle {
-	padding: 20px;
-	font-size: 18px;
-	font-weight: 600;
-}
+
 
 .listWrap {
 	width: 97%;
 	height: 710px;
 	margin: 0 auto;
-	border-top: 2px #a39485 solid;
 	border-bottom: 2px #a39485 solid;
-	overflow: scroll;
 	overflow-x: hidden;
 	padding-bottom: 15px;
 	display: flex;
@@ -40,7 +54,8 @@
 .currentCard {
 	width: 1000px;
 	height: 290px;
-	margin: 15px 0 0 40px;
+	margin: 0 auto;
+	margin-top: 17px;
 	border-radius: 10px;
 	border: 1px #a39485 solid;
   	box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -65,6 +80,7 @@
 .cardChart {
 	float: right;
 	width: 50%;
+	overflow: hidden;
 }
 
 .cardChartTitle {

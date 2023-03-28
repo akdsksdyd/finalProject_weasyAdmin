@@ -16,7 +16,7 @@
 			<div class="userListWrap">
 
 				<div class="userList-title">
-					<a href="http://localhost:8686/user/userList"> • User List</a>
+					<a href="http://localhost:8686/user/userList"> • 회원 목록</a>
 				</div>
 
 				<br> <br> <br>
@@ -34,15 +34,15 @@
 				<table>
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Email</th>
-							<th>PhoneNum</th>
-							<th>Birth</th>
-							<th>Gender</th>
-							<th>NickName</th>
-							<th>LoginLog</th>
-							<th>PassWord</th>
-							<th>DropOut</th>
+							<th style="width: 10%">이름</th>
+							<th style="width: 15%">이메일</th>
+							<th style="width: 15%">핸드폰번호</th>
+							<th style="width: 10%">생년월일</th>
+							<th style="width: 10%">성별</th>
+							<th style="width: 10%">닉네임</th>
+							<th style="width: 10%">로그인기록</th>
+							<th style="width: 10%">pw초기화</th>
+							<th style="width: 10%">회원삭제</th>
 						</tr>
 					</thead>
 
@@ -56,12 +56,12 @@
 							<td>[[${vo.nickName}]]</td>
 							<td>[[${vo.loginDate}]]</td>
 							<td>
-								<button class="pwreset_modal_btn">reset</button> <input
+								<input class="pwreset_modal_btn" type="image" src="../img/button/manage.png"> <input
 								type="hidden" th:value="${vo.userEmail}"> <input
 								type="hidden" th:value="${vo.birth}">
 							</td>
 							<td>
-								<button class="authority_btn">o</button> <input
+								<input class="authority_btn" type="image" src="../img/button/removeuser.png"> <input
 								type="hidden" th:value="${vo.userEmail}">
 							</td>
 						</tr>
@@ -185,4 +185,9 @@
 			alert('탈퇴가 취소되었습니다.');
 		}
 	});
+	
+	var msg = JSON.parse('[[${msg}]]');
+	if(msg != null){
+		alert(msg);
+	}
 </script>

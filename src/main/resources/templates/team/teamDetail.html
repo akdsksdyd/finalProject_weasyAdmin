@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
     <th:block th:replace="~{./include/layout :: layout(~{:: .main-wrapper})}">
         <div class="main-wrapper">
         
@@ -92,6 +93,7 @@
             </div>
         </th:block>
         <script th:inline="javascript">
+
         	/* 차트리스트 구현 스크립튼 */
             var chartList = JSON.parse('[[${lists}]]');
             var cardList = document.querySelectorAll('.cardChart');
@@ -101,6 +103,7 @@
                 tag.style.height = '200px';
                 tag.style.width = '200px';
                 tag.style.marginTop = '20px';
+                tag.style.margin = '0 auto';
                 // 2. chart 영역에 추가
                 cardList[idx].appendChild(tag);
                 // 3. 추가 후에 chart데이터 세팅
@@ -306,14 +309,15 @@
                태그를 그리면서 보여주고 모달 html에 값을 넣어줌*/
             function regetList(result) {
                 var str = "";
-                str += '<table class ="modalTable"><thead><tr><th>이메일</th><th>이름</th><th>닉네임</th><th>권한</th><th></th><th></th></tr></thead>';
+                str += '<br/>'
+                str += '<table class ="modalTable"><thead><tr><th>이메일</th><th>이름</th><th>닉네임</th><th>권한</th><th></th></tr></thead>';
                 for (var i = 0; i < result.length; i++) {
                     str += "<tr class = 'trbodys'>";
                     str += '<td class ="userEmail">' + result[i].userEmail + '</td>';
                     str += '<td>' + result[i].userName + '</td>';
                     str += '<td>' + result[i].nickName + '</td>';
-                    str += '<td><select class ="role"><option value = 0>팀원</option><option value = 1>옵저버</option></select></td>';
-                    str += '<td><button type ="button" class ="btn-success" style="background-color: #9DCEFF;" value =' + result[i].userEmail + '>추가</button></td>';
+                    str += '<td><select class ="role" style="width: 80px; height: 27px; border-radius: 5px; "><option value = 0>팀원</option><option value = 1>옵저버</option></select></td>';
+                    str += '<td><button type ="button" class ="btn-success" style="background-color: #15599b; color: white; border-radius: 7px; padding: 5px 12px; font-weight: 600; cursor: pointer; " value =' + result[i].userEmail + '>추가</button></td>';
                     str += ' <input class ="tnodate" type = "hidden" value = ' + result[i].userEmail + '>'
                     str += "</tr>";
                 }
@@ -354,5 +358,5 @@
                 $(".tablebodys").html(str);
             }
         </script>
-        <link rel="stylesheet" href="../css/teamDetail.css">
-        <link rel="stylesheet" href="../css/teamCurrent.css">
+<link rel="stylesheet" href="../css/teamDetail.css">
+<link rel="stylesheet" href="../css/teamCurrent.css">

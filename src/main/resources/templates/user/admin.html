@@ -17,7 +17,7 @@
 				<a href="http://localhost:8686/user/admin">• 관리자 등록</a>
 			</div>
 
-			<br> <br> <br>
+			<br> 
 
 			<div class="add">
 				<button class="adminAdd_btn">+ 관리자 추가</button>
@@ -28,10 +28,10 @@
 			<table class="admin">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Memo</th>
-						<th>Role</th>
+						<th style="width: 25%">이름</th>
+						<th style="width: 25%">이메일</th>
+						<th style="width: 25%">메모</th>
+						<th style="width: 25%">직급</th>
 					</tr>
 				</thead>
 
@@ -40,7 +40,7 @@
 						<td>[[${vo.userName}]]</td>
 						<td>[[${vo.userEmail}]]</td>
 						<td>[[${vo.memo}]]</td>
-						<td>[[${vo.role}]]</td>
+						<td>[[${vo.role == 0 ? '최고관리자' : '일반관리자'}]]</td>
 					</tr>
 				</tbody>
 			</table>
@@ -97,7 +97,7 @@
 			<div class="adminModal">
 				<div class="adminModal_body">
 					<div class="join-card">
-						<h1>WEASY ADMIN</h1>
+						<h1 style="font-weight:bolder;">관리자 등록카드</h1>
 						<br> <br>
 						<!-- 이메일 -->
 						<input type="text" id="id" name="userEmail"
@@ -110,7 +110,7 @@
 						<!-- 비밀번호 -->
 						<input type="password" id="password" name="userPw"
 							placeholder="password" required> <input type="password"
-							id="passwordConfirm" name="userPw" placeholder="password Confirm"
+							id="passwordConfirm" placeholder="password Confirm"
 							oninput="passConfirm()" required>
 
 						<!-- 비밀번호 확인 -->
@@ -141,7 +141,6 @@
 <!-- js 및 css -->
 <script src="/js/admin.js"></script>
 <link th:href="@{/css/admin.css}" rel="stylesheet" />
-
 
 
 <!-- 관리자가입 모달창 -->

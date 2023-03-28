@@ -43,7 +43,7 @@
 								<!-- 등록되어 있는 파일 보여주기 -->
 								<th:block th:each="src : ${vo.fileList}">
 									<div class="upload-file" style="margin-bottom: 5px;">
-										<img th:src="${src}" style="width: 50px; height: 50px; vertical-align: middle;">
+										<img th:src="${src}" onerror="this.src='/img/svg/logo.svg'" style="width: 50px; height: 50px; vertical-align: middle;">
 										<input class="upload-name" th:value="${#strings.listSplit(src, '/')[3]}" >
 										<button class="deleteBtn" type="button" th:value="${src}">삭제</button>
 									</div>
