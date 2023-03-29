@@ -13,8 +13,8 @@
 
 		<div class="adminWrap">
 
-			<div class="adminAdd">
-				<a href="http://localhost:8686/user/admin">• 관리자 등록</a>
+			<div >
+				<a class="adminAdd" href="http://localhost:8686/user/admin">• 관리자 등록</a>
 			</div>
 
 			<br> 
@@ -93,9 +93,9 @@
 
 		<!-- 관리지 추가 모달창 -->
 		<form class="admin" action="admin" method="post"
-			onsubmit="return Check()">
+			onsubmit="return Check()" name="form-name">
 			<div class="adminModal">
-				<div class="adminModal_body">
+				<div class="adminModal_body" >
 					<div class="join-card">
 						<h1 style="font-weight:bolder;">관리자 등록카드</h1>
 						<br> <br>
@@ -104,8 +104,8 @@
 							placeholder="userEmail" oninput="checkId()" required>
 
 						<!-- email ajax 중복검사 -->
-						<span class="id_ok">사용 가능한 이메일입니다.</span> <span class="id_already">사용
-							중인 이메일입니다.</span> <span class="id_form">이메일 형식에 맞게 입력해주세요.</span>
+						<span class="id_ok reset">사용 가능한 이메일입니다.</span> <span class="id_already reset">사용
+							중인 이메일입니다.</span> <span class="id_form reset">이메일 형식에 맞게 입력해주세요.</span>
 
 						<!-- 비밀번호 -->
 						<input type="password" id="password" name="userPw"
@@ -114,19 +114,19 @@
 							oninput="passConfirm()" required>
 
 						<!-- 비밀번호 확인 -->
-						<span class="pw_ok">비밀번호가 일치합니다.</span> <span class="pw_no">비밀번호가
-							불일치합니다.</span> <span class="pw_form">비밀번호는 8~16자의 영문 대소문자, 숫자,
+						<span class="pw_ok reset">비밀번호가 일치합니다.</span> <span class="pw_no reset">비밀번호가
+							불일치합니다.</span> <span class="pw_form reset">비밀번호는 8~16자의 영문 대소문자, 숫자,
 							특수문자만 가능합니다.</span>
 
 						<!-- 이름 -->
 						<input type="text" id="name" name="userName"
 							placeholder="userName" oninput="checkName()" required> <span
-							class="name_form">이름형식에 맞게 입력해주세요.</span>
+							class="name_form reset">이름형식에 맞게 입력해주세요.</span>
 
 						<!-- 핸드폰번호 -->
 						<input type="text" id="phoneNum" name="phoneNum"
 							placeholder="phoneNum" oninput="checkNum()" required> <span
-							class="num_form">핸드폰 번호형식에 맞게 입력해주세요.</span> <input type="text"
+							class="num_form reset">핸드폰 번호형식에 맞게 입력해주세요.</span> <input type="text"
 							name="memo" placeholder="memo"> <br> <br> <input
 							type="checkbox" id="role" name="role" value="1" required>
 						관리자 권한을 부여하시겠습니까? <br> <br> <input type="submit"

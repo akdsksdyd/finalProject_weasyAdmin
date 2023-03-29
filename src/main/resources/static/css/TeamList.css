@@ -150,6 +150,13 @@ p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
 	overflow: hidden;
 }
 
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    justify-content: center;
+}
+
 .progressPaging {
 	width: 30%;
 	height: 80px;
