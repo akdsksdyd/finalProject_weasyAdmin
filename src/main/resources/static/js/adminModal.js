@@ -10,9 +10,12 @@ $(".adminAdd_btn").click(function(e) {
 $(document).mouseup(function (e){
 
   var modalClose = $(".adminModal");
+ 
 
   if( modalClose.has(e.target).length === 0){
-
+	
+	document.forms["form-name"].reset();
+	$(".reset").css('display','none');
     modalClose.css('display','none');
   }
   

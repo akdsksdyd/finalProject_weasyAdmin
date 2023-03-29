@@ -242,6 +242,7 @@
                 .on('keyup', 'input', function (e) {
                     var searchId = e.target.value;
                     var teamNo = $(".tnodate").val();
+                    console.log(teamNo);
                     if (searchId == '') {
                         $(".userEmail").remove();
                         var str = "";
@@ -271,7 +272,6 @@
                 var userEmail = e.target.value;
                 var teamNo = $(".tnodate").val();
                 var role = $(e.target).parent().siblings(".role").children().val();
-                console.log(role);
                 var searchId = $(".modalSearch").val();
                 $.ajax({
                     url: "/insertTeam",
@@ -283,8 +283,9 @@
                         searchId: searchId
                     },
                     success: function (result) {
-                        regetList(result);
                         alert("추가성공");
+                    	 $(".modalbodys").empty();
+                        regetList(result);
                     },
                     error: function (err) {
                         console.log("추가에러");
