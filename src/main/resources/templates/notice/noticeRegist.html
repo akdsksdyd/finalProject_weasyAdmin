@@ -48,7 +48,7 @@
 						<div class="inputBox" style="margin-top: 20px;">
 							<div class="inputBtnBox">
 								<input type="submit" value="등록" />
-								<input type="button" value="취소" />		
+								<input type="button" class="cancleBtn" value="취소" />		
 							</div>
 						</div>
 					
@@ -78,6 +78,11 @@ $('.removeFile').click((e) => {
 	
 	var files = $('.fileBox span');
 	if(files.length > 1) files[files.length-2].remove();
+})
+
+// 취소 버튼
+$('.cancleBtn').click(() => {
+	location.href="noticeList";
 })
 
 </script>

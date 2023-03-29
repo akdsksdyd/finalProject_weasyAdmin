@@ -139,11 +139,6 @@
 
 <script th:inline="javascript">
 
-//타이틀 누르면 기본 페이지로 이동
-$(".noticeTitle").click(() => {
-	window.location.href = "noticeList";
-})
-
 var msg = JSON.parse('[[${msg}]]');
 if(msg != null){
 	alert(msg);
