@@ -31,10 +31,10 @@
     </if>
     GROUP BY t.teamNO
     <if test="cri.teamSort == 'teamNameDesc'">
-        ORDER BY teamName DESC
+        ORDER BY teamNo DESC
     </if>
     <if test="cri.teamSort == 'teamNameAsc'">
-        ORDER BY teamName ASC
+        ORDER BY teamNo ASC
     </if>
     <if test="cri.teamSort == 'countAsc'">
         ORDER BY teamCount ASC
@@ -114,20 +114,17 @@
     </delete>
     <!-- 모달창에서 팀원ID검색 -->
     <select id="searchId" resultType="userVO">
-        SELECT u.userEmail, u.nickName,
-        		u.userName
-        		FROM (
-        		SELECT userName, userEmail, nickName
-        		FROM users
-        		WHERE
-        		(userEmail LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
-        		OR
-        		(nickname LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
-        		) u
-        		LEFT OUTER JOIN authority a ON u.userEmail = a.userEmail
-        		WHERE a.teamNo
-        		!= #{teamNo} OR teamNO IS NULL
-        		GROUP BY u.userEmail;
+SELECT u.userEmail, u.nickName, u.userName
+FROM (
+    SELECT userName, userEmail, nickName
+    FROM users
+    WHERE (userEmail LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
+        OR (nickname LIKE CONCAT('%', #{searchId}, '%') AND permission = 'Y')
+) u
+LEFT OUTER JOIN authority a ON u.userEmail = a.userEmail AND a.teamNo = #{teamNo}
+WHERE a.userEmail IS NULL
+GROUP BY u.userEmail;
+
     </select>
     <!-- 모달창에서 팀원추가 -->
     <select id="insertTeam">

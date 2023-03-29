@@ -17,5 +17,6 @@ public class AdminVO { //관리자 VO
 	private String phoneNum;
 	private String memo;
 	private int role;
+	private int orderNum;
 
 }
