@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.weasy.admin.command.UserVO;
 import com.weasy.admin.service.BoardService;
+import com.weasy.admin.service.UserSha256;
 
 
 @Controller
@@ -29,7 +30,10 @@ public class LoginController {
 							 HttpServletRequest request,
 							 RedirectAttributes ra) {
 		
-		UserVO vo = boardService.loginCheck(id, pw);
+		String realPw = UserSha256.encrypt(pw);
+		System.out.println(pw);
+		System.out.println(realPw);
+		UserVO vo = boardService.loginCheck(id, realPw);
 		
 		if(vo != null) {
 			request.getSession().setAttribute("user_id", vo.getUserEmail());

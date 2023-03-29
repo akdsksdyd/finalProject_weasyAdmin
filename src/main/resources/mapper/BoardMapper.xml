@@ -123,7 +123,7 @@
 				   where status = 2
 				   group by teamNo
 				   order by progressing desc
-				   limit 4) b
+				   limit 3) b
 	   on a.teamNo = b.teamNo;
 	</select>
 	

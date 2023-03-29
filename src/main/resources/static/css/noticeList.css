@@ -26,7 +26,6 @@ a {text-decoration: none;}
 	margin-top: 30px;
 	font-size: 22px;
 	font-weight: 600;
-	cursor: pointer;
 }
 
 .noticeRegistBtn {
@@ -38,9 +37,6 @@ a {text-decoration: none;}
 	color: white;
 }
 
-.noticeTitle:hover {
-	color: #0080FF;
-}
 
 /****************/
 /* 페이지 버튼 부분 */
